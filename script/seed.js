@@ -23,10 +23,10 @@ async function seed() {
   ])
 
   const category = await Promise.all([
-    Category.create({name: 'Xbox One', imageURL: ''}),
-    Category.create({name: 'PlayStation 4', imageURL: ''}),
-    Category.create({name: 'Nintendo Switch', imageURL: ''}),
-    Category.create({name: 'PC', imageURL: ''})
+    Category.create({name: 'Xbox One'}),
+    Category.create({name: 'PlayStation 4'}),
+    Category.create({name: 'Nintendo Switch'}),
+    Category.create({name: 'PC'})
   ])
 
   console.log(`seeded ${users.length} users`)

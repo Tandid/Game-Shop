@@ -13,7 +13,7 @@ const Category = db.define('category', {
   imageURL: {
     type: Sequelize.STRING,
     allowNull: false,
-    defaultvalue: 'https://img.icons8.com/cotton/2x/controller.png'
+    defaultValue: 'https://img.icons8.com/cotton/2x/controller.png'
   }
 })
 

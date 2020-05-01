@@ -18,7 +18,7 @@ const Product = db.define('product', {
   imageURL: {
     type: Sequelize.STRING,
     allowNull: false,
-    defaultvalue: 'https://img.icons8.com/cotton/2x/controller.png'
+    defaultValue: 'https://img.icons8.com/cotton/2x/controller.png'
   },
 
   price: {
@@ -29,6 +29,7 @@ const Product = db.define('product', {
   inventory: {
     type: Sequelize.INTEGER,
     allowNull: false
+    //read about defaultValue
   }
 })
 
