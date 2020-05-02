@@ -10,14 +10,14 @@ const Order = require('./order')
  *    BlogPost.belongsTo(User)
  */
 
-User.hasMany(Order)
-Order.belongsTo(User)
+// User.hasMany(Order)
+// Order.belongsTo(User)
 
 Category.hasMany(Product)
 Product.belongsTo(Category)
 
-Order.hasMany(Product)
-Product.belongsTo(Order)
+// Order.hasMany(Product)
+// Product.belongsTo(Order)
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,

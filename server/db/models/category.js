@@ -16,15 +16,15 @@ const Category = db.define('category', {
     validate: {
       notEmpty: true
     }
-  },
-
-  description: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
   }
+
+  // description: {
+  //   type: Sequelize.STRING,
+  //   allowNull: false,
+  //   validate: {
+  //     notEmpty: true
+  //   }
+  // }
 })
 
 module.exports = Category
