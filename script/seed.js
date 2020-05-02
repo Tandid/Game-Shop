@@ -8,15 +8,81 @@ async function seed() {
   console.log('db synced!')
 
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({email: 'paul@gmail.com', password: '123'}),
+    User.create({email: 'dennis@gmail.com', password: '123'}),
+    User.create({email: 'tandid@gmail.com', password: '123'})
   ])
 
   const product = await Promise.all([
     Product.create({
+      title: 'Super Smash Bros. Ultimate',
+      description: 'Switch',
+      imageURL:
+        'https://images-na.ssl-images-amazon.com/images/I/81aJ-R4E6gL._SL1500_.jpg',
+      price: 59.99,
+      inventory: 5
+    }),
+    Product.create({
+      title: 'Animal Crossing New Horizons',
+      description: 'Switch',
+      imageURL:
+        'https://media.gamestop.com/i/gamestop/10168434/Animal-Crossing-New-Horizons',
+      price: 59.99,
+      inventory: 5
+    }),
+    Product.create({
+      title: 'The Legend of Zelda: Breath of the Wild',
+      description: 'Switch',
+      imageURL:
+        'https://media.gamestop.com/i/gamestop/10141904/The-Legend-of-Zelda-Breath-of-the-Wild',
+      price: 59.99,
+      inventory: 5
+    }),
+    Product.create({
+      title: 'Pokemon Shield',
+      description: 'Switch',
+      imageURL:
+        'https://images-na.ssl-images-amazon.com/images/I/71lz62-F84L._SY445_.jpg',
+      price: 59.99,
+      inventory: 5
+    }),
+    Product.create({
+      title: 'Gears 5',
+      description: 'Xbox One',
+      imageURL:
+        'https://cdn.cdkeys.com/500x706/media/catalog/product/g/e/gears-5-cd-keys-xbox-discount.jpg',
+      price: 59.99,
+      inventory: 5
+    }),
+    Product.create({
+      title: 'Halo 5: Guardians',
+      description: 'Xbox One',
+      imageURL:
+        'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/9441/9441137_sa.jpg;maxHeight=640;maxWidth=550',
+      price: 59.99,
+      inventory: 5
+    }),
+    Product.create({
       title: 'Call of Duty: Modern Warfare',
-      description: 'first person shooter game',
-      imageURL: '',
+      description: 'PS4',
+      imageURL:
+        'https://cdn.cdkeys.com/500x706/media/catalog/product/c/o/cod-modern-warfare-xp-boost-dlc-ps4.jpg',
+      price: 59.99,
+      inventory: 5
+    }),
+    Product.create({
+      title: 'Final Fantasy VII',
+      description: 'PS4',
+      imageURL:
+        'https://upload.wikimedia.org/wikipedia/en/c/ce/FFVIIRemake.png',
+      price: 59.99,
+      inventory: 5
+    }),
+    Product.create({
+      title: 'GTA V',
+      description: 'PC',
+      imageURL:
+        'https://cdn.cdkeys.com/500x706/media/catalog/product/g/r/grand_theft_auto_v_5_gta_5_pc_3.jpg',
       price: 59.99,
       inventory: 5
     })
