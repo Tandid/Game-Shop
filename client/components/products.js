@@ -9,7 +9,6 @@ const Products = ({products}) => {
         {products.map(product => {
           return <ProductCard key={product.id} {...product} />
         })}
-        hello
       </ul>
     </div>
   )
