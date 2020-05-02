@@ -12,8 +12,18 @@ const Category = db.define('category', {
 
   imageURL: {
     type: Sequelize.STRING,
+    defaultValue: 'https://img.icons8.com/cotton/2x/controller.png',
+    validate: {
+      notEmpty: true
+    }
+  },
+
+  description: {
+    type: Sequelize.STRING,
     allowNull: false,
-    defaultValue: 'https://img.icons8.com/cotton/2x/controller.png'
+    validate: {
+      notEmpty: true
+    }
   }
 })
 
