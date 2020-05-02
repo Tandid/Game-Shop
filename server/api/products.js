@@ -1,16 +1,6 @@
 const router = require('express').Router()
 const {Product} = require('../db/models')
 
-// /api/products
-// router.get('/', async (req, res, next) => {
-//   try {
-//     const products = await Product.findAll()
-//     res.json(products)
-//   } catch (err) {
-//     next(err)
-//   }
-// })
-
 router.get('/', async (req, res, next) => {
   await Product.findAll()
     .then(products => res.send(products))

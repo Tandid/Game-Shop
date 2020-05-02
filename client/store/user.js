@@ -23,23 +23,23 @@ const removeUser = () => ({type: REMOVE_USER})
  */
 const me = () => async dispatch => {
   try {
-    const res = await axios.get('/auth/me')
-    dispatch(getUser(res.data || defaultUser))
+    const response = await axios.get('/auth/me')
+    dispatch(getUser(response.data || defaultUser))
   } catch (err) {
     console.error(err)
   }
 }
 
 const auth = (email, password, method) => async dispatch => {
-  let res
+  let response
   try {
-    res = await axios.post(`/auth/${method}`, {email, password})
+    response = await axios.post(`/auth/${method}`, {email, password})
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
 
   try {
-    dispatch(getUser(res.data))
+    dispatch(getUser(response.data))
     history.push('/home')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
