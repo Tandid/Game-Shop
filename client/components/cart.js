@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import ProductCard from './productCard.js'
+import ProductList from './ProductList.js'
 
 const Cart = ({cart, products}) => {
   if (!cart.items) {
@@ -9,10 +9,11 @@ const Cart = ({cart, products}) => {
     console.log(cart.items)
     return (
       <div>
+        <h1>Cart</h1>
         <ul>
           {products
             .filter(product => cart.items.includes(String(product.id)))
-            .map(product => <ProductCard key={product.id} {...product} />)}
+            .map(product => <ProductList key={product.id} {...product} />)}
         </ul>
       </div>
     )
