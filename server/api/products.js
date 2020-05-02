@@ -12,7 +12,9 @@ const {Product} = require('../db/models')
 // })
 
 router.get('/', async (req, res, next) => {
-  await Product.findAll().then(products => res.send(products).catch(next))
+  await Product.findAll()
+    .then(products => res.send(products))
+    .catch(next)
 })
 
 router.get('/:id', async (req, res, next) => {

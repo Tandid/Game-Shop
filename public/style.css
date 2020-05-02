@@ -4,6 +4,7 @@ body {
 
 a {
   text-decoration: none;
+  /* text-decoration-style: none; */
 }
 
 label {
@@ -18,4 +19,13 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+.active {
+  font-weight: bolder;
+}
+
+img {
+  height: 200px;
+  width: 150px;
 }
