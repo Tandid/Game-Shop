@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, Products, Cart} from './components'
-import {me, getProducts} from './store'
+import {me, getProducts, getCart} from './store'
 
 /**
  * COMPONENT
@@ -52,6 +52,7 @@ const mapDispatchToProps = dispatch => {
     loadInitialData() {
       dispatch(me())
       dispatch(getProducts())
+      dispatch(getCart())
     }
   }
 }

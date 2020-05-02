@@ -15,7 +15,7 @@ const Products = ({products}) => {
 }
 
 const mapStateToProps = ({products}) => {
-  console.log({products})
+  console.log(products)
   return {products}
 }
 
