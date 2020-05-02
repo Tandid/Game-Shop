@@ -10,7 +10,7 @@ export const UserHome = props => {
 
   return (
     <div>
-      <h3>Welcome, {email}</h3>
+      <h3 className="welcome">Welcome, {email}</h3>
     </div>
   )
 }
@@ -18,13 +18,13 @@ export const UserHome = props => {
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapStateToProps = state => {
   return {
     email: state.user.email
   }
 }
 
-export default connect(mapState)(UserHome)
+export default connect(mapStateToProps)(UserHome)
 
 /**
  * PROP TYPES

@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome} from './components'
-import {me} from './store'
+import {Login, Signup, UserHome, Products} from './components'
+import {me, getProducts} from './store'
 
 /**
  * COMPONENT
@@ -21,6 +21,7 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/products" component={Products} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -37,7 +38,7 @@ class Routes extends Component {
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapStateToProps = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
@@ -45,17 +46,18 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+      dispatch(getProducts())
     }
   }
 }
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(mapState, mapDispatch)(Routes))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Routes))
 
 /**
  * PROP TYPES
