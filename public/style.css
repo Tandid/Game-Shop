@@ -96,3 +96,9 @@ button {
   flex-direction: column;
   width: 80%;
 }
+
+.productLink {
+  border: 1px black solid;
+  background-color: black;
+  padding: 0.25rem;
+}

@@ -12,6 +12,7 @@ import {
   ProductForm
 } from './components'
 import {me, getProducts, getCart} from './store'
+import EditProductDetails from './components/EditProductDetails'
 
 /**
  * COMPONENT
@@ -29,9 +30,10 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/products/:id" component={ProductDetails} />
+        <Route exact path="/products/:id" component={ProductDetails} />
+        <Route exact path="/products/:id/edit" component={EditProductDetails} />
         <Route exact path="/newProduct" component={ProductForm} />
-        <Route path="/products" component={Products} />
+        <Route exact path="/products" component={Products} />
         <Route path="/cart" component={Cart} />
         {isLoggedIn && (
           <Switch>

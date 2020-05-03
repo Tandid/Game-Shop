@@ -9,7 +9,9 @@ const ProductCard = ({id, title, imageURL, price, inventory}) => {
       <br />
       <img src={imageURL} />
       <p>${price}</p>
-      <Link to={`/products/${id}`}>More Details</Link>
+      <Link to={`/products/${id}`} className="productLink">
+        More Details
+      </Link>
       <button> Add to Cart </button>
       <p>Quantity: {inventory}</p>
     </li>
