@@ -1,10 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import ProductCard from './productCard.js'
 
 const Products = ({products}) => {
   return (
     <div>
+      <Link to="/newProduct">Create New Product</Link>
       <ul className="wrapper">
         {products.map(product => {
           return <ProductCard key={product.id} {...product} />

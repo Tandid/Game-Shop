@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 const ProductCard = ({id, title, imageURL, price, inventory}) => {
   return (
@@ -8,7 +9,7 @@ const ProductCard = ({id, title, imageURL, price, inventory}) => {
       <br />
       <img src={imageURL} />
       <p>${price}</p>
-      <a href={'products/' + id}> More Details </a>
+      <Link to={`/products/${id}`}>More Details</Link>
       <button> Add to Cart </button>
       <p>Quantity: {inventory}</p>
     </li>

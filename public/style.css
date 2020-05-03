@@ -90,3 +90,9 @@ button {
   height: 2rem;
   justify-content: center;
 }
+
+.newGame {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
