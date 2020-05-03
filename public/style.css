@@ -23,7 +23,7 @@ form div {
   margin: 1em;
   display: inline-block;
 }
-/* ------------------------------------ */
+/* -------------------products----------------- */
 .active {
   font-weight: bolder;
 }
@@ -42,14 +42,11 @@ nav {
 }
 
 .card {
-  height: 100%;
   width: 25%;
-  align-content: center;
   text-align: center;
-  border: solid 1px black;
-  vertical-align: middle;
-  border-radius: 2rem;
+  border-radius: 1rem;
   background-color: beige;
+  margin: 0.5rem;
 }
 
 img {
@@ -67,4 +64,29 @@ a:hover {
   text-justify: auto;
   justify-content: center;
   padding: 5rem;
+}
+
+/* -----------------cart---------- */
+
+.cart-wrapper {
+  background-color: beige;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.cart-items {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  align-items: center;
+  border: solid 1px black;
+}
+
+.cart-items > p,
+button {
+  height: 2rem;
+  justify-content: center;
 }

@@ -3,16 +3,16 @@ import {connect} from 'react-redux'
 
 const ProductList = ({id, title, imageURL, price, inventory, products}) => {
   return (
-    <li key={id} className="cart">
+    <li key={id} className="cart-items">
       <img src={imageURL} />
       <p>{title}</p>
       <p>${price}</p>
-      <button>Remove From Cart</button>
+      <p>Quantity: 1</p>
       <div>
-        <p>Quantity: 1</p>
         <button> - </button>
         <button> + </button>
       </div>
+      <button>Remove From Cart</button>
     </li>
   )
 }

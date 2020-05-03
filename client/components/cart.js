@@ -4,17 +4,20 @@ import ProductList from './ProductList.js'
 
 const Cart = ({cart, products}) => {
   if (!cart.items) {
-    return <h3>Loading...</h3>
+    return <h3>Cart is Empty</h3>
   } else {
     console.log(cart.items)
     return (
-      <div>
+      <div className="cart-wrapper">
         <h1>Cart</h1>
         <ul>
           {products
             .filter(product => cart.items.includes(String(product.id)))
             .map(product => <ProductList key={product.id} {...product} />)}
         </ul>
+        <p> Total Price: </p>
+        <button className="cart-button"> Checkout </button>
+        <button className="cart-button"> Clear Cart </button>
       </div>
     )
   }
