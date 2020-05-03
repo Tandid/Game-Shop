@@ -5,6 +5,7 @@ import history from '../history'
  * ACTION TYPES ------------------------------------------------
  */
 const GET_PRODUCTS = 'GET_PRODUCTS'
+const GET_DETAILS = 'GET_DETAILS'
 const CREATE_PRODUCT = 'CREATE_PRODUCT'
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 const EDIT_PRODUCT = 'EDIT_PRODUCT'
@@ -18,6 +19,7 @@ const initialState = []
  * ACTION CREATORS
  */
 const _getProducts = products => ({type: GET_PRODUCTS, products})
+const _getDetails = product => ({type: GET_DETAILS, product})
 const _createProduct = product => ({type: CREATE_PRODUCT, product})
 const _removeProduct = id => ({type: REMOVE_PRODUCT, product: id})
 const _editProduct = product => ({type: EDIT_PRODUCT, product})
@@ -29,6 +31,13 @@ const getProducts = () => {
   return async dispatch => {
     const response = await axios.get('/api/products')
     dispatch(_getProducts(response.data))
+  }
+}
+
+const getDetails = id => {
+  return async dispatch => {
+    const response = await axios.get(`/api/products/${id}`)
+    dispatch(_getDetails(response.data))
   }
 }
 
@@ -61,6 +70,8 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case GET_PRODUCTS:
       return action.products
+    case GET_DETAILS:
+      return action.product
     case CREATE_PRODUCT:
       return [...state, action.product]
     case REMOVE_PRODUCT:
@@ -72,4 +83,4 @@ export default function(state = initialState, action) {
   }
 }
 
-export {getProducts, createProduct, removeProduct, editProduct}
+export {getProducts, getDetails, createProduct, removeProduct, editProduct}

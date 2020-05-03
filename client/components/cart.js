@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import ProductList from './ProductList.js'
+import ProductList from './productList.js'
 
 const Cart = ({cart, products}) => {
   if (!cart.items) {

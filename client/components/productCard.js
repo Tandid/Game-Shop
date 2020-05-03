@@ -1,22 +1,23 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-const ProductCard = ({id, title, imageURL, price, inventory, products}) => {
+const ProductCard = ({id, title, imageURL, price, inventory}) => {
   return (
     <li key={id} className="card">
       <p>{title}</p>
       <br />
       <img src={imageURL} />
       <p>${price}</p>
-      <button>Add to Cart</button>
+      <a href={'products/' + id}> More Details </a>
+      <button> Add to Cart </button>
       <p>Quantity: {inventory}</p>
     </li>
   )
 }
 
-const mapStateToProps = ({products}) => {
+const mapStateToProps = state => {
   return {
-    products
+    state
   }
 }
 
