@@ -19,13 +19,16 @@ class ProductForm extends React.Component {
   async onSubmit(event) {
     event.preventDefault()
     try {
-      await this.props.save({
-        title: this.state.title,
-        description: this.state.description,
-        imageUrl: this.state.imageUrl,
-        price: this.state.price,
-        inventory: this.state.inventory
-      })
+      await this.props.save(
+        {
+          title: this.state.title,
+          description: this.state.description,
+          imageUrl: this.state.imageUrl,
+          price: this.state.price,
+          inventory: this.state.inventory
+        },
+        this.props.history.push
+      )
       this.setState({
         title: '',
         description: '',
@@ -81,7 +84,7 @@ class ProductForm extends React.Component {
 
 const mapDispatchToProducts = dispatch => {
   return {
-    save: product => dispatch(createProduct(product))
+    save: (product, push) => dispatch(createProduct(product, push))
   }
 }
 
