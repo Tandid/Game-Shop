@@ -40,7 +40,7 @@ const auth = (email, password, method) => async dispatch => {
 
   try {
     dispatch(getUser(response.data))
-    history.push('/home')
+    history.push('/')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }

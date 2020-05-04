@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Product, Category, Order} = require('../server/db/models')
+const {User, Product, Category, OrderItems} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -90,7 +90,9 @@ async function seed() {
 
   const [SSBU, AC, LOZ, PS, G5, HALO, COD, FF7, GTAV] = products
 
-  const orders = await Promise.all([Order.create({items: [SSBU.id, AC.id]})])
+  const orders = await Promise.all([
+    OrderItems.create({items: [SSBU.id, AC.id]})
+  ])
 
   const category = await Promise.all([
     Category.create({name: 'Xbox One'}),

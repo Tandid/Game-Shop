@@ -2,7 +2,15 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
-const ProductCard = ({id, title, imageURL, price, inventory}) => {
+const ProductCard = ({
+  id,
+  title,
+  imageURL,
+  price,
+  inventory,
+  products,
+  cart
+}) => {
   return (
     <li key={id} className="card">
       <h4>{title}</h4>
@@ -12,15 +20,16 @@ const ProductCard = ({id, title, imageURL, price, inventory}) => {
       <Link to={`/products/${id}`} className="productLink">
         More Details
       </Link>
-      <button> Add to Cart </button>
+      <button onClick={ev => cart.items.push(`${id}`)}> Add to Cart </button>
       <p>Quantity: {inventory}</p>
     </li>
   )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({products, cart}) => {
   return {
-    state
+    products,
+    cart
   }
 }
 

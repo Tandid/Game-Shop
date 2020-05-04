@@ -55,7 +55,7 @@ img {
 }
 
 a:hover {
-  color: white;
+  font-weight: bolder;
 }
 
 /* -------home----------------- */
@@ -70,6 +70,11 @@ a:hover {
   margin: 1rem;
   height: 400px;
   border: solid 2px white;
+}
+
+.welcome > a {
+  background-color: #f24443;
+  padding: 0.5rem;
 }
 
 .most-popular > h1 {
