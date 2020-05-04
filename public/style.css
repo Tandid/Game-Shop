@@ -37,8 +37,10 @@ form div {
   padding: 1rem;
 }
 
-nav {
+nav > div {
   background-color: #f24443;
+  display: flex;
+  justify-content: space-around;
 }
 
 .card {
@@ -75,6 +77,7 @@ a:hover {
 .welcome > a {
   background-color: #f24443;
   padding: 0.5rem;
+  border: solid 2px white;
 }
 
 .most-popular > h1 {
@@ -88,6 +91,7 @@ a:hover {
   text-align: center;
   padding: 1rem;
   border-radius: 1rem;
+  margin: 2rem;
 }
 
 .cart-items {

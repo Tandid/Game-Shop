@@ -1,18 +1,19 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-const ProductList = ({id, title, imageURL, price, inventory, products}) => {
+const ProductList = ({id, title, imageURL, price, products}) => {
+  let count = 1
   return (
     <li key={id} className="cart-items">
       <img src={imageURL} />
       <p>{title}</p>
-      <p>${price}</p>
-      <p>Quantity: 1</p>
+      <p>${price * count}</p>
+      <p>Quantity: {count}</p>
       <div>
-        <button> - </button>
-        <button> + </button>
+        <button onClick={ev => console.log(count--)}> - </button>
+        <button onClick={ev => console.log(count++)}> + </button>
       </div>
-      <button>Remove From Cart</button>
+      <button onClick={ev => console.log(id)}>Remove From Cart</button>
     </li>
   )
 }
