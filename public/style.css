@@ -50,8 +50,8 @@ nav {
 }
 
 img {
-  height: 200px;
-  width: 150px;
+  height: 250px;
+  width: 200px;
 }
 
 a:hover {
@@ -91,6 +91,8 @@ button {
   justify-content: center;
 }
 
+/* ---------------------------- */
+
 .newGame {
   display: flex;
   flex-direction: column;
@@ -101,4 +103,28 @@ button {
   border: 1px black solid;
   background-color: black;
   padding: 0.25rem;
+}
+
+/* ----------details----------- */
+
+.product-details {
+  background-color: beige;
+  height: 500px;
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  margin: 2rem;
+  border-radius: 1rem;
+}
+
+.details-1,
+.details-2,
+.details-3 {
+  height: 100%;
+  width: 30%;
+}
+
+.img-details {
+  height: 80%;
+  width: 80%;
 }

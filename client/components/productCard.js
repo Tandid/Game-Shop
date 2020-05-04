@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 const ProductCard = ({id, title, imageURL, price, inventory}) => {
   return (
     <li key={id} className="card">
-      <p>{title}</p>
+      <h4>{title}</h4>
       <br />
       <img src={imageURL} />
       <p>${price}</p>
