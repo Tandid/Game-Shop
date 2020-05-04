@@ -1,20 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import Popular from './mostPopular.js'
 
 export const UserHome = props => {
   const {email} = props
 
   return (
     <div>
-      <h3 className="welcome">Welcome, {email}</h3>
+      <div className="welcome">
+        <h3>Welcome {email}</h3>
+        <a href="/products">Enter Now</a>
+      </div>
+      <Popular />
     </div>
   )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({user}) => {
   return {
-    email: state.user.email
+    email: user.email
   }
 }
 

@@ -58,14 +58,24 @@ a:hover {
   color: white;
 }
 
+/* -------home----------------- */
 .welcome {
   color: white;
   text-align: center;
   text-justify: auto;
   justify-content: center;
   padding: 5rem;
+  background-image: url('https://wallpaperaccess.com/full/7445.jpg');
+  background-size: cover;
+  margin: 1rem;
+  height: 400px;
+  border: solid 2px white;
 }
 
+.most-popular > h1 {
+  color: white;
+  text-align: center;
+}
 /* -----------------cart---------- */
 
 .cart-wrapper {
