@@ -13,6 +13,15 @@ async function seed() {
     User.create({email: 'tandid@gmail.com', password: '123'})
   ])
 
+  const categories = await Promise.all([
+    Category.create({name: 'Xbox One'}),
+    Category.create({name: 'PlayStation 4'}),
+    Category.create({name: 'Nintendo Switch'}),
+    Category.create({name: 'PC'})
+  ])
+
+  const [xbox, ps4, nintendo, pc] = categories
+
   const products = await Promise.all([
     Product.create({
       title: 'Super Smash Bros. Ultimate',
@@ -20,7 +29,8 @@ async function seed() {
       imageURL:
         'https://images-na.ssl-images-amazon.com/images/I/81aJ-R4E6gL._SL1500_.jpg',
       price: 59.99,
-      inventory: 5
+      inventory: 5,
+      categoryId: nintendo.id
     }),
     Product.create({
       title: 'Animal Crossing New Horizons',
@@ -28,7 +38,8 @@ async function seed() {
       imageURL:
         'https://media.gamestop.com/i/gamestop/10168434/Animal-Crossing-New-Horizons',
       price: 59.99,
-      inventory: 5
+      inventory: 5,
+      categoryId: nintendo.id
     }),
     Product.create({
       title: 'The Legend of Zelda: Breath of the Wild',
@@ -36,7 +47,8 @@ async function seed() {
       imageURL:
         'https://media.gamestop.com/i/gamestop/10141904/The-Legend-of-Zelda-Breath-of-the-Wild',
       price: 59.99,
-      inventory: 5
+      inventory: 5,
+      categoryId: nintendo.id
     }),
     Product.create({
       title: 'Pokemon Shield',
@@ -44,7 +56,8 @@ async function seed() {
       imageURL:
         'https://images-na.ssl-images-amazon.com/images/I/71lz62-F84L._SY445_.jpg',
       price: 59.99,
-      inventory: 5
+      inventory: 5,
+      categoryId: nintendo.id
     }),
     Product.create({
       title: 'Gears 5',
@@ -52,7 +65,8 @@ async function seed() {
       imageURL:
         'https://cdn.cdkeys.com/500x706/media/catalog/product/g/e/gears-5-cd-keys-xbox-discount.jpg',
       price: 59.99,
-      inventory: 5
+      inventory: 5,
+      categoryId: xbox.id
     }),
     Product.create({
       title: 'Halo 5: Guardians',
@@ -60,7 +74,8 @@ async function seed() {
       imageURL:
         'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/9441/9441137_sa.jpg;maxHeight=640;maxWidth=550',
       price: 59.99,
-      inventory: 5
+      inventory: 5,
+      categoryId: xbox.id
     }),
     Product.create({
       title: 'Call of Duty: Modern Warfare',
@@ -68,7 +83,8 @@ async function seed() {
       imageURL:
         'https://cdn.cdkeys.com/500x706/media/catalog/product/c/o/cod-modern-warfare-xp-boost-dlc-ps4.jpg',
       price: 59.99,
-      inventory: 5
+      inventory: 5,
+      categoryId: ps4.id
     }),
     Product.create({
       title: 'Final Fantasy VII',
@@ -76,7 +92,8 @@ async function seed() {
       imageURL:
         'https://upload.wikimedia.org/wikipedia/en/c/ce/FFVIIRemake.png',
       price: 59.99,
-      inventory: 5
+      inventory: 5,
+      categoryId: ps4.id
     }),
     Product.create({
       title: 'GTA V',
@@ -84,7 +101,8 @@ async function seed() {
       imageURL:
         'https://cdn.cdkeys.com/500x706/media/catalog/product/g/r/grand_theft_auto_v_5_gta_5_pc_3.jpg',
       price: 59.99,
-      inventory: 5
+      inventory: 5,
+      categoryId: pc.id
     })
   ])
 
@@ -92,13 +110,6 @@ async function seed() {
 
   const orders = await Promise.all([
     OrderItems.create({items: [SSBU.id, AC.id]})
-  ])
-
-  const category = await Promise.all([
-    Category.create({name: 'Xbox One'}),
-    Category.create({name: 'PlayStation 4'}),
-    Category.create({name: 'Nintendo Switch'}),
-    Category.create({name: 'PC'})
   ])
 
   console.log(`seeded ${users.length} users`)

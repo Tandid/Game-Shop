@@ -8,9 +8,10 @@ class ProductForm extends React.Component {
     this.state = {
       title: '',
       description: '',
-      imageUrl: '',
+      imageURL: '',
       price: '',
       inventory: '',
+      categoryId: '',
       error: ''
     }
     this.onSubmit = this.onSubmit.bind(this)
@@ -23,19 +24,13 @@ class ProductForm extends React.Component {
         {
           title: this.state.title,
           description: this.state.description,
-          imageUrl: this.state.imageUrl,
+          imageURL: this.state.imageURL,
           price: this.state.price,
-          inventory: this.state.inventory
+          inventory: this.state.inventory,
+          categoryId: this.state.categoryId
         },
         this.props.history.push
       )
-      this.setState({
-        title: '',
-        description: '',
-        imageUrl: '',
-        price: '',
-        inventory: ''
-      })
     } catch (exception) {
       this.setState({error: exception.response.data.message})
     }
@@ -43,7 +38,16 @@ class ProductForm extends React.Component {
 
   render() {
     const {onSubmit} = this
-    const {title, description, imageUrl, price, inventory, error} = this.state
+    const {
+      title,
+      description,
+      imageURL,
+      price,
+      inventory,
+      error,
+      categoryId
+    } = this.state
+    const {categories} = this.props
     return (
       <form className="newGame" onSubmit={onSubmit}>
         {error}
@@ -58,8 +62,8 @@ class ProductForm extends React.Component {
           placeholder="Description"
         />
         <input
-          value={imageUrl}
-          onChange={event => this.setState({imageUrl: event.target.value})}
+          value={imageURL}
+          onChange={event => this.setState({imageURL: event.target.value})}
           placeholder="Image Url"
         />
         <input
@@ -72,13 +76,29 @@ class ProductForm extends React.Component {
           onChange={event => this.setState({inventory: event.target.value})}
           placeholder="Inventory"
         />
+        <select
+          onChange={event => this.setState({categoryId: event.target.value})}
+        >
+          <option value="">--Select a Platform--</option>
+          {categories.map(category => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
         <button
-          disabled={!title || !description || !imageUrl || !price || !inventory}
+          disabled={!title || !description || !imageURL || !price || !inventory}
         >
           Create New Game
         </button>
       </form>
     )
+  }
+}
+
+const mapStatetoProps = ({categories}) => {
+  return {
+    categories
   }
 }
 
@@ -88,4 +108,4 @@ const mapDispatchToProducts = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProducts)(ProductForm)
+export default connect(mapStatetoProps, mapDispatchToProducts)(ProductForm)
