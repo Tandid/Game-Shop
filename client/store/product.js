@@ -80,7 +80,7 @@ const updateProduct = (product, push) => {
 /**
  * REDUCER -------------------------------------------------------
  */
-export default function(state = initialState, action) {
+const products = function(state = initialState, action) {
   switch (action.type) {
     case GET_PRODUCTS:
       return action.products
@@ -102,4 +102,27 @@ export default function(state = initialState, action) {
   }
 }
 
-export {getProducts, getDetails, createProduct, removeProduct, updateProduct}
+const product = function(state = {}, action) {
+  switch (action.type) {
+    case GET_DETAILS:
+      state = action.product
+      return state
+
+    case UPDATE_PRODUCT:
+      state = action.product
+      return state
+
+    default:
+      return state
+  }
+}
+
+export {
+  products,
+  product,
+  getProducts,
+  getDetails,
+  createProduct,
+  removeProduct,
+  updateProduct
+}

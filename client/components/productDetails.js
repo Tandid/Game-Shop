@@ -1,14 +1,20 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {getDetails} from '../store/product'
 
-const ProductDetails = ({product, cart, categories}) => {
-  if (!product) {
-    return <h1>Loading...</h1>
-  } else {
-    const category = categories.find(
-      category => category.id === product.categoryId
-    )
+class ProductDetails extends React.Component {
+  constructor() {
+    super()
+  }
+
+  componentDidMount() {
+    const productId = this.props.match.params.id
+    this.props.getProduct(productId)
+  }
+
+  render() {
+    const {product, cart, category} = this.props
     if (!category) {
       return <h1>Loading...</h1>
     } else {
@@ -31,7 +37,9 @@ const ProductDetails = ({product, cart, categories}) => {
             <button onClick={ev => cart.items.push(`${product.id}`)}>
               Add to Cart
             </button>
-            <Link to={`/products/${product.id}/edit`}>Edit</Link>
+            <Link to={`/products/${product.id}/edit`} className="productLink">
+              Edit
+            </Link>
           </div>
         </div>
       )
@@ -39,13 +47,22 @@ const ProductDetails = ({product, cart, categories}) => {
   }
 }
 
-const mapStateToProps = ({products, cart, categories}, {match}) => {
-  const product = products.find(prod => prod.id == match.params.id)
+const mapStateToProps = ({products, product, cart, categories}, {match}) => {
+  const category = categories.find(
+    _category => product.categoryId === _category.id
+  )
   return {
+    products,
     product,
     cart,
-    categories
+    category
   }
 }
 
-export default connect(mapStateToProps)(ProductDetails)
+const mapDispatchToProps = dispatch => {
+  return {
+    getProduct: id => dispatch(getDetails(id))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails)

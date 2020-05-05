@@ -11,7 +11,7 @@ import {
   ProductDetails,
   ProductForm
 } from './components'
-import {me, getProducts, getCart} from './store'
+import {me, getProducts, getCart, getDetails} from './store'
 import EditProductDetails from './components/EditProductDetails'
 import {getCategories} from './store/categories'
 

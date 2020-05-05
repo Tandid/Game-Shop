@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {loadProduct, updateProduct} from '../store/singleProduct'
+import {getDetails, updateProduct} from '../store/product'
 
 class EditProductDetails extends React.Component {
   constructor(props) {
@@ -9,21 +9,21 @@ class EditProductDetails extends React.Component {
     let imageURL = ''
     let price = ''
     let inventory = ''
-    if (props.singleProduct) {
-      if (props.singleProduct.title) {
-        title = props.singleProduct.title
+    if (props.product) {
+      if (props.product.title) {
+        title = props.product.title
       }
-      if (props.singleProduct.description) {
-        description = props.singleProduct.description
+      if (props.product.description) {
+        description = props.product.description
       }
-      if (props.singleProduct.imageURL) {
-        imageURL = props.singleProduct.imageURL
+      if (props.product.imageURL) {
+        imageURL = props.product.imageURL
       }
-      if (props.singleProduct.price) {
-        price = props.singleProduct.price
+      if (props.product.price) {
+        price = props.product.price
       }
-      if (props.singleProduct.inventory) {
-        inventory = props.singleProduct.inventory
+      if (props.product.inventory) {
+        inventory = props.product.inventory
       }
     }
     super()
@@ -44,27 +44,20 @@ class EditProductDetails extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.singleProduct.title !== this.props.singleProduct.title) {
-      this.setState({title: this.props.singleProduct.title})
+    if (prevProps.product.title !== this.props.product.title) {
+      this.setState({title: this.props.product.title})
     }
-    if (
-      prevProps.singleProduct.description !==
-      this.props.singleProduct.description
-    ) {
-      this.setState({description: this.props.singleProduct.description})
+    if (prevProps.product.description !== this.props.product.description) {
+      this.setState({description: this.props.product.description})
     }
-    if (
-      prevProps.singleProduct.imageURL !== this.props.singleProduct.imageURL
-    ) {
-      this.setState({imageURL: this.props.singleProduct.imageURL})
+    if (prevProps.product.imageURL !== this.props.product.imageURL) {
+      this.setState({imageURL: this.props.product.imageURL})
     }
-    if (prevProps.singleProduct.price !== this.props.singleProduct.price) {
-      this.setState({price: this.props.singleProduct.price})
+    if (prevProps.product.price !== this.props.product.price) {
+      this.setState({price: this.props.product.price})
     }
-    if (
-      prevProps.singleProduct.inventory !== this.props.singleProduct.inventory
-    ) {
-      this.setState({inventory: this.props.singleProduct.inventory})
+    if (prevProps.product.inventory !== this.props.product.inventory) {
+      this.setState({inventory: this.props.product.inventory})
     }
   }
 
@@ -73,7 +66,7 @@ class EditProductDetails extends React.Component {
     try {
       this.props.update(
         {
-          id: this.props.singleProduct.id,
+          id: this.props.product.id,
           title: this.state.title,
           description: this.state.description,
           imageURL: this.state.imageURL,
@@ -90,7 +83,7 @@ class EditProductDetails extends React.Component {
   render() {
     const {onSubmit} = this
     const {title, description, imageURL, price, inventory, error} = this.state
-    const {singleProduct} = this.props
+    const {product} = this.props
     return (
       <form onSubmit={onSubmit} className="editProductDetails">
         {error}
@@ -116,11 +109,11 @@ class EditProductDetails extends React.Component {
         />
         <button
           disabled={
-            title === singleProduct.title &&
-            description === singleProduct.description &&
-            imageURL === singleProduct.imageURL &&
-            price === singleProduct.price &&
-            inventory === singleProduct.inventory
+            title === product.title &&
+            description === product.description &&
+            imageURL === product.imageURL &&
+            price === product.price &&
+            inventory === product.inventory
           }
         >
           Update
@@ -130,15 +123,15 @@ class EditProductDetails extends React.Component {
   }
 }
 
-const mapPropsToState = ({singleProduct}) => {
+const mapPropsToState = ({product}) => {
   return {
-    singleProduct
+    product
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProduct: id => dispatch(loadProduct(id)),
+    getProduct: id => dispatch(getDetails(id)),
     update: (product, push) => dispatch(updateProduct(product, push))
   }
 }
