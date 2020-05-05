@@ -1,78 +1,86 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {getDetails, editProduct, removeProduct} from '../store/product'
+import {loadProduct, updateProduct} from '../store/singleProduct'
 
-class ProductDetails extends React.Component {
+class EditProductDetails extends React.Component {
   constructor(props) {
     let title = ''
-    // let description = ''
-    // let imageUrl = ''
-    // let price = ''
-    // let inventory = ''
-    if (props.singleProduct && props.singleProduct.title) {
-      title = props.singleProduct.title
+    let description = ''
+    let imageURL = ''
+    let price = ''
+    let inventory = ''
+    if (props.singleProduct) {
+      if (props.singleProduct.title) {
+        title = props.singleProduct.title
+      }
+      if (props.singleProduct.description) {
+        description = props.singleProduct.description
+      }
+      if (props.singleProduct.imageURL) {
+        imageURL = props.singleProduct.imageURL
+      }
+      if (props.singleProduct.price) {
+        price = props.singleProduct.price
+      }
+      if (props.singleProduct.inventory) {
+        inventory = props.singleProduct.inventory
+      }
     }
-    //   if (props.product.description) {
-    //     description = props.product.description
-    //   }
-    //   if (props.product.imageUrl) {
-    //     imageUrl = props.product.imageUrl
-    //   }
-    //   if (props.product.price) {
-    //     price = props.product.price
-    //   }
-    //   if (props.product.inventory) {
-    //     inventory = props.product.inventory
-    //   }
-
     super()
     this.state = {
       title,
-      //   description,
-      //   imageUrl,
-      //   price,
-      //   inventory,
+      description,
+      imageURL,
+      price,
+      inventory,
       error: ''
     }
     this.onSubmit = this.onSubmit.bind(this)
   }
 
   componentDidMount() {
-    const id = this.props.match.params.id
-    this.props.getProduct(id)
+    const productId = this.props.match.params.id
+    this.props.getProduct(productId)
   }
 
-  //   componentDidUpdate(prevProps) {
-  //     if (prevProps.product.title !== this.props.product.title) {
-  //       this.setState({title: this.props.product.title})
-  //     }
-  //   }
-  // else if (
-  //     prevProps.product.description !== this.props.product.description
-  //   ) {
-  //     this.setState({description: this.props.product.description})
-  //   } else if (prevProps.product.imageUrl !== this.props.product.imageUrl) {
-  //     this.setState({imageUrl: this.props.product.imageUrl})
-  //   } else if (prevProps.product.price !== this.props.product.price) {
-  //     this.setState({price: this.props.product.price})
-  //   } else if (prevProps.product.inventory !== this.props.product.inventory) {
-  //     this.setState({inventory: this.props.product.inventory})
-  //   }
-  // }
+  componentDidUpdate(prevProps) {
+    if (prevProps.singleProduct.title !== this.props.singleProduct.title) {
+      this.setState({title: this.props.singleProduct.title})
+    }
+    if (
+      prevProps.singleProduct.description !==
+      this.props.singleProduct.description
+    ) {
+      this.setState({description: this.props.singleProduct.description})
+    }
+    if (
+      prevProps.singleProduct.imageURL !== this.props.singleProduct.imageURL
+    ) {
+      this.setState({imageURL: this.props.singleProduct.imageURL})
+    }
+    if (prevProps.singleProduct.price !== this.props.singleProduct.price) {
+      this.setState({price: this.props.singleProduct.price})
+    }
+    if (
+      prevProps.singleProduct.inventory !== this.props.singleProduct.inventory
+    ) {
+      this.setState({inventory: this.props.singleProduct.inventory})
+    }
+  }
 
   async onSubmit(event) {
     event.preventDefault()
     try {
       this.props.update(
         {
-          id: this.props.product.id,
+          id: this.props.singleProduct.id,
           title: this.state.title,
-          description: this.props.product.description,
-          imageUrl: this.props.product.imageUrl,
-          price: this.props.product.price,
-          inventory: this.props.product.inventory
+          description: this.state.description,
+          imageURL: this.state.imageURL,
+          price: parseFloat(this.state.price),
+          inventory: parseInt(this.state.inventory)
         },
-        () => {}
+        this.props.history.push
       )
     } catch (exception) {
       this.setState({error: exception.response.data.message})
@@ -81,35 +89,58 @@ class ProductDetails extends React.Component {
 
   render() {
     const {onSubmit} = this
-    const {title, error} = this.state
-    const {product, update, destroy} = this.props
-    console.log(title)
-    if (!product) {
-      return <h1>Loading...</h1>
-    } else {
-      return (
-        <div>
-          <h1>{product.title}</h1>
-        </div>
-      )
-    }
+    const {title, description, imageURL, price, inventory, error} = this.state
+    const {singleProduct} = this.props
+    return (
+      <form onSubmit={onSubmit} className="editProductDetails">
+        {error}
+        <input
+          value={title}
+          onChange={event => this.setState({title: event.target.value})}
+        />
+        <input
+          value={description}
+          onChange={event => this.setState({description: event.target.value})}
+        />
+        <input
+          value={imageURL}
+          onChange={event => this.setState({imageURL: event.target.value})}
+        />
+        <input
+          value={price}
+          onChange={event => this.setState({price: event.target.value})}
+        />
+        <input
+          value={inventory}
+          onChange={event => this.setState({inventory: event.target.value})}
+        />
+        <button
+          disabled={
+            title === singleProduct.title &&
+            description === singleProduct.description &&
+            imageURL === singleProduct.imageURL &&
+            price === singleProduct.price &&
+            inventory === singleProduct.inventory
+          }
+        >
+          Update
+        </button>
+      </form>
+    )
   }
 }
 
-const mapStateToProps = ({products}, {match}) => {
-  const product = products.find(prod => prod.id == match.params.id)
-
+const mapPropsToState = ({singleProduct}) => {
   return {
-    product
+    singleProduct
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProduct: id => dispatch(getDetails(id)),
-    update: product => dispatch(editProduct(product)),
-    destroy: (id, push) => dispatch(removeProduct(id, push))
+    getProduct: id => dispatch(loadProduct(id)),
+    update: (product, push) => dispatch(updateProduct(product, push))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails)
+export default connect(mapPropsToState, mapDispatchToProps)(EditProductDetails)

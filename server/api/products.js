@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
 })
 
 router.get('/:id', async (req, res, next) => {
-  await Product.findAll({where: {id: req.params.id}})
+  await Product.findByPk(req.params.id)
     .then(product => res.send(product))
     .catch(next)
 })

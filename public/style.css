@@ -147,3 +147,9 @@ button {
   height: 80%;
   width: 80%;
 }
+
+.editProductDetails {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}

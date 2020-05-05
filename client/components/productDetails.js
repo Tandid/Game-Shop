@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
 const ProductDetails = ({product, cart, categories}) => {
-  // const {id, title, description, imageURL, price, inventory} = product
   if (!product) {
     return <h1>Loading...</h1>
   } else {

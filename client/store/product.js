@@ -8,7 +8,8 @@ const GET_PRODUCTS = 'GET_PRODUCTS'
 const GET_DETAILS = 'GET_DETAILS'
 const CREATE_PRODUCT = 'CREATE_PRODUCT'
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
-const EDIT_PRODUCT = 'EDIT_PRODUCT'
+// const EDIT_PRODUCT = 'EDIT_PRODUCT'
+const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 
 /**
  * INITIAL STATE --------------------------------------------------
@@ -22,7 +23,8 @@ const _getProducts = products => ({type: GET_PRODUCTS, products})
 const _getDetails = product => ({type: GET_DETAILS, product})
 const _createProduct = product => ({type: CREATE_PRODUCT, product})
 const _removeProduct = id => ({type: REMOVE_PRODUCT, product: id})
-const _editProduct = product => ({type: EDIT_PRODUCT, product})
+// const _editProduct = (product) => ({type: EDIT_PRODUCT, product})
+const _updateProduct = product => ({type: UPDATE_PRODUCT, product})
 
 /**
  * THUNK CREATORS -------------------------------------------------
@@ -57,10 +59,21 @@ const removeProduct = id => {
 }
 
 //need to work on this
-const editProduct = id => {
+// const editProduct = (id) => {
+//   return async (dispatch) => {
+//     const response = await axios.put(`/api/products/${id}`)
+//     dispatch(_editProduct(response.data))
+//   }
+// }
+
+const updateProduct = (product, push) => {
   return async dispatch => {
-    const response = await axios.put(`/api/products/${id}`)
-    dispatch(_editProduct(response.data))
+    const {data: updatedProduct} = await axios.put(
+      `/api/products/${product.id}`,
+      product
+    )
+    dispatch(_updateProduct(updatedProduct))
+    push('/products')
   }
 }
 
@@ -77,11 +90,16 @@ export default function(state = initialState, action) {
       return [...state, action.product]
     case REMOVE_PRODUCT:
       return state.filter(product => product.id !== action.product) //need to work on this
-    case EDIT_PRODUCT:
-      return state //need to work on this
+    // case EDIT_PRODUCT:
+    //   return state //need to work on this
+    case UPDATE_PRODUCT:
+      state = state.map(
+        product => (product.id === action.product.id ? action.product : product)
+      )
+      return state
     default:
       return state
   }
 }
 
-export {getProducts, getDetails, createProduct, removeProduct, editProduct}
+export {getProducts, getDetails, createProduct, removeProduct, updateProduct}
