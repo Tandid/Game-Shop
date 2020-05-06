@@ -26,7 +26,9 @@ class Orders extends React.Component {
 }
 
 const mapStateToProps = ({orders}) => {
-  return {orders}
+  return {
+    orders
+  }
 }
 
 export default connect(mapStateToProps)(Orders)
