@@ -115,23 +115,27 @@ async function seed() {
   const [SSBU, AC, LOZ, PS, G5, HALO, COD, FF7, GTAV] = products
 
   const orders = await Promise.all([
-    Order.create({userId: 2}),
-    Order.create({userId: 3})
+    Order.create({userId: 2, status: 'cart'}),
+    Order.create({userId: 3, status: 'cart'}),
+    Order.create({userId: 2, status: 'completed'})
   ])
 
-  const [order1, order2] = orders
+  const [activeOrder1, activeOrder2, completedOrder] = orders
 
   const cart1 = await Promise.all([
-    OrderItems.create({productId: SSBU.id, orderId: order1.id}),
-    OrderItems.create({productId: AC.id, orderId: order1.id})
+    OrderItems.create({productId: SSBU.id, orderId: activeOrder1.id}),
+    OrderItems.create({productId: AC.id, orderId: activeOrder1.id})
   ])
 
   const cart2 = await Promise.all([
-    OrderItems.create({productId: SSBU.id, orderId: order2.id}),
-    OrderItems.create({productId: GTAV.id, orderId: order2.id})
+    OrderItems.create({productId: SSBU.id, orderId: activeOrder2.id}),
+    OrderItems.create({productId: GTAV.id, orderId: activeOrder2.id})
   ])
 
-  const [firstOrder, secondOrder] = orders
+  const compOrd = await Promise.all([
+    OrderItems.create({productId: FF7.id, orderId: completedOrder.id}),
+    OrderItems.create({productId: HALO.id, orderId: completedOrder.id})
+  ])
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${products.length} products`)

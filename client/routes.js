@@ -9,11 +9,14 @@ import {
   Products,
   Cart,
   ProductDetails,
-  ProductForm
+  ProductForm,
+  Orders
 } from './components'
 import {me, getProducts, getCart, getDetails} from './store'
 import EditProductDetails from './components/EditProductDetails'
 import {getCategories} from './store/categories'
+import {getOrders} from './store/orders'
+import {getOrderItems} from './store/orderItems'
 
 /**
  * COMPONENT
@@ -35,6 +38,7 @@ class Routes extends Component {
         <Route exact path="/products/:id" component={ProductDetails} />
         <Route exact path="/products" component={Products} />
         <Route path="/cart" component={Cart} />
+        <Route path="/orders" component={Orders} />
         {isLoggedIn && (
           <Switch>
             <Route exact path="/newProduct" component={ProductForm} />
@@ -70,7 +74,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(me())
       dispatch(getProducts())
       dispatch(getCart())
+      dispatch(getOrders())
       dispatch(getCategories())
+      dispatch(getOrderItems())
     }
   }
 }
