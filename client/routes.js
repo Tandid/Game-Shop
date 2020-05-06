@@ -12,7 +12,7 @@ import {
   ProductForm,
   Orders
 } from './components'
-import {me, getProducts, getCart, getDetails} from './store'
+import {me, getProducts, getCart} from './store'
 import EditProductDetails from './components/EditProductDetails'
 import {getCategories} from './store/categories'
 import {getOrders} from './store/orders'
@@ -72,7 +72,7 @@ const mapDispatchToProps = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
-      dispatch(getProducts())
+      // dispatch(getProducts()) //loaded this in products.js instead
       dispatch(getCart())
       dispatch(getOrders())
       dispatch(getCategories())
