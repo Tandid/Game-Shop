@@ -4,9 +4,10 @@ import {Link} from 'react-router-dom'
 import ProductCard from './productCard.js'
 
 const Products = ({products}) => {
-  if (!products) {
+  if (!products.length) {
     return <h1>Loading...</h1>
   } else {
+    console.log(products)
     return (
       <div>
         <Link to="/newProduct">Create New Product</Link>
@@ -20,8 +21,20 @@ const Products = ({products}) => {
   }
 }
 
+// class Products extends React.Component {
+//   constructor() {
+//     super()
+//   }
+
+//   componentDidMount() {
+//     this.props.getProducts()
+//   }
+// }
+
 const mapStateToProps = ({products}) => {
   return {products}
 }
+
+// const mapDispatchToProps = () =>
 
 export default connect(mapStateToProps)(Products)
