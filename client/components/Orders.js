@@ -25,9 +25,9 @@ class Orders extends React.Component {
   }
 }
 
-const mapStateToProps = ({orders}) => {
+const mapStateToProps = state => {
   return {
-    orders
+    orders: state.userOrders.orders
   }
 }
 

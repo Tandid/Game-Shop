@@ -72,7 +72,7 @@ const mapDispatchToProps = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
-      // dispatch(getProducts()) //loaded this in products.js instead
+      dispatch(getProducts())
       dispatch(getCart())
       dispatch(getOrders())
       dispatch(getCategories())

@@ -6,7 +6,6 @@ const Cart = ({orderItems, products}) => {
   if (!orderItems) {
     return <h3>Cart is Empty</h3>
   } else {
-    console.log(orderItems)
     return (
       <div className="cart-wrapper">
         <h1>Cart</h1>

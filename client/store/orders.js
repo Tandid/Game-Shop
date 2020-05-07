@@ -13,9 +13,9 @@ const REMOVE_ITEM = 'REMOVE_ITEM'
 /**
  * INITIAL STATE --------------------------------------------------
  */
-const initialState = {
-  userOrder: {}
-}
+// const initialState = {
+//   userOrder: {}
+// }
 
 /**
  * ACTION CREATORS
@@ -43,7 +43,6 @@ export default function(state = [], action) {
   switch (action.type) {
     case GET_ORDERS:
       return action.orders
-
     // case ADD_PRODUCT:
     // case INCREMENT:
     // case DECREMENT:
