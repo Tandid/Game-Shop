@@ -7,6 +7,16 @@ import ProductCard from './productCard.js'
 class Products extends React.Component {
   constructor() {
     super()
+    this.state = {
+      category: 'all'
+    }
+    this.onChange = this.onChange.bind(this)
+  }
+
+  onChange(ev) {
+    this.setState({
+      category: ev.target.value
+    })
   }
 
   async componentDidMount() {
@@ -19,18 +29,40 @@ class Products extends React.Component {
 
   render() {
     const {products} = this.props
-    if (!products.length) {
+    const {category} = this.state
+    let filteredProducts
+    if (category !== 'all') {
+      filteredProducts = products.filter(
+        product => product.category === category
+      )
+    } else {
+      filteredProducts = products
+    }
+
+    if (!filteredProducts.length) {
       return <h1>Loading...</h1>
     } else {
-      console.log(products)
       return (
         <div>
-          <Link to="/newProduct">Create New Product</Link>
-          <ul className="wrapper">
-            {products.map(product => {
-              return <ProductCard key={product.id} {...product} />
-            })}
-          </ul>
+          <div className="search-bar">
+            <p>Search by Category</p>
+            <select onChange={this.onChange} value={category}>
+              <option value="all">All</option>
+              <option value="Xbox">Xbox</option>
+              <option value="Playstation">Playstation</option>
+              <option value="PC">PC</option>
+              <option value="Switch">Switch</option>
+            </select>
+          </div>
+
+          <div>
+            <Link to="/newProduct">Create New Product</Link>
+            <ul className="wrapper">
+              {filteredProducts.map(product => {
+                return <ProductCard key={product.id} {...product} />
+              })}
+            </ul>
+          </div>
         </div>
       )
     }
