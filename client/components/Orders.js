@@ -8,24 +8,12 @@ class Orders extends React.Component {
     super()
   }
 
-  componentDidMount() {
-    if (this.props.user.id) {
-      this.props.fetchOrders(this.props.user.id)
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.user.id !== this.props.user.id) {
-      this.props.fetchOrders(this.props.user.id)
-    }
-  }
-
   render() {
-    const {orders} = this.props
+    const {orders, user} = this.props
     return (
       <div>
         {orders
-          .filter(order => order.status !== 'cart')
+          .filter(order => order.userId === user.id && order.status !== 'cart')
           .map(order => <OrderCard key={order.id} {...order} />)}
       </div>
     )
@@ -39,12 +27,12 @@ const mapStateToProps = ({orders, user}) => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchOrders: id => {
-      dispatch(getOrders(id))
-    }
-  }
-}
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     fetchOrders: id => {
+//       dispatch(getOrders(id))
+//     }
+//   }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Orders)
+export default connect(mapStateToProps)(Orders)

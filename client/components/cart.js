@@ -8,20 +8,8 @@ class Cart extends React.Component {
     super()
   }
 
-  componentDidMount() {
-    if (this.props.user.id) {
-      this.props.fetchOrders(this.props.user.id)
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.user.id !== this.props.user.id) {
-      this.props.fetchOrders(this.props.user.id)
-    }
-  }
-
   render() {
-    const {cart, orderItems, products} = this.props
+    const {cart, orderItems, products, user} = this.props
     if (!cart || !orderItems || !products) {
       return <h3>Loading...</h3>
     } else {
@@ -45,14 +33,10 @@ class Cart extends React.Component {
 }
 
 const mapStateToProps = ({orderItems, products, orders, user}) => {
-  const cart = orders.find(order => order.status === 'cart')
+  const cart = orders.find(
+    order => order.status === 'cart' && order.userId === user.id
+  )
   return {cart, orderItems, products, user}
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchOrders: id => dispatch(getOrders(id))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cart)
+export default connect(mapStateToProps)(Cart)
