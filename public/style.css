@@ -157,3 +157,20 @@ button {
 .OrderCard {
   background-color: white;
 }
+
+/* search bar */
+
+.search-bar {
+  color: white;
+  font-weight: bolder;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0 30%;
+  justify-content: space-around;
+}
+
+.search-bar > select {
+  height: 2rem;
+  background-color: beige;
+}
