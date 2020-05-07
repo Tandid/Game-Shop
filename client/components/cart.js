@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import ProductList from './productList.js'
 import {getOrders} from '.././store/orders'
+import {getOrderItems} from '../store/orderItems.js'
 
 class Cart extends React.Component {
   constructor() {
@@ -9,19 +10,26 @@ class Cart extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.user.id) {
-      this.props.fetchOrders(this.props.user.id)
-    }
+    this.props.loadOrderItems()
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.user.id !== this.props.user.id) {
-      this.props.fetchOrders(this.props.user.id)
+    if (
+      prevProps.orderItems.length > 0 &&
+      this.props.orderItems === prevProps.orderItems
+    ) {
+      this.props.loadOrderItems()
     }
+    // if (
+    //   prevProps.orderItems.length &&
+    //   prevProps.orderItems !== this.props.orderItems
+    // ) {
+    //   this.props.loadOrderItems()
+    // }
   }
 
   render() {
-    const {cart, orderItems, products} = this.props
+    const {cart, orderItems, products, user} = this.props
     if (!cart || !orderItems || !products) {
       return <h3>Loading...</h3>
     } else {
@@ -31,7 +39,9 @@ class Cart extends React.Component {
           <ul>
             {orderItems
               .filter(orderItem => orderItem.orderId === cart.id)
-              .map(orderItem => <li>{orderItem.quantity}</li>)}
+              .map(orderItem => (
+                <ProductList key={Math.random()} {...orderItem} />
+              ))}
           </ul>
           <p> Total Price: </p>
           <button className="cart-button"> Checkout </button>
@@ -43,13 +53,15 @@ class Cart extends React.Component {
 }
 
 const mapStateToProps = ({orderItems, products, orders, user}) => {
-  const cart = orders.find(order => order.status === 'cart')
+  const cart = orders.find(
+    order => order.status === 'cart' && order.userId === user.id
+  )
   return {cart, orderItems, products, user}
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchOrders: id => dispatch(getOrders(id))
+    loadOrderItems: () => dispatch(getOrderItems())
   }
 }
 

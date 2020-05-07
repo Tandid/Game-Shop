@@ -29,9 +29,9 @@ const _removeItem = product => ({type: REMOVE_ITEM, product})
 /**
  * THUNK CREATORS -------------------------------------------------
  */
-const getOrders = id => {
+const getOrders = () => {
   return async dispatch => {
-    const response = await axios.get(`/api/orders/${id}`)
+    const response = await axios.get(`/api/orders`)
     dispatch(_getOrders(response.data))
   }
 }

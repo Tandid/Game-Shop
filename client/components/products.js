@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getProducts} from '.././store'
 import ProductCard from './productCard.js'
+import orderItems, {createOrderItem} from '../store/orderItems'
 
 class Products extends React.Component {
   constructor() {
@@ -75,7 +76,8 @@ const mapStateToProps = ({products}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    load: () => dispatch(getProducts())
+    load: () => dispatch(getProducts()),
+    addToCart: orderItem => dispatch(createOrderItem(orderItem))
   }
 }
 

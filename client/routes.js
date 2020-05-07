@@ -17,6 +17,7 @@ import {me, getProducts} from './store'
 import EditProductDetails from './components/EditProductDetails'
 import {getCategories} from './store/categories'
 import {getOrderItems} from './store/orderItems'
+import {getOrders} from './store/orders'
 
 /**
  * COMPONENT
@@ -75,7 +76,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(me())
       dispatch(getProducts())
       dispatch(getCategories())
-      dispatch(getOrderItems())
+      dispatch(getOrders())
+      // dispatch(getOrderItems())
     }
   }
 }
