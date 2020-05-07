@@ -29,9 +29,9 @@ const _removeItem = product => ({type: REMOVE_ITEM, product})
 /**
  * THUNK CREATORS -------------------------------------------------
  */
-const getOrders = () => {
+const getOrders = id => {
   return async dispatch => {
-    const response = await axios.get('/api/orders')
+    const response = await axios.get(`/api/orders/${id}`)
     dispatch(_getOrders(response.data))
   }
 }
@@ -43,10 +43,7 @@ export default function(state = [], action) {
   switch (action.type) {
     case GET_ORDERS:
       return action.orders
-    // case ADD_PRODUCT:
-    // case INCREMENT:
-    // case DECREMENT:
-    // case REMOVE_ITEM
+
     default:
       return state
   }
