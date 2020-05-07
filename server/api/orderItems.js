@@ -7,12 +7,6 @@ router.get('/', async (req, res, next) => {
     .catch(next)
 })
 
-router.get('/:id', (req, res, next) => {
-  OrderItems.findByPk(req.params.id)
-    .then(orderItem => res.send(orderItem))
-    .catch(next)
-})
-
 router.post('/', (req, res, next) => {
   OrderItems.create(req.body)
     .then(orderItem => res.status(201).send(orderItem))

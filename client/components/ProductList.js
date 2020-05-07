@@ -8,8 +8,9 @@ class ProductList extends React.Component {
   }
 
   render() {
-    const {id, productId, orderId, products, addOrSubtract} = this.props
+    const {productId, products, addOrSubtract} = this.props
     const product = products.find(product => product.id === productId)
+    console.log(this.props)
     return (
       <li className="cart-items">
         <img src={product.imageURL} />
@@ -19,7 +20,15 @@ class ProductList extends React.Component {
         <div>
           <button
             onClick={() =>
-              addOrSubtract({id, productId, orderId, quantity: 0}, () => {})
+              addOrSubtract(
+                {
+                  id: this.props.id,
+                  productId: this.props.productId,
+                  orderId: this.props.orderId,
+                  quantity: 0
+                },
+                () => {}
+              )
             }
           >
             {' '}
@@ -27,7 +36,15 @@ class ProductList extends React.Component {
           </button>
           <button
             onClick={() =>
-              addOrSubtract({id, productId, orderId, quantity: 2}, () => {})
+              addOrSubtract(
+                {
+                  id: this.props.id,
+                  productId: this.props.productId,
+                  orderId: this.props.orderId,
+                  quantity: 0
+                },
+                () => {}
+              )
             }
           >
             {' '}
