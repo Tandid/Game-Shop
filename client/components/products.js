@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getProducts} from '.././store'
 import ProductCard from './productCard.js'
+import orderItems, {createOrderItem} from '../store/orderItems'
 
 class Products extends React.Component {
   constructor() {
@@ -22,7 +23,6 @@ class Products extends React.Component {
     if (!products.length) {
       return <h1>Loading...</h1>
     } else {
-      console.log(products)
       return (
         <div>
           <Link to="/newProduct">Create New Product</Link>
@@ -43,7 +43,8 @@ const mapStateToProps = ({products}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    load: () => dispatch(getProducts())
+    load: () => dispatch(getProducts()),
+    addToCart: orderItem => dispatch(createOrderItem(orderItem))
   }
 }
 

@@ -2,7 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import OrderCard from './OrderCard'
 import {getOrders} from '../store/orders'
-import {me} from '../store'
 
 class Orders extends React.Component {
   constructor() {
@@ -22,7 +21,7 @@ class Orders extends React.Component {
   }
 
   render() {
-    const {orders, user} = this.props
+    const {orders} = this.props
     return (
       <div>
         {orders

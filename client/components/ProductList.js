@@ -1,27 +1,59 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {updateOrderItem} from '../store/orderItems'
 
-const ProductList = ({id, title, imageURL, price, products}) => {
-  let count = 1
-  return (
-    <li key={id} className="cart-items">
-      <img src={imageURL} />
-      <p>{title}</p>
-      <p>${price * count}</p>
-      <p>Quantity: {count}</p>
-      <div>
-        <button onClick={ev => console.log(count--)}> - </button>
-        <button onClick={ev => console.log(count++)}> + </button>
-      </div>
-      <button onClick={ev => console.log(id)}>Remove From Cart</button>
-    </li>
-  )
+class ProductList extends React.Component {
+  constructor() {
+    super()
+  }
+
+  render() {
+    const {id, productId, orderId, products, addOrSubtract} = this.props
+    const product = products.find(product => product.id === productId)
+    return (
+      <li className="cart-items">
+        <img src={product.imageURL} />
+        <p>{product.title}</p>
+        <p>${product.price}</p>
+        <p>Quantity: {this.props.quantity}</p>{' '}
+        <div>
+          <button
+            onClick={() =>
+              addOrSubtract({id, productId, orderId, quantity: 0}, () => {})
+            }
+          >
+            {' '}
+            -{' '}
+          </button>
+          <button
+            onClick={() =>
+              addOrSubtract({id, productId, orderId, quantity: 2}, () => {})
+            }
+          >
+            {' '}
+            +{' '}
+          </button>{' '}
+        </div>
+        <button onClick={ev => console.log(productId)}>
+          Remove From Cart
+        </button>{' '}
+      </li>
+    )
+  }
 }
 
-const mapStateToProps = ({products}) => {
+const mapStateToProps = ({orderItems, products}) => {
   return {
+    orderItems,
     products
   }
 }
 
-export default connect(mapStateToProps)(ProductList)
+const mapDispatchToProps = dispatch => {
+  return {
+    addOrSubtract: (orderItem, push) =>
+      dispatch(updateOrderItem(orderItem, push))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductList)

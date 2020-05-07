@@ -31,7 +31,9 @@ class Cart extends React.Component {
           <ul>
             {orderItems
               .filter(orderItem => orderItem.orderId === cart.id)
-              .map(orderItem => <li>{orderItem.quantity}</li>)}
+              .map(orderItem => (
+                <ProductList key={Math.random()} {...orderItem} />
+              ))}
           </ul>
           <p> Total Price: </p>
           <button className="cart-button"> Checkout </button>
