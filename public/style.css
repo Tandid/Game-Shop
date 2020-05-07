@@ -153,3 +153,7 @@ button {
   flex-direction: column;
   width: 100%;
 }
+
+.OrderCard {
+  background-color: white;
+}

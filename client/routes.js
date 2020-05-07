@@ -13,10 +13,9 @@ import {
   Orders,
   Account
 } from './components'
-import {me, getProducts, getCart} from './store'
+import {me, getProducts} from './store'
 import EditProductDetails from './components/EditProductDetails'
 import {getCategories} from './store/categories'
-import {getOrders} from './store/orders'
 import {getOrderItems} from './store/orderItems'
 
 /**
@@ -75,8 +74,6 @@ const mapDispatchToProps = dispatch => {
     loadInitialData() {
       dispatch(me())
       dispatch(getProducts())
-      dispatch(getCart())
-      dispatch(getOrders())
       dispatch(getCategories())
       dispatch(getOrderItems())
     }

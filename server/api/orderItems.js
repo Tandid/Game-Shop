@@ -7,4 +7,10 @@ router.get('/', async (req, res, next) => {
     .catch(next)
 })
 
+// router.get('/:orderId', (req, res, next) => {
+//   OrderItems.findAll({where: {status: 'cart'}})
+//     .then((orderItems) => res.send(orderItems))
+//     .catch(next)
+// })
+
 module.exports = router

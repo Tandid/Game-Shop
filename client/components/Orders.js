@@ -1,34 +1,51 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import OrderCard from './OrderCard'
-
-// class Orders extends React.Component {
-//   constructor() {
-//     super()
-//   }
-
-//   render() {
-//     return <h1>Hello World</h1>
-//   }
-// }
+import {getOrders} from '../store/orders'
+import {me} from '../store'
 
 class Orders extends React.Component {
   constructor() {
     super()
   }
 
+  componentDidMount() {
+    if (this.props.user.id) {
+      this.props.fetchOrders(this.props.user.id)
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.user.id !== this.props.user.id) {
+      this.props.fetchOrders(this.props.user.id)
+    }
+  }
+
   render() {
-    const {orders} = this.props
+    const {orders, user} = this.props
     return (
-      <div>{orders.map(order => <OrderCard key={order.id} {...order} />)}</div>
+      <div>
+        {orders
+          .filter(order => order.status !== 'cart')
+          .map(order => <OrderCard key={order.id} {...order} />)}
+      </div>
     )
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({orders, user}) => {
   return {
-    orders: state.userOrders.orders
+    orders,
+    user
   }
 }
 
-export default connect(mapStateToProps)(Orders)
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchOrders: id => {
+      dispatch(getOrders(id))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Orders)
