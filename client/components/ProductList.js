@@ -1,6 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {updateOrderItem} from '../store/orderItems'
+import {
+  updateOrderItem,
+  deleteOrderItem,
+  getOrderItems
+} from '../store/orderItems'
 
 class ProductList extends React.Component {
   constructor() {
@@ -21,39 +25,38 @@ class ProductList extends React.Component {
           <p>Quantity: {this.props.quantity}</p>{' '}
           <div>
             <button
-              onClick={() =>
-                addOrSubtract(
-                  {
-                    id: this.props.id,
-                    productId: this.props.productId,
-                    orderId: this.props.orderId,
-                    quantity: 0
-                  },
-                  () => {}
-                )
-              }
+              onClick={() => {
+                addOrSubtract({
+                  productId: this.props.productId,
+                  orderId: this.props.orderId,
+                  quantity: this.props.quantity - 1
+                })
+              }}
             >
               {' '}
               -{' '}
             </button>
             <button
-              onClick={() =>
-                addOrSubtract(
-                  {
-                    id: this.props.id,
-                    productId: this.props.productId,
-                    orderId: this.props.orderId,
-                    quantity: 0
-                  },
-                  () => {}
-                )
-              }
+              onClick={() => {
+                addOrSubtract({
+                  productId: this.props.productId,
+                  orderId: this.props.orderId,
+                  quantity: this.props.quantity + 1
+                })
+              }}
             >
               {' '}
               +{' '}
             </button>{' '}
           </div>
-          <button onClick={ev => console.log(productId)}>
+          <button
+            onClick={() =>
+              this.props.removeFromCart({
+                productId: this.props.productId,
+                orderId: this.props.orderId
+              })
+            }
+          >
             Remove From Cart
           </button>{' '}
         </li>
@@ -71,8 +74,8 @@ const mapStateToProps = ({orderItems, products}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addOrSubtract: (orderItem, push) =>
-      dispatch(updateOrderItem(orderItem, push))
+    addOrSubtract: orderItem => dispatch(updateOrderItem(orderItem)),
+    removeFromCart: orderItem => dispatch(deleteOrderItem(orderItem))
   }
 }
 

@@ -77,7 +77,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(getProducts())
       dispatch(getCategories())
       dispatch(getOrders())
-      dispatch(getOrderItems())
+      // dispatch(getOrderItems())
     }
   }
 }

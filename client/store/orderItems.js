@@ -6,6 +6,7 @@ import axios from 'axios'
 const GET_ORDER_ITEMS = 'GET_ORDER_ITEMS'
 const CREATE_ORDER_ITEM = 'CREATE_ORDER_ITEM'
 const UPDATE_ORDER_ITEM = 'UPDATE_ORDER_ITEM'
+const DELETE_ORDER_ITEM = 'DELETE_ORDER_ITEM'
 
 /**
  * INITIAL STATE --------------------------------------------------
@@ -18,6 +19,7 @@ const initialState = []
 const _getOrderItems = orderItems => ({type: GET_ORDER_ITEMS, orderItems})
 const _createOrderItem = orderItem => ({type: CREATE_ORDER_ITEM, orderItem})
 const _updateOrderItem = orderItem => ({type: UPDATE_ORDER_ITEM, orderItem})
+const _deleteOrderItem = orderItem => ({type: DELETE_ORDER_ITEM, orderItem})
 
 /**
  * THUNK CREATORS -------------------------------------------------
@@ -36,14 +38,22 @@ const createOrderItem = orderItem => {
   }
 }
 
-const updateOrderItem = (orderItem, push) => {
+const updateOrderItem = orderItem => {
   return async dispatch => {
     const {data: updatedOrderItem} = await axios.put(
-      `/api/orderItems/${orderItem.id}`,
+      `/api/orders/${orderItem.orderId}/orderItems/${orderItem.productId}`,
       orderItem
     )
     dispatch(_updateOrderItem(updatedOrderItem))
-    push('/cart')
+  }
+}
+
+const deleteOrderItem = orderItem => {
+  return async dispatch => {
+    await axios.delete(
+      `/api/orders/${orderItem.orderId}/orderItems/${orderItem.productId}`
+    )
+    dispatch(_deleteOrderItem(orderItem))
   }
 }
 
@@ -62,13 +72,16 @@ export default function(state = initialState, action) {
     case UPDATE_ORDER_ITEM:
       state = state.map(
         orderItem =>
-          orderItem.id === action.orderItem.id ? action.orderItem : orderItem
+          orderItem === action.orderItem ? action.orderItem : orderItem
       )
       return state
+
+    case DELETE_ORDER_ITEM:
+      state = state.filter(orderItem => orderItem !== action.orderItem)
 
     default:
       return state
   }
 }
 
-export {getOrderItems, createOrderItem, updateOrderItem}
+export {getOrderItems, createOrderItem, updateOrderItem, deleteOrderItem}

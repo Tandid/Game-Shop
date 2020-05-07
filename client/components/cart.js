@@ -2,10 +2,30 @@ import React from 'react'
 import {connect} from 'react-redux'
 import ProductList from './productList.js'
 import {getOrders} from '.././store/orders'
+import {getOrderItems} from '../store/orderItems.js'
 
 class Cart extends React.Component {
   constructor() {
     super()
+  }
+
+  componentDidMount() {
+    this.props.loadOrderItems()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.orderItems.length > 0 &&
+      this.props.orderItems === prevProps.orderItems
+    ) {
+      this.props.loadOrderItems()
+    }
+    // if (
+    //   prevProps.orderItems.length &&
+    //   prevProps.orderItems !== this.props.orderItems
+    // ) {
+    //   this.props.loadOrderItems()
+    // }
   }
 
   render() {
@@ -39,4 +59,10 @@ const mapStateToProps = ({orderItems, products, orders, user}) => {
   return {cart, orderItems, products, user}
 }
 
-export default connect(mapStateToProps)(Cart)
+const mapDispatchToProps = dispatch => {
+  return {
+    loadOrderItems: () => dispatch(getOrderItems())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)

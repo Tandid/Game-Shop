@@ -7,16 +7,23 @@ router.get('/', async (req, res, next) => {
     .catch(next)
 })
 
-router.post('/', (req, res, next) => {
-  OrderItems.create(req.body)
-    .then(orderItem => res.status(201).send(orderItem))
+router.get('/:orderId', async (req, res, next) => {
+  await OrderItems.findAll({where: {orderId: req.params.orderId}})
+    .then(orderItems => res.send(orderItems))
     .catch(next)
 })
 
-router.put('/:id', (req, res, next) => {
-  OrderItems.findByPk(req.params.id)
-    .then(orderItem => orderItem.update({inventory: req.body.inventory}))
-    .then(orderItem => res.send(orderItem))
+router.get('/:orderId/:productId', async (req, res, next) => {
+  await OrderItems.findAll({
+    where: {orderId: req.params.orderId, productId: req.params.productId}
+  })
+    .then(orderItems => res.send(orderItems))
+    .catch(next)
+})
+
+router.post('/', (req, res, next) => {
+  OrderItems.create(req.body)
+    .then(orderItem => res.status(201).send(orderItem))
     .catch(next)
 })
 
