@@ -10,7 +10,8 @@ import {
   Cart,
   ProductDetails,
   ProductForm,
-  Orders
+  Orders,
+  Account
 } from './components'
 import {me, getProducts, getCart} from './store'
 import EditProductDetails from './components/EditProductDetails'
@@ -41,6 +42,7 @@ class Routes extends Component {
         <Route path="/orders" component={Orders} />
         {isLoggedIn && (
           <Switch>
+            <Route exact path="/account" component={Account} />
             <Route exact path="/newProduct" component={ProductForm} />
             <Route
               exact
