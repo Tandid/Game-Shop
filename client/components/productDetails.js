@@ -15,8 +15,8 @@ class ProductDetails extends React.Component {
   }
 
   render() {
-    const {product, cart, category, orderItems} = this.props
-    if (!category || !orderItems || !cart) {
+    const {product, cart, orderItems} = this.props
+    if (!orderItems || !cart) {
       return <h1>Loading...</h1>
     } else {
       const existingOrderItem = orderItems.find(
@@ -32,7 +32,7 @@ class ProductDetails extends React.Component {
 
           <div className="details-2">
             <p>Description: {product.description}</p>
-            <p>Platform: {category.name}</p>
+            <p>Platform: {product.category}</p>
             <p>Reviews</p>
           </div>
 
@@ -68,20 +68,17 @@ class ProductDetails extends React.Component {
 }
 
 const mapStateToProps = (
-  {products, product, orders, categories, user, orderItems},
+  {products, product, orders, user, orderItems},
   {match}
 ) => {
-  const category = categories.find(
-    _category => product.categoryId === _category.id
-  )
   const cart = orders.find(
     order => order.status === 'cart' && order.userId === user.id
   )
+
   return {
     products,
     product,
     cart,
-    category,
     user,
     orderItems
   }

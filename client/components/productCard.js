@@ -43,8 +43,7 @@ class ProductCard extends React.Component {
               }
             }}
           >
-            {' '}
-            Add to Cart{' '}
+            Add to Cart
           </button>
           <p>Inventory: {inventory}</p>
         </li>
