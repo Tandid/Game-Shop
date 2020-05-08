@@ -11,7 +11,7 @@ class ProductForm extends React.Component {
       imageURL: '',
       price: '',
       inventory: '',
-      categoryId: '',
+      category: '',
       error: ''
     }
     this.onSubmit = this.onSubmit.bind(this)
@@ -27,7 +27,7 @@ class ProductForm extends React.Component {
           imageURL: this.state.imageURL,
           price: this.state.price,
           inventory: this.state.inventory,
-          categoryId: this.state.categoryId
+          category: this.state.category
         },
         this.props.history.push
       )
@@ -45,9 +45,8 @@ class ProductForm extends React.Component {
       price,
       inventory,
       error,
-      categoryId
+      category
     } = this.state
-    const {categories} = this.props
     return (
       <form className="newGame" onSubmit={onSubmit}>
         {error}
@@ -77,14 +76,13 @@ class ProductForm extends React.Component {
           placeholder="Inventory"
         />
         <select
-          onChange={event => this.setState({categoryId: event.target.value})}
+          onChange={event => this.setState({category: event.target.value})}
         >
           <option value="">--Select a Platform--</option>
-          {categories.map(category => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
+          <option value="Xbox">Xbox</option>
+          <option value="Playstation">Playstation</option>
+          <option value="PC">PC</option>
+          <option value="Nintendo">Switch</option>
         </select>
         <button
           disabled={!title || !description || !imageURL || !price || !inventory}

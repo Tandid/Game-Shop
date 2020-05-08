@@ -30,6 +30,11 @@ const Product = db.define('product', {
     type: Sequelize.INTEGER,
     allowNull: false
     //read about defaultValue
+  },
+
+  category: {
+    type: Sequelize.STRING,
+    allowNull: false
   }
 })
 

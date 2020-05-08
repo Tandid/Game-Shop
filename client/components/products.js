@@ -52,7 +52,7 @@ class Products extends React.Component {
               <option value="Xbox">Xbox</option>
               <option value="Playstation">Playstation</option>
               <option value="PC">PC</option>
-              <option value="Switch">Switch</option>
+              <option value="Nintendo">Switch</option>
             </select>
           </div>
 
