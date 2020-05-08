@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getDetails} from '../store/product'
+import orderItems, {createOrderItem, updateOrderItem} from '../store/orderItems'
 
 class ProductDetails extends React.Component {
   constructor() {
@@ -14,10 +15,14 @@ class ProductDetails extends React.Component {
   }
 
   render() {
-    const {product, cart, category} = this.props
-    if (!category) {
+    const {product, cart, category, orderItems} = this.props
+    if (!category || !orderItems || !cart) {
       return <h1>Loading...</h1>
     } else {
+      const existingOrderItem = orderItems.find(
+        orderItem =>
+          orderItem.productId === product.id && orderItem.orderId === cart.id
+      )
       return (
         <div className="product-details">
           <div className="details-1">
@@ -34,7 +39,22 @@ class ProductDetails extends React.Component {
           <div className="details-3">
             <p>${product.price}</p>
             <p>Quantity: {product.inventory}</p>
-            <button onClick={ev => cart.items.push(`${product.id}`)}>
+            <button
+              onClick={() => {
+                if (!existingOrderItem) {
+                  this.props.addToCart({
+                    productId: product.id,
+                    orderId: cart.id
+                  })
+                } else {
+                  this.props.increment({
+                    productId: product.id,
+                    orderId: cart.id,
+                    quantity: existingOrderItem.quantity + 1
+                  })
+                }
+              }}
+            >
               Add to Cart
             </button>
             <Link to={`/products/${product.id}/edit`} className="productLink">
@@ -47,21 +67,31 @@ class ProductDetails extends React.Component {
   }
 }
 
-const mapStateToProps = ({products, product, cart, categories}, {match}) => {
+const mapStateToProps = (
+  {products, product, orders, categories, user, orderItems},
+  {match}
+) => {
   const category = categories.find(
     _category => product.categoryId === _category.id
+  )
+  const cart = orders.find(
+    order => order.status === 'cart' && order.userId === user.id
   )
   return {
     products,
     product,
     cart,
-    category
+    category,
+    user,
+    orderItems
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProduct: id => dispatch(getDetails(id))
+    getProduct: id => dispatch(getDetails(id)),
+    addToCart: orderItem => dispatch(createOrderItem(orderItem)),
+    increment: orderItem => dispatch(updateOrderItem(orderItem))
   }
 }
 

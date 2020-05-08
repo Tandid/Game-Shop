@@ -123,7 +123,7 @@ class EditProductDetails extends React.Component {
   }
 }
 
-const mapPropsToState = ({product}) => {
+const mapStateToProps = ({product}) => {
   return {
     product
   }
@@ -136,4 +136,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapPropsToState, mapDispatchToProps)(EditProductDetails)
+export default connect(mapStateToProps, mapDispatchToProps)(EditProductDetails)
