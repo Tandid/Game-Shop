@@ -94,9 +94,9 @@ class ProductForm extends React.Component {
   }
 }
 
-const mapStatetoProps = ({categories}) => {
+const mapStatetoProps = state => {
   return {
-    categories
+    state: state
   }
 }
 

@@ -14,8 +14,8 @@ class ProductDetails extends React.Component {
   }
 
   render() {
-    const {product, cart, category} = this.props
-    if (!category) {
+    const {product, cart} = this.props
+    if (!product) {
       return <h1>Loading...</h1>
     } else {
       return (
@@ -27,7 +27,7 @@ class ProductDetails extends React.Component {
 
           <div className="details-2">
             <p>Description: {product.description}</p>
-            <p>Platform: {category.name}</p>
+            <p>Platform: {product.category}</p>
             <p>Reviews</p>
           </div>
 
@@ -47,15 +47,11 @@ class ProductDetails extends React.Component {
   }
 }
 
-const mapStateToProps = ({products, product, cart, categories}, {match}) => {
-  const category = categories.find(
-    _category => product.categoryId === _category.id
-  )
+const mapStateToProps = ({products, product, cart}, {match}) => {
   return {
     products,
     product,
-    cart,
-    category
+    cart
   }
 }
 
