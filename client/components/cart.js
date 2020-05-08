@@ -2,33 +2,32 @@ import React from 'react'
 import {connect} from 'react-redux'
 import ProductList from './productList.js'
 import {getOrders} from '../store/orders'
-import {getOrderItems} from '../store/orderItems.js'
+import {getOrderItems, deleteOrderItem} from '../store/orderItems.js'
 
 class Cart extends React.Component {
   constructor(props) {
-    let cart = []
-    if (props.cart && props.cart.length) {
-      cart = props.cart
-    }
+    // let orderItems = []
+    // if (props.orderItems && props.orderItems.length) {
+    //   orderItems = props.orderItems
+    // }
     super()
-    this.state = {
-      cart
-    }
+    // this.state = {
+    //   orderItems,
+    // }
   }
 
-  async componentDidMount() {
-    const orderItems = this.props.loadOrderItems()
+  componentDidMount() {
+    this.props.loadOrderItems()
   }
 
-  async componentDidUpdate(prevProps) {
-    // incorrect to avoid infinite loop
-    if (this.props.orderItems === prevProps.orderItems) {
-      await this.props.loadOrderItems()
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.orderItems.length !== prevProps.orderItems.length) {
+  //     this.props.loadOrderItems()
+  //   }
+  // }
 
   render() {
-    const {cart, orderItems, products, user} = this.props
+    const {orderItems, cart, products, user} = this.props
     if (!cart || !orderItems || !products) {
       return <h3>Loading...</h3>
     } else {
@@ -44,7 +43,17 @@ class Cart extends React.Component {
           </ul>
           <p> Total Price: </p>
           <button className="cart-button"> Checkout </button>
-          <button className="cart-button"> Clear Cart </button>
+          <button
+            className="cart-button"
+            onClick={() => {
+              orderItems
+                .filter(orderItem => orderItem.orderId === cart.id)
+                .forEach(orderItem => this.props.removeFromCart(orderItem))
+            }}
+          >
+            {' '}
+            Clear Cart{' '}
+          </button>
         </div>
       )
     }
@@ -60,7 +69,8 @@ const mapStateToProps = ({orderItems, products, orders, user}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadOrderItems: () => dispatch(getOrderItems())
+    loadOrderItems: () => dispatch(getOrderItems()),
+    removeFromCart: orderItem => dispatch(deleteOrderItem(orderItem))
   }
 }
 

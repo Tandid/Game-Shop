@@ -4,6 +4,7 @@ import axios from 'axios'
  * ACTION TYPES ------------------------------------------------
  */
 const GET_ORDER_ITEMS = 'GET_ORDER_ITEMS'
+const GET_ORDER_ITEM = 'GET_ORDER_ITEM'
 const CREATE_ORDER_ITEM = 'CREATE_ORDER_ITEM'
 const UPDATE_ORDER_ITEM = 'UPDATE_ORDER_ITEM'
 const DELETE_ORDER_ITEM = 'DELETE_ORDER_ITEM'
@@ -17,6 +18,7 @@ const initialState = []
  * ACTION CREATORS
  */
 const _getOrderItems = orderItems => ({type: GET_ORDER_ITEMS, orderItems})
+const _getOrderItem = orderItem => ({type: GET_ORDER_ITEM, orderItem})
 const _createOrderItem = orderItem => ({type: CREATE_ORDER_ITEM, orderItem})
 const _updateOrderItem = orderItem => ({type: UPDATE_ORDER_ITEM, orderItem})
 const _deleteOrderItem = orderItem => ({type: DELETE_ORDER_ITEM, orderItem})
@@ -28,6 +30,15 @@ const getOrderItems = () => {
   return async dispatch => {
     const response = await axios.get('/api/orderItems')
     dispatch(_getOrderItems(response.data))
+  }
+}
+
+const getOrderItem = orderItem => {
+  return async dispatch => {
+    const response = await axios.get(
+      `/api/orders/${orderItem.orderId}/orderItems/${orderItem.productId}`
+    )
+    dispatch(_getOrderItem(response.data))
   }
 }
 
@@ -60,7 +71,7 @@ const deleteOrderItem = orderItem => {
 /**
  * REDUCER -------------------------------------------------------
  */
-export default function(state = initialState, action) {
+const orderItems = function(state = initialState, action) {
   switch (action.type) {
     case GET_ORDER_ITEMS:
       return action.orderItems
@@ -84,4 +95,27 @@ export default function(state = initialState, action) {
   }
 }
 
-export {getOrderItems, createOrderItem, updateOrderItem, deleteOrderItem}
+const orderItem = function(state = {}, action) {
+  switch (action.type) {
+    case GET_ORDER_ITEM:
+      state = action.orderItem
+      return state
+
+    case UPDATE_ORDER_ITEM:
+      state = action.orderItem
+      return state
+
+    default:
+      return state
+  }
+}
+
+export {
+  orderItems,
+  orderItem,
+  getOrderItem,
+  getOrderItems,
+  createOrderItem,
+  updateOrderItem,
+  deleteOrderItem
+}

@@ -3,12 +3,30 @@ import {connect} from 'react-redux'
 import {
   updateOrderItem,
   deleteOrderItem,
-  getOrderItems
+  getOrderItems,
+  getOrderItem
 } from '../store/orderItems'
 
 class ProductList extends React.Component {
-  constructor() {
+  constructor(props) {
     super()
+  }
+
+  componentDidMount() {
+    this.props.loadOrderItem({
+      orderId: this.props.orderId,
+      productId: this.props.productId
+    })
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.orderItem.quantity !== prevProps.orderItem.quantity ||
+      //this line doesn't work
+      this.props.orderItems.length !== prevProps.orderItems.length
+    ) {
+      this.props.loadOrderItems()
+    }
   }
 
   render() {
@@ -65,8 +83,9 @@ class ProductList extends React.Component {
   }
 }
 
-const mapStateToProps = ({orderItems, products}) => {
+const mapStateToProps = ({orderItem, orderItems, products}) => {
   return {
+    orderItem,
     orderItems,
     products
   }
@@ -74,6 +93,8 @@ const mapStateToProps = ({orderItems, products}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    loadOrderItem: orderItem => dispatch(getOrderItem(orderItem)),
+    loadOrderItems: () => dispatch(getOrderItems()),
     addOrSubtract: orderItem => dispatch(updateOrderItem(orderItem)),
     removeFromCart: orderItem => dispatch(deleteOrderItem(orderItem))
   }
