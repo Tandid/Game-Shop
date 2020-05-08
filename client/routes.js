@@ -29,6 +29,8 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn} = this.props
+    const {user} = this.props
+    console.log(user.admin)
 
     return (
       <Switch>
@@ -43,12 +45,13 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             <Route exact path="/account" component={Account} />
-            <Route exact path="/newProduct" component={CreateProduct} />
-            <Route exact path="/products/:id/edit" component={EditProduct} />
             <Route exact path="/listings" component={Listings} />
+            <Route exact path="/products/:id/edit" component={EditProduct} />
+            <Route exact path="/newProduct" component={CreateProduct} />
             {/* Routes placed here are only available after logging in */}
           </Switch>
         )}
+        {user.admin == true && <Switch />}
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>
@@ -63,7 +66,8 @@ const mapStateToProps = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    user: state.user
   }
 }
 

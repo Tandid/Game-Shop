@@ -11,44 +11,44 @@ class ProductCard extends React.Component {
 
   render() {
     const {id, title, imageURL, price, inventory, cart, orderItems} = this.props
-    if (!id || !title || !imageURL || !price || !inventory || !cart) {
-      return <h1>Loading...</h1>
-    } else {
-      const existingOrderItem = orderItems.find(
-        orderItem =>
-          orderItem.productId === this.props.id && orderItem.orderId === cart.id
-      )
-      return (
-        <li key={id} className="card">
-          <h4>{title}</h4>
-          <br />
-          <img src={imageURL} />
-          <p>${price}</p>
-          <Link to={`/products/${id}`} className="productLink">
-            More Details
-          </Link>
-          <button
-            onClick={() => {
-              if (!existingOrderItem) {
-                this.props.addToCart({
-                  productId: this.props.id,
-                  orderId: cart.id
-                })
-              } else {
-                this.props.increment({
-                  productId: this.props.id,
-                  orderId: cart.id,
-                  quantity: existingOrderItem.quantity + 1
-                })
-              }
-            }}
-          >
-            Add to Cart
-          </button>
-          <p>Inventory: {inventory}</p>
-        </li>
-      )
-    }
+    // if (!id || !title || !imageURL || !price || !inventory || !cart) {
+    //   return <h1>Loading...</h1>
+    // } else {
+    const existingOrderItem = orderItems.find(
+      orderItem =>
+        // orderItem.productId === this.props.id && orderItem.orderId === cart.id
+        orderItem.productId === id && orderItem.orderId === id
+    )
+    return (
+      <li key={id} className="card">
+        <h4>{title}</h4>
+        <br />
+        <img src={imageURL} />
+        <p>${price}</p>
+        <Link to={`/products/${id}`} className="productLink">
+          More Details
+        </Link>
+        <button
+          onClick={() => {
+            if (!existingOrderItem) {
+              this.props.addToCart({
+                productId: this.props.id,
+                orderId: cart.id
+              })
+            } else {
+              this.props.increment({
+                productId: this.props.id,
+                orderId: cart.id,
+                quantity: existingOrderItem.quantity + 1
+              })
+            }
+          }}
+        >
+          Add to Cart
+        </button>
+        <p>Inventory: {inventory}</p>
+      </li>
+    )
   }
 }
 
