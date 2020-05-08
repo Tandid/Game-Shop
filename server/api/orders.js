@@ -33,7 +33,7 @@ router.put('/:id/orderItems/:productId', (req, res, next) => {
   OrderItems.findOne({
     where: {orderId: req.params.id, productId: req.params.productId}
   })
-    .then(orderItem => orderItem.update({inventory: req.body.inventory}))
+    .then(orderItem => orderItem.update({quantity: req.body.quantity}))
     .then(orderItem => res.send(orderItem))
     .catch(next)
 })
