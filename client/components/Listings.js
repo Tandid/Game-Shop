@@ -1,20 +1,26 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {getProducts} from '../store'
+import {getProducts, removeProduct} from '../store'
 
 class Listings extends React.Component {
   constructor() {
     super()
+    this.delete = this.deleteProduct.bind(this)
   }
 
-  //   async componentDidMount() {
-  //     try {
-  //       await this.props.load()
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
+  async componentDidMount() {
+    try {
+      await this.props.load()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  deleteProduct = id => {
+    this.props.delete(id)
+  }
+
   render() {
     const {products} = this.props
     return (
@@ -48,7 +54,9 @@ class Listings extends React.Component {
                       <Link to={`/products/${product.id}/edit`}>Edit</Link>
                     </td>
                     <td>
-                      <button>Delete</button>
+                      <button onClick={() => this.deleteProduct(product.id)}>
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -71,7 +79,8 @@ const mapStateToProps = ({products}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    load: () => dispatch(getProducts())
+    load: () => dispatch(getProducts()),
+    delete: id => dispatch(removeProduct(id))
   }
 }
 
