@@ -42,6 +42,24 @@ const User = db.define('user', {
   admin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+
+  firstName: {
+    type: Sequelize.STRING
+  },
+
+  lastName: {
+    type: Sequelize.STRING
+  },
+
+  address: {
+    type: Sequelize.STRING
+  },
+
+  imageURL: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: 'https://img.icons8.com/cotton/2x/controller.png'
   }
 })
 

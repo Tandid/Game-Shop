@@ -191,3 +191,66 @@ select {
   height: 2rem;
   background-color: beige;
 }
+/* profile */
+.profile-wrapper {
+  background-color: beige;
+  display: flex;
+  text-align: center;
+  margin: 2rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  justify-content: space-evenly;
+}
+
+.link-button {
+  background-color: black;
+  padding: 0.5rem;
+  border: solid 1px white;
+  width: 20%;
+}
+
+.button-edit {
+  width: 500px;
+}
+/* table */
+.table-wrapper {
+  display: flex;
+  width: 100%;
+  overflow: auto;
+  background-color: beige;
+  align-content: center;
+  border-radius: 1rem;
+}
+
+table {
+  margin: 2rem;
+  border: solid 2px lightgrey;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+thead {
+  background-color: lightgrey;
+  text-align: center;
+}
+
+th {
+  padding: 5px;
+}
+
+td {
+  text-align: center;
+}
+td > a {
+  color: blue;
+}
+td > button {
+  width: 200px;
+}
+tr:nth-child(even) {
+  background-color: lightgray;
+}
+
+.wrapper > h2 {
+  color: white;
+}

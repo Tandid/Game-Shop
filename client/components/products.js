@@ -57,7 +57,6 @@ class Products extends React.Component {
           </div>
 
           <div>
-            <Link to="/newProduct">Create New Product</Link>
             <ul className="wrapper">
               {filteredProducts.map(product => {
                 return <ProductCard key={product.id} {...product} />
