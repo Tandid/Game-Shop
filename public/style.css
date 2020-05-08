@@ -115,7 +115,6 @@ button {
 .newGame {
   display: flex;
   flex-direction: column;
-  width: 80%;
 }
 
 .productLink {
@@ -148,9 +147,27 @@ button {
   width: 80%;
 }
 
-.editProductDetails {
+.form-wrapper {
+  border-radius: 1rem;
+  background-color: beige;
+  margin: 2rem;
+}
+
+.edit-form,
+.new-form {
   display: flex;
+  /* justify-content: space-around; */
   flex-direction: column;
+  padding: 1rem;
+  margin: 0 1rem;
+}
+.edit-form > p {
+  padding: none;
+}
+
+p > input,
+select {
+  height: 2rem;
   width: 100%;
 }
 

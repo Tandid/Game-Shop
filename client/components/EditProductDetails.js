@@ -9,6 +9,7 @@ class EditProductDetails extends React.Component {
     let imageURL = ''
     let price = ''
     let inventory = ''
+    let category = ''
     if (props.product) {
       if (props.product.title) {
         title = props.product.title
@@ -25,6 +26,9 @@ class EditProductDetails extends React.Component {
       if (props.product.inventory) {
         inventory = props.product.inventory
       }
+      if (props.product.category) {
+        category = props.product.category
+      }
     }
     super()
     this.state = {
@@ -33,6 +37,7 @@ class EditProductDetails extends React.Component {
       imageURL,
       price,
       inventory,
+      category,
       error: ''
     }
     this.onSubmit = this.onSubmit.bind(this)
@@ -59,6 +64,9 @@ class EditProductDetails extends React.Component {
     if (prevProps.product.inventory !== this.props.product.inventory) {
       this.setState({inventory: this.props.product.inventory})
     }
+    if (prevProps.product.category !== this.props.product.category) {
+      this.setState({category: this.props.product.category})
+    }
   }
 
   async onSubmit(event) {
@@ -71,7 +79,8 @@ class EditProductDetails extends React.Component {
           description: this.state.description,
           imageURL: this.state.imageURL,
           price: parseFloat(this.state.price),
-          inventory: parseInt(this.state.inventory)
+          inventory: parseInt(this.state.inventory),
+          category: this.state.category
         },
         this.props.history.push
       )
@@ -82,43 +91,84 @@ class EditProductDetails extends React.Component {
 
   render() {
     const {onSubmit} = this
-    const {title, description, imageURL, price, inventory, error} = this.state
+    const {
+      title,
+      description,
+      imageURL,
+      price,
+      inventory,
+      category,
+      error
+    } = this.state
     const {product} = this.props
     return (
-      <form onSubmit={onSubmit} className="editProductDetails">
-        {error}
-        <input
-          value={title}
-          onChange={event => this.setState({title: event.target.value})}
-        />
-        <input
-          value={description}
-          onChange={event => this.setState({description: event.target.value})}
-        />
-        <input
-          value={imageURL}
-          onChange={event => this.setState({imageURL: event.target.value})}
-        />
-        <input
-          value={price}
-          onChange={event => this.setState({price: event.target.value})}
-        />
-        <input
-          value={inventory}
-          onChange={event => this.setState({inventory: event.target.value})}
-        />
-        <button
-          disabled={
-            title === product.title &&
-            description === product.description &&
-            imageURL === product.imageURL &&
-            price === product.price &&
-            inventory === product.inventory
-          }
-        >
-          Update
-        </button>
-      </form>
+      <div className="form-wrapper">
+        <form onSubmit={onSubmit} className="edit-form">
+          {error}
+          <h3>Edit Product Details</h3>
+          <p>
+            Product Title:{' '}
+            <input
+              value={title}
+              onChange={event => this.setState({title: event.target.value})}
+            />
+          </p>
+          <p>
+            Description:{' '}
+            <input
+              value={description}
+              onChange={event =>
+                this.setState({description: event.target.value})
+              }
+            />
+          </p>
+          <p>
+            ImageURL:{' '}
+            <input
+              value={imageURL}
+              onChange={event => this.setState({imageURL: event.target.value})}
+            />
+          </p>
+          <p>
+            Price:{' '}
+            <input
+              value={price}
+              onChange={event => this.setState({price: event.target.value})}
+            />
+          </p>
+          <p>
+            Inventory:{' '}
+            <input
+              value={inventory}
+              onChange={event => this.setState({inventory: event.target.value})}
+            />
+          </p>
+
+          <p>
+            Platform:{' '}
+            <select onChange={ev => this.setState({category: ev.target.value})}>
+              <option value="">--Select a Platform--</option>
+              <option value="Xbox">Xbox</option>
+              <option value="Playstation">Playstation</option>
+              <option value="PC">PC</option>
+              <option value="Nintendo">Switch</option>
+            </select>
+          </p>
+
+          <button
+            disabled={
+              title === product.title &&
+              description === product.description &&
+              imageURL === product.imageURL &&
+              price === product.price &&
+              inventory === product.inventory &&
+              category === product.category
+            }
+          >
+            Update
+          </button>
+        </form>
+      </div>
     )
   }
 }

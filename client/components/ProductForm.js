@@ -48,48 +48,79 @@ class ProductForm extends React.Component {
       category
     } = this.state
     return (
-      <form className="newGame" onSubmit={onSubmit}>
-        {error}
-        <input
-          value={title}
-          onChange={event => this.setState({title: event.target.value})}
-          placeholder="Title"
-        />
-        <input
-          value={description}
-          onChange={event => this.setState({description: event.target.value})}
-          placeholder="Description"
-        />
-        <input
-          value={imageURL}
-          onChange={event => this.setState({imageURL: event.target.value})}
-          placeholder="Image Url"
-        />
-        <input
-          value={price}
-          onChange={event => this.setState({price: event.target.value})}
-          placeholder="Price"
-        />
-        <input
-          value={inventory}
-          onChange={event => this.setState({inventory: event.target.value})}
-          placeholder="Inventory"
-        />
-        <select
-          onChange={event => this.setState({category: event.target.value})}
-        >
-          <option value="">--Select a Platform--</option>
-          <option value="Xbox">Xbox</option>
-          <option value="Playstation">Playstation</option>
-          <option value="PC">PC</option>
-          <option value="Nintendo">Switch</option>
-        </select>
-        <button
-          disabled={!title || !description || !imageURL || !price || !inventory}
-        >
-          Create New Game
-        </button>
-      </form>
+      <div className="form-wrapper">
+        <form className="new-form" onSubmit={onSubmit}>
+          {error}
+          <h3> Create New Game </h3>
+          <p>
+            Title:
+            <input
+              value={title}
+              onChange={event => this.setState({title: event.target.value})}
+              placeholder="Title"
+            />
+          </p>
+          <p>
+            Description:
+            <input
+              value={description}
+              onChange={event =>
+                this.setState({description: event.target.value})
+              }
+              placeholder="Description"
+            />
+          </p>
+          <p>
+            ImageURL:
+            <input
+              value={imageURL}
+              onChange={event => this.setState({imageURL: event.target.value})}
+              placeholder="Image Url"
+            />
+          </p>
+          <p>
+            Price:
+            <input
+              value={price}
+              onChange={event => this.setState({price: event.target.value})}
+              placeholder="Price"
+            />
+          </p>
+          <p>
+            Inventory:
+            <input
+              value={inventory}
+              onChange={event => this.setState({inventory: event.target.value})}
+              placeholder="Inventory"
+            />
+          </p>
+          <p>
+            Platform:
+            <select
+              onChange={event => this.setState({category: event.target.value})}
+            >
+              <option value="">--Select a Platform--</option>
+              <option value="Xbox">Xbox</option>
+              <option value="Playstation">Playstation</option>
+              <option value="PC">PC</option>
+              <option value="Nintendo">Switch</option>
+            </select>
+          </p>
+
+          <button
+            disabled={
+              !title ||
+              !description ||
+              !imageURL ||
+              !price ||
+              !inventory ||
+              !category
+            }
+          >
+            Create New Game
+          </button>
+        </form>
+      </div>
     )
   }
 }
