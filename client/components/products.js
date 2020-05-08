@@ -41,12 +41,24 @@ class Products extends React.Component {
     }
 
     if (!filteredProducts.length) {
-      return <h1>Loading...</h1>
+      return (
+        <div className="search-bar">
+          <p>Search by Platform</p>
+          <select onChange={this.onChange} value={category}>
+            <option value="all">All</option>
+            <option value="Xbox">Xbox</option>
+            <option value="Playstation">Playstation</option>
+            <option value="PC">PC</option>
+            <option value="Nintendo">Switch</option>
+          </select>
+          <h1>There are no games currently available</h1>
+        </div>
+      )
     } else {
       return (
         <div>
           <div className="search-bar">
-            <p>Search by Category</p>
+            <p>Search by Platform</p>
             <select onChange={this.onChange} value={category}>
               <option value="all">All</option>
               <option value="Xbox">Xbox</option>
