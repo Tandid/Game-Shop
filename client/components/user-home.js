@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import Popular from './mostPopular.js'
+import Popular from './MostPopular.js'
 
 export const UserHome = props => {
   const {email} = props

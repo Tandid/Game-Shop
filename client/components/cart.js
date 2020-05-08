@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import ProductList from './productList.js'
-import {getOrders} from '.././store/orders'
+import {getOrders} from '../store/orders'
 import {getOrderItems} from '../store/orderItems.js'
 
 class Cart extends React.Component {

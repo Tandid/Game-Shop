@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {createProduct} from '../store/product'
 
-class ProductForm extends React.Component {
+class CreateProduct extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -137,4 +137,4 @@ const mapDispatchToProducts = dispatch => {
   }
 }
 
-export default connect(mapStatetoProps, mapDispatchToProducts)(ProductForm)
+export default connect(mapStatetoProps, mapDispatchToProducts)(CreateProduct)

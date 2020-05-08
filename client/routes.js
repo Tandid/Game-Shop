@@ -9,12 +9,12 @@ import {
   Products,
   Cart,
   ProductDetails,
-  ProductForm,
+  CreateProduct,
   Orders,
   Account
 } from './components'
 import {me, getProducts} from './store'
-import EditProductDetails from './components/EditProductDetails'
+import EditProduct from './components/EditProduct'
 import {getOrderItems} from './store/orderItems'
 import {getOrders} from './store/orders'
 
@@ -42,12 +42,8 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             <Route exact path="/account" component={Account} />
-            <Route exact path="/newProduct" component={ProductForm} />
-            <Route
-              exact
-              path="/products/:id/edit"
-              component={EditProductDetails}
-            />
+            <Route exact path="/newProduct" component={CreateProduct} />
+            <Route exact path="/products/:id/edit" component={EditProduct} />
             {/* Routes placed here are only available after logging in */}
           </Switch>
         )}

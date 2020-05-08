@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {getDetails, updateProduct} from '../store/product'
 
-class EditProductDetails extends React.Component {
+class EditProduct extends React.Component {
   constructor(props) {
     let title = ''
     let description = ''
@@ -186,4 +186,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditProductDetails)
+export default connect(mapStateToProps, mapDispatchToProps)(EditProduct)

@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import ProductCard from './productCard.js'
+import ProductCard from './ProductCard.js'
 
 const Popular = ({mostPopular}) => {
   return (
