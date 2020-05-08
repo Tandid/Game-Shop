@@ -5,27 +5,26 @@ import {getOrders} from '.././store/orders'
 import {getOrderItems} from '../store/orderItems.js'
 
 class Cart extends React.Component {
-  constructor() {
-    super()
-  }
-
-  componentDidMount() {
-    this.props.loadOrderItems()
-  }
-
-  componentDidUpdate(prevProps) {
-    if (
-      prevProps.orderItems.length > 0 &&
-      this.props.orderItems === prevProps.orderItems
-    ) {
-      this.props.loadOrderItems()
+  constructor(props) {
+    let cart = []
+    if (props.cart && props.cart.length) {
+      cart = props.cart
     }
-    // if (
-    //   prevProps.orderItems.length &&
-    //   prevProps.orderItems !== this.props.orderItems
-    // ) {
-    //   this.props.loadOrderItems()
-    // }
+    super()
+    this.state = {
+      cart
+    }
+  }
+
+  async componentDidMount() {
+    const orderItems = this.props.loadOrderItems()
+  }
+
+  async componentDidUpdate(prevProps) {
+    // incorrect to avoid infinite loop
+    if (this.props.orderItems === prevProps.orderItems) {
+      await this.props.loadOrderItems()
+    }
   }
 
   render() {
