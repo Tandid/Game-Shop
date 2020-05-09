@@ -85,10 +85,8 @@ const updateUser = user => {
 /**
  * REDUCER
  */
-export default function(state = defaultUser, action) {
+const user = function(state = defaultUser, action) {
   switch (action.type) {
-    case GET_USERS:
-      return action.users
     case GET_USER:
       return action.user
     case REMOVE_USER:
@@ -101,4 +99,13 @@ export default function(state = defaultUser, action) {
   }
 }
 
-export {me, auth, logout, updateUser, removeUser, getUsers}
+const users = function(state = {}, action) {
+  switch (action.type) {
+    case GET_USERS:
+      return action.users
+    default:
+      return state
+  }
+}
+
+export {me, auth, logout, updateUser, removeUser, getUsers, user, users}
