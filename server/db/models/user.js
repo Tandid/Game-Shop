@@ -6,12 +6,7 @@ const User = db.define('user', {
   email: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false,
-    validate: {
-      isEmail: {
-        msg: 'Please enter a valid email address'
-      }
-    }
+    allowNull: false
   },
   password: {
     type: Sequelize.STRING,
@@ -19,12 +14,6 @@ const User = db.define('user', {
     // This is a hack to get around Sequelize's lack of a "private" option.
     get() {
       return () => this.getDataValue('password')
-    },
-    validate: {
-      len: {
-        args: [3],
-        msg: 'Password must be at least 3 characters'
-      }
     }
   },
   salt: {
@@ -37,29 +26,6 @@ const User = db.define('user', {
   },
   googleId: {
     type: Sequelize.STRING
-  },
-
-  admin: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false
-  },
-
-  firstName: {
-    type: Sequelize.STRING
-  },
-
-  lastName: {
-    type: Sequelize.STRING
-  },
-
-  address: {
-    type: Sequelize.STRING
-  },
-
-  imageURL: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    defaultValue: 'https://img.icons8.com/cotton/2x/controller.png'
   }
 })
 
