@@ -57,9 +57,6 @@ class ProductDetails extends React.Component {
             >
               Add to Cart
             </button>
-            <Link to={`/products/${product.id}/edit`} className="productLink">
-              Edit
-            </Link>
           </div>
         </div>
       )
