@@ -80,7 +80,8 @@ export default function(state = defaultUser, action) {
     case GET_USER:
       return action.user
     case REMOVE_USER:
-      return state.filter(user => user.id !== action.user)
+      return state
+    // return state.filter(user => user.id !== action.user)
     case UPDATE_USER:
       return action.user
     default:

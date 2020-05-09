@@ -9,14 +9,6 @@ class Listings extends React.Component {
     this.delete = this.deleteProduct.bind(this)
   }
 
-  async componentDidMount() {
-    try {
-      await this.props.load()
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   deleteProduct = id => {
     this.props.delete(id)
   }
@@ -79,7 +71,6 @@ const mapStateToProps = ({products}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    load: () => dispatch(getProducts()),
     delete: id => dispatch(removeProduct(id))
   }
 }
