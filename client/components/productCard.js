@@ -6,14 +6,33 @@ import orderItems, {
   createOrderItem,
   updateOrderItem
 } from '../store/orderItems'
-import {getOrders} from '../store/orders'
+import {getOrders, createOrder} from '../store/orders'
 
 class ProductCard extends React.Component {
   constructor() {
     super()
+    // this.guestUserCart = this.guestUserCart.bind(this)
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.cart !== prevProps.cart) {
+      this.props.loadOrders()
+    }
+  }
+
+  // async guestUserCart() {
+  //   try {
+  //     await this.props.createNewCart({
+  //       userId: this.props.user.id,
+  //       status: 'cart',
+  //     })
+  //   } catch (exception) {
+  //     console.log(exception)
+  //   }
+  // }
+
   render() {
+    // const {guestUserCart} = this
     const {id, title, imageURL, price, inventory, cart, orderItems} = this.props
     // if (!id || !title || !imageURL || !price || !inventory || !cart) {
     if (!id || !cart) {
@@ -69,9 +88,11 @@ const mapStateToProps = ({orders, user, orderItems}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    loadOrders: () => dispatch(getOrders()),
     loadOrderItems: () => dispatch(getOrderItems()),
     addToCart: orderItem => dispatch(createOrderItem(orderItem)),
-    increment: orderItem => dispatch(updateOrderItem(orderItem))
+    increment: orderItem => dispatch(updateOrderItem(orderItem)),
+    createNewCart: order => dispatch(createOrder(order))
   }
 }
 

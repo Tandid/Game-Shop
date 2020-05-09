@@ -1342,14 +1342,32 @@ function (_React$Component) {
   function ProductCard() {
     _classCallCheck(this, ProductCard);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(ProductCard).call(this));
+    return _possibleConstructorReturn(this, _getPrototypeOf(ProductCard).call(this)); // this.guestUserCart = this.guestUserCart.bind(this)
   }
 
   _createClass(ProductCard, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (this.props.cart !== prevProps.cart) {
+        this.props.loadOrders();
+      }
+    } // async guestUserCart() {
+    //   try {
+    //     await this.props.createNewCart({
+    //       userId: this.props.user.id,
+    //       status: 'cart',
+    //     })
+    //   } catch (exception) {
+    //     console.log(exception)
+    //   }
+    // }
+
+  }, {
     key: "render",
     value: function render() {
       var _this = this;
 
+      // const {guestUserCart} = this
       var _this$props = this.props,
           id = _this$props.id,
           title = _this$props.title,
@@ -1412,6 +1430,9 @@ var mapStateToProps = function mapStateToProps(_ref) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
+    loadOrders: function loadOrders() {
+      return dispatch(Object(_store_orders__WEBPACK_IMPORTED_MODULE_4__["getOrders"])());
+    },
     loadOrderItems: function loadOrderItems() {
       return dispatch(Object(_store_orderItems__WEBPACK_IMPORTED_MODULE_3__["getOrderItems"])());
     },
@@ -1420,6 +1441,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     increment: function increment(orderItem) {
       return dispatch(Object(_store_orderItems__WEBPACK_IMPORTED_MODULE_3__["updateOrderItem"])(orderItem));
+    },
+    createNewCart: function createNewCart(order) {
+      return dispatch(Object(_store_orders__WEBPACK_IMPORTED_MODULE_4__["createOrder"])(order));
     }
   };
 };
