@@ -1,30 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import Popular from './MostPopular.js'
 
-/**
- * COMPONENT
- */
 export const UserHome = props => {
   const {email} = props
 
   return (
     <div>
-      <h3>Welcome, {email}</h3>
+      <div className="welcome">
+        <h3>Welcome {email}</h3>
+        <a href="/products">Enter Now</a>
+      </div>
+      <Popular />
     </div>
   )
 }
 
-/**
- * CONTAINER
- */
-const mapState = state => {
+const mapStateToProps = ({user}) => {
   return {
-    email: state.user.email
+    email: user.email
   }
 }
 
-export default connect(mapState)(UserHome)
+export default connect(mapStateToProps)(UserHome)
 
 /**
  * PROP TYPES

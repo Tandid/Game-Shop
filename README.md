@@ -1,3 +1,7 @@
+Heroku Link: https://progamerz-app.herokuapp.com/
+Login as admin with: tandid@gmail.com or dennis@gmail.com Password: 123  
+Login as regular user with: paul@gmail.com Password: 123
+
 # Boilermaker
 
 _Good things come in pairs_
