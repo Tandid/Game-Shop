@@ -34,7 +34,6 @@ class Listings extends React.Component {
                 <th>Title</th>
                 <th>Price</th>
                 <th>Inventory</th>
-                <th>Other</th>
                 <th>Edit Product</th>
                 <th>Delete Product</th>
               </tr>
@@ -44,12 +43,13 @@ class Listings extends React.Component {
                 products.map(product => (
                   <tr key={product.id}>
                     <td>{product.id}</td>
-                    <td>{product.title}</td>
+                    <td>
+                      <Link to={`/products/${product.id}`}>
+                        {product.title}
+                      </Link>
+                    </td>
                     <td>{product.price}</td>
                     <td>{product.inventory}</td>
-                    <td>
-                      <Link to={`/products/${product.id}`}>More Details</Link>
-                    </td>
                     <td>
                       <Link to={`/products/${product.id}/edit`}>Edit</Link>
                     </td>

@@ -11,5 +11,7 @@ export {default as Orders} from './Orders'
 export {default as ProductDetails} from './ProductDetails'
 export {default as CreateProduct} from './CreateProduct'
 export {default as Account} from './Account'
-export {default as Listings} from './listings'
+export {default as Listings} from './Listings'
+export {default as UserList} from './UserList'
+
 export {Login, Signup} from './auth-form'

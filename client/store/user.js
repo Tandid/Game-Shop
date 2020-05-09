@@ -17,7 +17,7 @@ const defaultUser = {}
  * ACTION CREATORS
  */
 const getUser = user => ({type: GET_USER, user})
-const removeUser = () => ({type: REMOVE_USER})
+const _removeUser = id => ({type: REMOVE_USER, user: id})
 const _updateUser = () => ({type: UPDATE_USER})
 
 /**
@@ -51,10 +51,17 @@ const auth = (email, password, method) => async dispatch => {
 const logout = () => async dispatch => {
   try {
     await axios.post('/auth/logout')
-    dispatch(removeUser())
+    dispatch(_removeUser())
     history.push('/login')
   } catch (err) {
     console.error(err)
+  }
+}
+
+const removeUser = id => {
+  return async dispatch => {
+    await axios.delete(`/api/users/${id}`)
+    dispatch(_removeUser(id))
   }
 }
 
@@ -73,7 +80,7 @@ export default function(state = defaultUser, action) {
     case GET_USER:
       return action.user
     case REMOVE_USER:
-      return defaultUser
+      return state.filter(user => user.id !== action.user)
     case UPDATE_USER:
       return action.user
     default:
@@ -81,4 +88,4 @@ export default function(state = defaultUser, action) {
   }
 }
 
-export {me, auth, logout, updateUser}
+export {me, auth, logout, updateUser, removeUser}

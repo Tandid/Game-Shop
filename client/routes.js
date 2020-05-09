@@ -12,7 +12,8 @@ import {
   CreateProduct,
   Orders,
   Account,
-  Listings
+  Listings,
+  UserList
 } from './components'
 import {me, getProducts} from './store'
 import EditProduct from './components/EditProduct'
@@ -46,6 +47,7 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/account" component={Account} />
             <Route exact path="/listings" component={Listings} />
+            <Route exact path="/userlist" component={UserList} />
             <Route exact path="/products/:id/edit" component={EditProduct} />
             <Route exact path="/newProduct" component={CreateProduct} />
             {/* Routes placed here are only available after logging in */}

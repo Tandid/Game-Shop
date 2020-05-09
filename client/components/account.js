@@ -28,6 +28,9 @@ class Account extends Component {
               <Link className="link-button" to="/listings">
                 Manage Products
               </Link>
+              <Link className="link-button" to="/userlist">
+                Manage Users
+              </Link>
               <Link className="link-button" to="/orders">
                 Manage Orders
               </Link>
