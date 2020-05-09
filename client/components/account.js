@@ -9,10 +9,6 @@ class Account extends Component {
     this.state = {}
   }
 
-  async componentDidMount() {
-    await this.props.getUser()
-  }
-
   render() {
     const {user} = this.props
     console.log(user)
@@ -56,7 +52,6 @@ const mapStateToProps = ({user}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getUser: () => dispatch(me()),
     updateUser: id => dispatch(updateUser(id))
   }
 }
