@@ -8,6 +8,10 @@ class Orders extends React.Component {
     super()
   }
 
+  componentDidMount(prevProps) {
+    this.props.fetchOrders()
+  }
+
   render() {
     const {orders, user} = this.props
     return (
@@ -27,12 +31,12 @@ const mapStateToProps = ({orders, user}) => {
   }
 }
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     fetchOrders: id => {
-//       dispatch(getOrders(id))
-//     }
-//   }
-// }
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchOrders: () => {
+      dispatch(getOrders())
+    }
+  }
+}
 
-export default connect(mapStateToProps)(Orders)
+export default connect(mapStateToProps, mapDispatchToProps)(Orders)

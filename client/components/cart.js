@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import ProductList from './productList.js'
-import {getOrders} from '../store/orders'
+import {getOrders, updateOrder, createOrder} from '../store/orders'
 import {getOrderItems, deleteOrderItem} from '../store/orderItems.js'
 
 class Cart extends React.Component {
@@ -14,6 +14,7 @@ class Cart extends React.Component {
     // this.state = {
     //   orderItems,
     // }
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   componentDidMount() {
@@ -26,7 +27,24 @@ class Cart extends React.Component {
   //   }
   // }
 
+  async onSubmit(event) {
+    event.preventDefault()
+    try {
+      await this.props.acceptOrder(
+        {id: this.props.cart.id, status: 'accepted'},
+        this.props.history.push
+      )
+      await this.props.createNewCart({
+        userId: this.props.user.id,
+        status: 'cart'
+      })
+    } catch (exception) {
+      console.log(exception)
+    }
+  }
+
   render() {
+    const {onSubmit} = this
     const {orderItems, cart, products, user} = this.props
     if (!cart || !orderItems || !products) {
       return <h3>Loading...</h3>
@@ -42,7 +60,10 @@ class Cart extends React.Component {
               ))}
           </ul>
           <p> Total Price: $</p>
-          <button className="cart-button"> Checkout </button>
+          <button className="cart-button" onClick={onSubmit}>
+            {' '}
+            Checkout{' '}
+          </button>
           <button
             className="cart-button"
             onClick={() => {
@@ -69,7 +90,9 @@ const mapStateToProps = ({orderItems, products, orders, user}) => {
 const mapDispatchToProps = dispatch => {
   return {
     loadOrderItems: () => dispatch(getOrderItems()),
-    removeFromCart: orderItem => dispatch(deleteOrderItem(orderItem))
+    removeFromCart: orderItem => dispatch(deleteOrderItem(orderItem)),
+    acceptOrder: (order, push) => dispatch(updateOrder(order, push)),
+    createNewCart: order => dispatch(createOrder(order))
   }
 }
 

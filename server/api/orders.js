@@ -13,6 +13,20 @@ router.get('/:id', (req, res, next) => {
     .catch(next)
 })
 
+router.put('/:id', (req, res, next) => {
+  Order.findByPk(req.params.id)
+    .then(order => order.update({status: req.body.status}))
+    .then(order => res.send(order))
+    .catch(next)
+})
+
+router.post('/', (req, res, next) => {
+  Order.create(req.body)
+    .then(order => res.status(201).send(order))
+    .catch(next)
+})
+
+// ORDER ITEMS
 router.get('/:id/orderItems', (req, res, next) => {
   OrderItems.findAll({
     where: {orderId: req.params.id}

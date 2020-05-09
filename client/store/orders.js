@@ -5,10 +5,8 @@ import {product} from './product'
  * ACTION TYPES ------------------------------------------------
  */
 const GET_ORDERS = 'GET_ORDERS'
-const ADD_PRODUCT = 'ADD_PRODUCT'
-const INCREMENT = 'INCREMENT'
-const DECREMENT = 'DECREMENT'
-const REMOVE_ITEM = 'REMOVE_ITEM'
+const UPDATE_ORDER = 'UPDATE_ORDER'
+const CREATE_ORDER = 'CREATE_ORDER'
 
 /**
  * INITIAL STATE --------------------------------------------------
@@ -21,10 +19,8 @@ const REMOVE_ITEM = 'REMOVE_ITEM'
  * ACTION CREATORS
  */
 const _getOrders = orders => ({type: GET_ORDERS, orders})
-const _addProduct = product => ({type: ADD_PRODUCT, product})
-const _increment = product => ({type: INCREMENT, product})
-const _decrement = product => ({type: DECREMENT, product})
-const _removeItem = product => ({type: REMOVE_ITEM, product})
+const _updateOrder = order => ({type: UPDATE_ORDER, order})
+const _createOrder = order => ({type: CREATE_ORDER, order})
 
 /**
  * THUNK CREATORS -------------------------------------------------
@@ -36,6 +32,24 @@ const getOrders = () => {
   }
 }
 
+const updateOrder = (order, push) => {
+  return async dispatch => {
+    const {data: updatedOrder} = await axios.put(
+      `/api/orders/${order.id}`,
+      order
+    )
+    dispatch(_updateOrder(updatedOrder))
+    push('/orders')
+  }
+}
+
+const createOrder = order => {
+  return async dispatch => {
+    const response = await axios.post('/api/orders', order)
+    dispatch(_createOrder(response.data))
+  }
+}
+
 /**
  * REDUCER -------------------------------------------------------
  */
@@ -44,9 +58,18 @@ export default function(state = [], action) {
     case GET_ORDERS:
       return action.orders
 
+    case UPDATE_ORDER:
+      state = state.map(
+        order => (order.id === action.order.id ? action.order : order)
+      )
+
+    case CREATE_ORDER:
+      state = [...state, action.order]
+      return state
+
     default:
       return state
   }
 }
 
-export {getOrders}
+export {getOrders, updateOrder, createOrder}

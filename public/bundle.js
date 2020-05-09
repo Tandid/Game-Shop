@@ -229,6 +229,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -237,9 +241,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -257,15 +261,20 @@ function (_React$Component) {
   _inherits(Cart, _React$Component);
 
   function Cart(props) {
+    var _this;
+
     _classCallCheck(this, Cart);
 
     // let orderItems = []
     // if (props.orderItems && props.orderItems.length) {
     //   orderItems = props.orderItems
     // }
-    return _possibleConstructorReturn(this, _getPrototypeOf(Cart).call(this)); // this.state = {
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Cart).call(this)); // this.state = {
     //   orderItems,
     // }
+
+    _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(Cart, [{
@@ -279,10 +288,59 @@ function (_React$Component) {
     // }
 
   }, {
+    key: "onSubmit",
+    value: function () {
+      var _onSubmit = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee(event) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                event.preventDefault();
+                _context.prev = 1;
+                _context.next = 4;
+                return this.props.acceptOrder({
+                  id: this.props.cart.id,
+                  status: 'accepted'
+                }, this.props.history.push);
+
+              case 4:
+                _context.next = 6;
+                return this.props.createNewCart({
+                  userId: this.props.user.id,
+                  status: 'cart'
+                });
+
+              case 6:
+                _context.next = 11;
+                break;
+
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](1);
+                console.log(_context.t0);
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[1, 8]]);
+      }));
+
+      function onSubmit(_x) {
+        return _onSubmit.apply(this, arguments);
+      }
+
+      return onSubmit;
+    }()
+  }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
+      var onSubmit = this.onSubmit;
       var _this$props = this.props,
           orderItems = _this$props.orderItems,
           cart = _this$props.cart,
@@ -301,14 +359,15 @@ function (_React$Component) {
             key: Math.random()
           }, orderItem));
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Total Price: $"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "cart-button"
-        }, " Checkout "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "cart-button",
+          onClick: onSubmit
+        }, ' ', "Checkout", ' '), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "cart-button",
           onClick: function onClick() {
             orderItems.filter(function (orderItem) {
               return orderItem.orderId === cart.id;
             }).forEach(function (orderItem) {
-              return _this.props.removeFromCart(orderItem);
+              return _this2.props.removeFromCart(orderItem);
             });
           }
         }, "Clear Cart"));
@@ -342,6 +401,12 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     removeFromCart: function removeFromCart(orderItem) {
       return dispatch(Object(_store_orderItems_js__WEBPACK_IMPORTED_MODULE_4__["deleteOrderItem"])(orderItem));
+    },
+    acceptOrder: function acceptOrder(order, push) {
+      return dispatch(Object(_store_orders__WEBPACK_IMPORTED_MODULE_3__["updateOrder"])(order, push));
+    },
+    createNewCart: function createNewCart(order) {
+      return dispatch(Object(_store_orders__WEBPACK_IMPORTED_MODULE_3__["createOrder"])(order));
     }
   };
 };
@@ -1186,6 +1251,11 @@ function (_React$Component) {
   }
 
   _createClass(Orders, [{
+    key: "componentDidMount",
+    value: function componentDidMount(prevProps) {
+      this.props.fetchOrders();
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$props = this.props,
@@ -1211,16 +1281,17 @@ var mapStateToProps = function mapStateToProps(_ref) {
     orders: orders,
     user: user
   };
-}; // const mapDispatchToProps = dispatch => {
-//   return {
-//     fetchOrders: id => {
-//       dispatch(getOrders(id))
-//     }
-//   }
-// }
+};
 
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    fetchOrders: function fetchOrders() {
+      dispatch(Object(_store_orders__WEBPACK_IMPORTED_MODULE_3__["getOrders"])());
+    }
+  };
+};
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(Orders));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(Orders));
 
 /***/ }),
 
@@ -2796,15 +2867,25 @@ var orderItem = function orderItem() {
 /*!********************************!*\
   !*** ./client/store/orders.js ***!
   \********************************/
-/*! exports provided: default, getOrders */
+/*! exports provided: default, getOrders, updateOrder, createOrder */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getOrders", function() { return getOrders; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateOrder", function() { return updateOrder; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createOrder", function() { return createOrder; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _product__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./product */ "./client/store/product.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -2816,10 +2897,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  */
 
 var GET_ORDERS = 'GET_ORDERS';
-var ADD_PRODUCT = 'ADD_PRODUCT';
-var INCREMENT = 'INCREMENT';
-var DECREMENT = 'DECREMENT';
-var REMOVE_ITEM = 'REMOVE_ITEM';
+var UPDATE_ORDER = 'UPDATE_ORDER';
+var CREATE_ORDER = 'CREATE_ORDER';
 /**
  * INITIAL STATE --------------------------------------------------
  */
@@ -2838,31 +2917,17 @@ var _getOrders = function _getOrders(orders) {
   };
 };
 
-var _addProduct = function _addProduct(product) {
+var _updateOrder = function _updateOrder(order) {
   return {
-    type: ADD_PRODUCT,
-    product: product
+    type: UPDATE_ORDER,
+    order: order
   };
 };
 
-var _increment = function _increment(product) {
+var _createOrder = function _createOrder(order) {
   return {
-    type: INCREMENT,
-    product: product
-  };
-};
-
-var _decrement = function _decrement(product) {
-  return {
-    type: DECREMENT,
-    product: product
-  };
-};
-
-var _removeItem = function _removeItem(product) {
-  return {
-    type: REMOVE_ITEM,
-    product: product
+    type: CREATE_ORDER,
+    order: order
   };
 };
 /**
@@ -2903,6 +2968,77 @@ var getOrders = function getOrders() {
     }()
   );
 };
+
+var updateOrder = function updateOrder(order, push) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref2 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2(dispatch) {
+        var _ref3, updatedOrder;
+
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/orders/".concat(order.id), order);
+
+              case 2:
+                _ref3 = _context2.sent;
+                updatedOrder = _ref3.data;
+                dispatch(_updateOrder(updatedOrder));
+                push('/orders');
+
+              case 6:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      return function (_x2) {
+        return _ref2.apply(this, arguments);
+      };
+    }()
+  );
+};
+
+var createOrder = function createOrder(order) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref4 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee3(dispatch) {
+        var response;
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/orders', order);
+
+              case 2:
+                response = _context3.sent;
+                dispatch(_createOrder(response.data));
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      return function (_x3) {
+        return _ref4.apply(this, arguments);
+      };
+    }()
+  );
+};
 /**
  * REDUCER -------------------------------------------------------
  */
@@ -2915,6 +3051,15 @@ var getOrders = function getOrders() {
   switch (action.type) {
     case GET_ORDERS:
       return action.orders;
+
+    case UPDATE_ORDER:
+      state = state.map(function (order) {
+        return order.id === action.order.id ? action.order : order;
+      });
+
+    case CREATE_ORDER:
+      state = [].concat(_toConsumableArray(state), [action.order]);
+      return state;
 
     default:
       return state;
@@ -47100,7 +47245,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
