@@ -2435,7 +2435,7 @@ socket.on('connect', function () {
 /*!*******************************!*\
   !*** ./client/store/index.js ***!
   \*******************************/
-/*! exports provided: default, me, auth, logout, updateUser, removeUser, getUsers, products, product, getProducts, getDetails, createProduct, removeProduct, updateProduct, orderItems, orderItem, getOrderItem, getOrderItems, createOrderItem, updateOrderItem, deleteOrderItem */
+/*! exports provided: default, me, auth, logout, updateUser, removeUser, getUsers, user, users, products, product, getProducts, getDetails, createProduct, removeProduct, updateProduct, orderItems, orderItem, getOrderItem, getOrderItems, createOrderItem, updateOrderItem, deleteOrderItem */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2461,6 +2461,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "removeUser", function() { return _user__WEBPACK_IMPORTED_MODULE_4__["removeUser"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getUsers", function() { return _user__WEBPACK_IMPORTED_MODULE_4__["getUsers"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "user", function() { return _user__WEBPACK_IMPORTED_MODULE_4__["user"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "users", function() { return _user__WEBPACK_IMPORTED_MODULE_4__["users"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "products", function() { return _product__WEBPACK_IMPORTED_MODULE_5__["products"]; });
 
@@ -2499,7 +2503,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var reducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  user: _user__WEBPACK_IMPORTED_MODULE_4__["default"],
+  user: _user__WEBPACK_IMPORTED_MODULE_4__["user"],
+  users: _user__WEBPACK_IMPORTED_MODULE_4__["users"],
   products: _product__WEBPACK_IMPORTED_MODULE_5__["products"],
   product: _product__WEBPACK_IMPORTED_MODULE_5__["product"],
   orders: _orders__WEBPACK_IMPORTED_MODULE_6__["default"],
@@ -3234,7 +3239,7 @@ var product = function product() {
 /*!******************************!*\
   !*** ./client/store/user.js ***!
   \******************************/
-/*! exports provided: default, me, auth, logout, updateUser, removeUser, getUsers */
+/*! exports provided: me, auth, logout, updateUser, removeUser, getUsers, user, users */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3245,6 +3250,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateUser", function() { return updateUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeUser", function() { return removeUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUsers", function() { return getUsers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "user", function() { return user; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "users", function() { return users; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _history__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../history */ "./client/history.js");
@@ -3513,14 +3520,11 @@ var updateUser = function updateUser(user) {
  */
 
 
-/* harmony default export */ __webpack_exports__["default"] = (function () {
+var user = function user() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultUser;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case GET_USERS:
-      return action.users;
-
     case GET_USER:
       return action.user;
 
@@ -3535,7 +3539,21 @@ var updateUser = function updateUser(user) {
     default:
       return state;
   }
-});
+};
+
+var users = function users() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case GET_USERS:
+      return action.users;
+
+    default:
+      return state;
+  }
+};
+
 
 
 /***/ }),

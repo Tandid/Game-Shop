@@ -76,8 +76,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadInitialData() {
-      dispatch(getUsers())
       dispatch(me())
+      dispatch(getUsers())
       dispatch(getProducts())
       dispatch(getOrders())
       dispatch(getOrderItems())
