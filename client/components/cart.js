@@ -41,7 +41,7 @@ class Cart extends React.Component {
                 <ProductList key={Math.random()} {...orderItem} />
               ))}
           </ul>
-          <p> Total Price: </p>
+          <p> Total Price: $</p>
           <button className="cart-button"> Checkout </button>
           <button
             className="cart-button"
@@ -51,8 +51,7 @@ class Cart extends React.Component {
                 .forEach(orderItem => this.props.removeFromCart(orderItem))
             }}
           >
-            {' '}
-            Clear Cart{' '}
+            Clear Cart
           </button>
         </div>
       )

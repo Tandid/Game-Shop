@@ -39,7 +39,7 @@ class ProductList extends React.Component {
         <li className="cart-items">
           <img src={product.imageURL} />
           <p>{product.title}</p>
-          <p>${product.price}</p>
+          <p>${product.price * this.props.quantity}</p>
           <p>Quantity: {this.props.quantity}</p>{' '}
           <div>
             <button

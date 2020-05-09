@@ -1,20 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {me, removeUser} from '../store'
+import {removeUser} from '../store'
 
 class UserList extends React.Component {
   constructor() {
     super()
     this.delete = this.deleteUser.bind(this)
-  }
-
-  async componentDidMount() {
-    try {
-      await this.props.load()
-    } catch (error) {
-      console.error(error)
-    }
   }
 
   deleteUser = id => {
@@ -76,7 +68,6 @@ const mapStateToProps = ({user}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    load: () => dispatch(me()),
     delete: id => dispatch(removeUser(id))
   }
 }
