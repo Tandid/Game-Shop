@@ -1791,18 +1791,20 @@ var UserList = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      var user = this.props.user;
+      var users = this.props.users;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Users"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "table-wrapper"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "First Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Last Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Admin Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Change Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Delete User"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-        key: user.id
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.lastName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.admin === true ? 'Active' : 'Inactive'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, user.admin === true ? 'Remove Admin' : 'Make Admin')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: function onClick() {
-          return _this2.deleteUser(user.id);
-        }
-      }, "Delete"))), "// ))}"))));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "First Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Last Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Admin Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Change Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Delete User"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, users && users.map(function (user) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+          key: user.id
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.lastName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.admin === true ? 'Active' : 'Inactive'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, user.admin === true ? 'Remove Admin' : 'Make Admin')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: function onClick() {
+            return _this2.deleteUser(user.id);
+          }
+        }, "Delete")));
+      })))));
     }
   }]);
 
@@ -1810,9 +1812,9 @@ var UserList = /*#__PURE__*/function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 var mapStateToProps = function mapStateToProps(_ref) {
-  var user = _ref.user;
+  var users = _ref.users;
   return {
-    user: user
+    users: users
   };
 };
 
@@ -2386,6 +2388,7 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     loadInitialData: function loadInitialData() {
+      dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_5__["getUsers"])());
       dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_5__["me"])());
       dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_5__["getProducts"])());
       dispatch(Object(_store_orders__WEBPACK_IMPORTED_MODULE_8__["getOrders"])());
@@ -2432,7 +2435,7 @@ socket.on('connect', function () {
 /*!*******************************!*\
   !*** ./client/store/index.js ***!
   \*******************************/
-/*! exports provided: default, me, auth, logout, updateUser, removeUser, products, product, getProducts, getDetails, createProduct, removeProduct, updateProduct, orderItems, orderItem, getOrderItem, getOrderItems, createOrderItem, updateOrderItem, deleteOrderItem */
+/*! exports provided: default, me, auth, logout, updateUser, removeUser, getUsers, products, product, getProducts, getDetails, createProduct, removeProduct, updateProduct, orderItems, orderItem, getOrderItem, getOrderItems, createOrderItem, updateOrderItem, deleteOrderItem */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2456,6 +2459,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "updateUser", function() { return _user__WEBPACK_IMPORTED_MODULE_4__["updateUser"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "removeUser", function() { return _user__WEBPACK_IMPORTED_MODULE_4__["removeUser"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getUsers", function() { return _user__WEBPACK_IMPORTED_MODULE_4__["getUsers"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "products", function() { return _product__WEBPACK_IMPORTED_MODULE_5__["products"]; });
 
@@ -3229,7 +3234,7 @@ var product = function product() {
 /*!******************************!*\
   !*** ./client/store/user.js ***!
   \******************************/
-/*! exports provided: default, me, auth, logout, updateUser, removeUser */
+/*! exports provided: default, me, auth, logout, updateUser, removeUser, getUsers */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3239,6 +3244,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logout", function() { return logout; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateUser", function() { return updateUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeUser", function() { return removeUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUsers", function() { return getUsers; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _history__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../history */ "./client/history.js");
@@ -3252,6 +3258,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  * ACTION TYPES
  */
 
+var GET_USERS = 'GET_USERS';
 var GET_USER = 'GET_USER';
 var REMOVE_USER = 'REMOVE_USER';
 var UPDATE_USER = 'UPDATE_USER';
@@ -3263,6 +3270,13 @@ var defaultUser = {};
 /**
  * ACTION CREATORS
  */
+
+var _getUsers = function _getUsers(users) {
+  return {
+    type: GET_USERS,
+    users: users
+  };
+};
 
 var getUser = function getUser(user) {
   return {
@@ -3288,7 +3302,7 @@ var _updateUser = function _updateUser() {
  */
 
 
-var me = function me() {
+var getUsers = function getUsers() {
   return /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(dispatch) {
       var response;
@@ -3296,27 +3310,19 @@ var me = function me() {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.prev = 0;
-              _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/auth/me');
+              _context.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/users');
 
-            case 3:
+            case 2:
               response = _context.sent;
-              dispatch(getUser(response.data || defaultUser));
-              _context.next = 10;
-              break;
+              dispatch(_getUsers(response.data));
 
-            case 7:
-              _context.prev = 7;
-              _context.t0 = _context["catch"](0);
-              console.error(_context.t0);
-
-            case 10:
+            case 4:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 7]]);
+      }, _callee);
     }));
 
     return function (_x) {
@@ -3325,7 +3331,7 @@ var me = function me() {
   }();
 };
 
-var auth = function auth(email, password, method) {
+var me = function me() {
   return /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(dispatch) {
       var response;
@@ -3335,21 +3341,58 @@ var auth = function auth(email, password, method) {
             case 0:
               _context2.prev = 0;
               _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/auth/me');
+
+            case 3:
+              response = _context2.sent;
+              dispatch(getUser(response.data || defaultUser));
+              _context2.next = 10;
+              break;
+
+            case 7:
+              _context2.prev = 7;
+              _context2.t0 = _context2["catch"](0);
+              console.error(_context2.t0);
+
+            case 10:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[0, 7]]);
+    }));
+
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+};
+
+var auth = function auth(email, password, method) {
+  return /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(dispatch) {
+      var response;
+      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              _context3.next = 3;
               return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/auth/".concat(method), {
                 email: email,
                 password: password
               });
 
             case 3:
-              response = _context2.sent;
-              _context2.next = 9;
+              response = _context3.sent;
+              _context3.next = 9;
               break;
 
             case 6:
-              _context2.prev = 6;
-              _context2.t0 = _context2["catch"](0);
-              return _context2.abrupt("return", dispatch(getUser({
-                error: _context2.t0
+              _context3.prev = 6;
+              _context3.t0 = _context3["catch"](0);
+              return _context3.abrupt("return", dispatch(getUser({
+                error: _context3.t0
               })));
 
             case 9:
@@ -3362,46 +3405,10 @@ var auth = function auth(email, password, method) {
 
             case 10:
             case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2, null, [[0, 6]]);
-    }));
-
-    return function (_x2) {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-};
-
-var logout = function logout() {
-  return /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(dispatch) {
-      return regeneratorRuntime.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.prev = 0;
-              _context3.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/auth/logout');
-
-            case 3:
-              dispatch(_removeUser());
-              _history__WEBPACK_IMPORTED_MODULE_1__["default"].push('/login');
-              _context3.next = 10;
-              break;
-
-            case 7:
-              _context3.prev = 7;
-              _context3.t0 = _context3["catch"](0);
-              console.error(_context3.t0);
-
-            case 10:
-            case "end":
               return _context3.stop();
           }
         }
-      }, _callee3, null, [[0, 7]]);
+      }, _callee3, null, [[0, 6]]);
     }));
 
     return function (_x3) {
@@ -3410,25 +3417,34 @@ var logout = function logout() {
   }();
 };
 
-var removeUser = function removeUser(id) {
+var logout = function logout() {
   return /*#__PURE__*/function () {
     var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(dispatch) {
       return regeneratorRuntime.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              _context4.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("/api/users/".concat(id));
-
-            case 2:
-              dispatch(_removeUser(id));
+              _context4.prev = 0;
+              _context4.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/auth/logout');
 
             case 3:
+              dispatch(_removeUser());
+              _history__WEBPACK_IMPORTED_MODULE_1__["default"].push('/login');
+              _context4.next = 10;
+              break;
+
+            case 7:
+              _context4.prev = 7;
+              _context4.t0 = _context4["catch"](0);
+              console.error(_context4.t0);
+
+            case 10:
             case "end":
               return _context4.stop();
           }
         }
-      }, _callee4);
+      }, _callee4, null, [[0, 7]]);
     }));
 
     return function (_x4) {
@@ -3437,22 +3453,20 @@ var removeUser = function removeUser(id) {
   }();
 };
 
-var updateUser = function updateUser(user) {
+var removeUser = function removeUser(id) {
   return /*#__PURE__*/function () {
     var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(dispatch) {
-      var response;
       return regeneratorRuntime.wrap(function _callee5$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
               _context5.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/users/".concat(user.id), user);
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("/api/users/".concat(id));
 
             case 2:
-              response = _context5.sent;
-              dispatch(_updateUser(response.data));
+              dispatch(_removeUser(id));
 
-            case 4:
+            case 3:
             case "end":
               return _context5.stop();
           }
@@ -3462,6 +3476,35 @@ var updateUser = function updateUser(user) {
 
     return function (_x5) {
       return _ref5.apply(this, arguments);
+    };
+  }();
+};
+
+var updateUser = function updateUser(user) {
+  return /*#__PURE__*/function () {
+    var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(dispatch) {
+      var response;
+      return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              _context6.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/users/".concat(user.id), user);
+
+            case 2:
+              response = _context6.sent;
+              dispatch(_updateUser(response.data));
+
+            case 4:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }));
+
+    return function (_x6) {
+      return _ref6.apply(this, arguments);
     };
   }();
 };
@@ -3475,6 +3518,9 @@ var updateUser = function updateUser(user) {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
+    case GET_USERS:
+      return action.users;
+
     case GET_USER:
       return action.user;
 

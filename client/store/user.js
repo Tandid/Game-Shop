@@ -4,6 +4,7 @@ import history from '../history'
 /**
  * ACTION TYPES
  */
+const GET_USERS = 'GET_USERS'
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 const UPDATE_USER = 'UPDATE_USER'
@@ -16,6 +17,7 @@ const defaultUser = {}
 /**
  * ACTION CREATORS
  */
+const _getUsers = users => ({type: GET_USERS, users})
 const getUser = user => ({type: GET_USER, user})
 const _removeUser = id => ({type: REMOVE_USER, user: id})
 const _updateUser = () => ({type: UPDATE_USER})
@@ -23,6 +25,14 @@ const _updateUser = () => ({type: UPDATE_USER})
 /**
  * THUNK CREATORS
  */
+
+const getUsers = () => {
+  return async dispatch => {
+    const response = await axios.get('/api/users')
+    dispatch(_getUsers(response.data))
+  }
+}
+
 const me = () => async dispatch => {
   try {
     const response = await axios.get('/auth/me')
@@ -77,6 +87,8 @@ const updateUser = user => {
  */
 export default function(state = defaultUser, action) {
   switch (action.type) {
+    case GET_USERS:
+      return action.users
     case GET_USER:
       return action.user
     case REMOVE_USER:
@@ -89,4 +101,4 @@ export default function(state = defaultUser, action) {
   }
 }
 
-export {me, auth, logout, updateUser, removeUser}
+export {me, auth, logout, updateUser, removeUser, getUsers}

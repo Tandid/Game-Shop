@@ -14,7 +14,7 @@ class UserList extends React.Component {
   }
 
   render() {
-    const {user} = this.props
+    const {users} = this.props
     return (
       <div className="wrapper">
         <h2>Users</h2>
@@ -32,26 +32,26 @@ class UserList extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {/* {users &&
-                users.map((user) => ( */}
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.firstName}</td>
-                <td>{user.lastName}</td>
-                <td>{user.email}</td>
-                <td>{user.admin === true ? 'Active' : 'Inactive'}</td>
-                <td>
-                  <button>
-                    {user.admin === true ? 'Remove Admin' : 'Make Admin'}
-                  </button>
-                </td>
-                <td>
-                  <button onClick={() => this.deleteUser(user.id)}>
-                    Delete
-                  </button>
-                </td>
-              </tr>
-              // ))}
+              {users &&
+                users.map(user => (
+                  <tr key={user.id}>
+                    <td>{user.id}</td>
+                    <td>{user.firstName}</td>
+                    <td>{user.lastName}</td>
+                    <td>{user.email}</td>
+                    <td>{user.admin === true ? 'Active' : 'Inactive'}</td>
+                    <td>
+                      <button>
+                        {user.admin === true ? 'Remove Admin' : 'Make Admin'}
+                      </button>
+                    </td>
+                    <td>
+                      <button onClick={() => this.deleteUser(user.id)}>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
@@ -60,9 +60,9 @@ class UserList extends React.Component {
   }
 }
 
-const mapStateToProps = ({user}) => {
+const mapStateToProps = ({users}) => {
   return {
-    user
+    users
   }
 }
 

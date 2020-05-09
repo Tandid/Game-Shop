@@ -15,7 +15,7 @@ import {
   Listings,
   UserList
 } from './components'
-import {me, getProducts} from './store'
+import {me, getProducts, getUsers} from './store'
 import EditProduct from './components/EditProduct'
 import {getOrderItems} from './store/orderItems'
 import {getOrders} from './store/orders'
@@ -76,6 +76,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadInitialData() {
+      dispatch(getUsers())
       dispatch(me())
       dispatch(getProducts())
       dispatch(getOrders())
