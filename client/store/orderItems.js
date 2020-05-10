@@ -89,6 +89,7 @@ const orderItems = function(state = initialState, action) {
 
     case DELETE_ORDER_ITEM:
       state = state.filter(orderItem => orderItem !== action.orderItem)
+      return state
 
     default:
       return state

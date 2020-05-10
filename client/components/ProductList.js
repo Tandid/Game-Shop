@@ -22,7 +22,6 @@ class ProductList extends React.Component {
   componentDidUpdate(prevProps) {
     if (
       this.props.orderItem.quantity !== prevProps.orderItem.quantity ||
-      //this line doesn't work
       this.props.orderItems.length !== prevProps.orderItems.length
     ) {
       this.props.loadOrderItems()

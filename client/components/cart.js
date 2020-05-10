@@ -5,23 +5,16 @@ import {getOrders, updateOrder, createOrder} from '../store/orders'
 import {getOrderItems, deleteOrderItem} from '../store/orderItems.js'
 
 class Cart extends React.Component {
-  constructor(props) {
-    // let orderItems = []
-    // if (props.orderItems && props.orderItems.length) {
-    //   orderItems = props.orderItems
-    // }
+  constructor() {
     super()
-    // this.state = {
-    //   orderItems,
-    // }
     this.onSubmit = this.onSubmit.bind(this)
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.orderItems.length !== prevProps.orderItems.length) {
-      this.props.loadOrderItems()
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.orderItems.length !== prevProps.orderItems.length) {
+  //     this.props.loadOrderItems()
+  //   }
+  // }
 
   async onSubmit(event) {
     event.preventDefault()
@@ -85,7 +78,7 @@ const mapStateToProps = ({orderItems, products, orders, user}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadOrderItems: () => dispatch(getOrderItems()),
+    // loadOrderItems: () => dispatch(getOrderItems()),
     removeFromCart: orderItem => dispatch(deleteOrderItem(orderItem)),
     acceptOrder: (order, push) => dispatch(updateOrder(order, push)),
     createNewCart: order => dispatch(createOrder(order))

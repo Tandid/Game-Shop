@@ -260,31 +260,22 @@ var Cart =
 function (_React$Component) {
   _inherits(Cart, _React$Component);
 
-  function Cart(props) {
+  function Cart() {
     var _this;
 
     _classCallCheck(this, Cart);
 
-    // let orderItems = []
-    // if (props.orderItems && props.orderItems.length) {
-    //   orderItems = props.orderItems
-    // }
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Cart).call(this)); // this.state = {
-    //   orderItems,
-    // }
-
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Cart).call(this));
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
     return _this;
-  }
+  } // componentDidUpdate(prevProps) {
+  //   if (this.props.orderItems.length !== prevProps.orderItems.length) {
+  //     this.props.loadOrderItems()
+  //   }
+  // }
+
 
   _createClass(Cart, [{
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      if (this.props.orderItems.length !== prevProps.orderItems.length) {
-        this.props.loadOrderItems();
-      }
-    }
-  }, {
     key: "onSubmit",
     value: function () {
       var _onSubmit = _asyncToGenerator(
@@ -393,9 +384,7 @@ var mapStateToProps = function mapStateToProps(_ref) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    loadOrderItems: function loadOrderItems() {
-      return dispatch(Object(_store_orderItems_js__WEBPACK_IMPORTED_MODULE_4__["getOrderItems"])());
-    },
+    // loadOrderItems: () => dispatch(getOrderItems()),
     removeFromCart: function removeFromCart(orderItem) {
       return dispatch(Object(_store_orderItems_js__WEBPACK_IMPORTED_MODULE_4__["deleteOrderItem"])(orderItem));
     },
@@ -1004,9 +993,6 @@ var mapStateToProps = function mapStateToProps(_ref) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    loadProducts: function loadProducts() {
-      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["getProducts"])());
-    },
     "delete": function _delete(id) {
       return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["removeProduct"])(id));
     }
@@ -2084,8 +2070,7 @@ function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      if (this.props.orderItem.quantity !== prevProps.orderItem.quantity || //this line doesn't work
-      this.props.orderItems.length !== prevProps.orderItems.length) {
+      if (this.props.orderItem.quantity !== prevProps.orderItem.quantity || this.props.orderItems.length !== prevProps.orderItems.length) {
         this.props.loadOrderItems();
       }
     }
@@ -2831,6 +2816,7 @@ var orderItems = function orderItems() {
       state = state.filter(function (orderItem) {
         return orderItem !== action.orderItem;
       });
+      return state;
 
     default:
       return state;
@@ -47240,7 +47226,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

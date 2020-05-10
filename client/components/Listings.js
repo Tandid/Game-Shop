@@ -72,7 +72,6 @@ const mapStateToProps = ({products}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadProducts: () => dispatch(getProducts()),
     delete: id => dispatch(removeProduct(id))
   }
 }

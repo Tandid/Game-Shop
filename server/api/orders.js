@@ -35,11 +35,12 @@ router.get('/:id/orderItems', (req, res, next) => {
     .catch(next)
 })
 
+// SINGLE ORDER ITEM
 router.get('/:id/orderItems/:productId', (req, res, next) => {
-  OrderItems.findAll({
+  OrderItems.findOne({
     where: {orderId: req.params.id, productId: req.params.productId}
   })
-    .then(orderItems => res.send(orderItems))
+    .then(orderItem => res.send(orderItem))
     .catch(next)
 })
 
