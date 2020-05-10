@@ -21,7 +21,7 @@ const initialState = []
 const _getProducts = products => ({type: GET_PRODUCTS, products})
 const _getDetails = product => ({type: GET_DETAILS, product})
 const _createProduct = product => ({type: CREATE_PRODUCT, product})
-const _removeProduct = id => ({type: REMOVE_PRODUCT, product: id})
+const _removeProduct = id => ({type: REMOVE_PRODUCT, id})
 const _updateProduct = product => ({type: UPDATE_PRODUCT, product})
 
 /**
@@ -77,7 +77,7 @@ const products = function(state = initialState, action) {
     case CREATE_PRODUCT:
       return [...state, action.product]
     case REMOVE_PRODUCT:
-      return state.filter(product => product.id !== action.product) //need to work on this
+      return state.filter(product => product.id !== action.id)
     case UPDATE_PRODUCT:
       state = state.map(
         product => (product.id === action.product.id ? action.product : product)

@@ -20,9 +20,13 @@ router.post('/', async (req, res, next) => {
 })
 
 router.delete('/:id', async (req, res, next) => {
-  await Product.findByPk(req.params.id)
-    .then(product => product.destroy(req.params.id))
-    .catch(next)
+  try {
+    const product = await Product.findByPk(req.params.id)
+    await product.destroy()
+    res.sendStatus(204)
+  } catch (error) {
+    next(error)
+  }
 })
 
 router.put('/:id', (req, res, next) => {

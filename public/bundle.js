@@ -278,15 +278,12 @@ function (_React$Component) {
   }
 
   _createClass(Cart, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.props.loadOrderItems();
-    } // componentDidUpdate(prevProps) {
-    //   if (this.props.orderItems.length !== prevProps.orderItems.length) {
-    //     this.props.loadOrderItems()
-    //   }
-    // }
-
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (this.props.orderItems.length !== prevProps.orderItems.length) {
+        this.props.loadOrderItems();
+      }
+    }
   }, {
     key: "onSubmit",
     value: function () {
@@ -937,15 +934,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -958,24 +953,20 @@ function (_React$Component) {
   _inherits(Listings, _React$Component);
 
   function Listings() {
-    var _this;
-
     _classCallCheck(this, Listings);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Listings).call(this));
+    return _possibleConstructorReturn(this, _getPrototypeOf(Listings).call(this));
+  } // componentDidUpdate(prevProps) {
+  //   if (this.props.products.length !== prevProps.products.length) {
+  //     this.props.loadProducts()
+  //   }
+  // }
 
-    _defineProperty(_assertThisInitialized(_this), "deleteProduct", function (id) {
-      _this.props["delete"](id);
-    });
-
-    _this["delete"] = _this.deleteProduct.bind(_assertThisInitialized(_this));
-    return _this;
-  }
 
   _createClass(Listings, [{
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this = this;
 
       var products = this.props.products;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -991,7 +982,7 @@ function (_React$Component) {
           to: "/products/".concat(product.id, "/edit")
         }, "Edit")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           onClick: function onClick() {
-            return _this2.deleteProduct(product.id);
+            return _this.props["delete"](product.id);
           }
         }, "Delete")));
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
@@ -1013,6 +1004,9 @@ var mapStateToProps = function mapStateToProps(_ref) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
+    loadProducts: function loadProducts() {
+      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["getProducts"])());
+    },
     "delete": function _delete(id) {
       return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["removeProduct"])(id));
     }
@@ -2466,7 +2460,7 @@ socket.on('connect', function () {
 /*!*******************************!*\
   !*** ./client/store/index.js ***!
   \*******************************/
-/*! exports provided: default, me, auth, logout, updateUser, removeUser, getUsers, user, users, orderItems, orderItem, getOrderItem, getOrderItems, createOrderItem, updateOrderItem, deleteOrderItem, products, product, getProducts, getDetails, createProduct, removeProduct, updateProduct */
+/*! exports provided: default, me, auth, logout, updateUser, removeUser, getUsers, user, users, products, product, getProducts, getDetails, createProduct, removeProduct, updateProduct, orderItems, orderItem, getOrderItem, getOrderItems, createOrderItem, updateOrderItem, deleteOrderItem */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3146,7 +3140,7 @@ var _createProduct = function _createProduct(product) {
 var _removeProduct = function _removeProduct(id) {
   return {
     type: REMOVE_PRODUCT,
-    product: id
+    id: id
   };
 };
 
@@ -3350,9 +3344,8 @@ var products = function products() {
 
     case REMOVE_PRODUCT:
       return state.filter(function (product) {
-        return product.id !== action.product;
+        return product.id !== action.id;
       });
-    //need to work on this
 
     case UPDATE_PRODUCT:
       state = state.map(function (product) {
@@ -47247,7 +47240,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

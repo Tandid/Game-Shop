@@ -6,12 +6,13 @@ import {getProducts, removeProduct} from '../store'
 class Listings extends React.Component {
   constructor() {
     super()
-    this.delete = this.deleteProduct.bind(this)
   }
 
-  deleteProduct = id => {
-    this.props.delete(id)
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.products.length !== prevProps.products.length) {
+  //     this.props.loadProducts()
+  //   }
+  // }
 
   render() {
     const {products} = this.props
@@ -46,7 +47,7 @@ class Listings extends React.Component {
                       <Link to={`/products/${product.id}/edit`}>Edit</Link>
                     </td>
                     <td>
-                      <button onClick={() => this.deleteProduct(product.id)}>
+                      <button onClick={() => this.props.delete(product.id)}>
                         Delete
                       </button>
                     </td>
@@ -71,6 +72,7 @@ const mapStateToProps = ({products}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    loadProducts: () => dispatch(getProducts()),
     delete: id => dispatch(removeProduct(id))
   }
 }

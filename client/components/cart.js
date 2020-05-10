@@ -17,15 +17,11 @@ class Cart extends React.Component {
     this.onSubmit = this.onSubmit.bind(this)
   }
 
-  componentDidMount() {
-    this.props.loadOrderItems()
+  componentDidUpdate(prevProps) {
+    if (this.props.orderItems.length !== prevProps.orderItems.length) {
+      this.props.loadOrderItems()
+    }
   }
-
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.orderItems.length !== prevProps.orderItems.length) {
-  //     this.props.loadOrderItems()
-  //   }
-  // }
 
   async onSubmit(event) {
     event.preventDefault()
