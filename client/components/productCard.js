@@ -14,11 +14,11 @@ class ProductCard extends React.Component {
     // this.guestUserCart = this.guestUserCart.bind(this)
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.cart !== prevProps.cart) {
-      this.props.loadOrders()
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.cart !== prevProps.cart) {
+  //     this.props.loadOrders()
+  //   }
+  // }
 
   // async guestUserCart() {
   //   try {

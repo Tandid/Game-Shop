@@ -828,7 +828,6 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: onSubmit,
         className: "edit-form"
       }, error, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Edit Product Details"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Product Title:", ' ', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         value: title,
@@ -866,6 +865,7 @@ function (_React$Component) {
           });
         }
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Platform:", ' ', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        value: category,
         onChange: function onChange(ev) {
           return _this2.setState({
             category: ev.target.value
@@ -882,7 +882,8 @@ function (_React$Component) {
       }, "PC"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "Nintendo"
       }, "Switch"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        disabled: title === product.title && description === product.description && imageURL === product.imageURL && price === product.price && inventory === product.inventory && category === product.category
+        disabled: title === product.title && description === product.description && imageURL === product.imageURL && price === product.price && inventory === product.inventory && category === product.category,
+        onClick: onSubmit
       }, "Update")));
     }
   }]);
@@ -1343,26 +1344,24 @@ function (_React$Component) {
     _classCallCheck(this, ProductCard);
 
     return _possibleConstructorReturn(this, _getPrototypeOf(ProductCard).call(this)); // this.guestUserCart = this.guestUserCart.bind(this)
-  }
+  } // componentDidUpdate(prevProps) {
+  //   if (this.props.cart !== prevProps.cart) {
+  //     this.props.loadOrders()
+  //   }
+  // }
+  // async guestUserCart() {
+  //   try {
+  //     await this.props.createNewCart({
+  //       userId: this.props.user.id,
+  //       status: 'cart',
+  //     })
+  //   } catch (exception) {
+  //     console.log(exception)
+  //   }
+  // }
+
 
   _createClass(ProductCard, [{
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      if (this.props.cart !== prevProps.cart) {
-        this.props.loadOrders();
-      }
-    } // async guestUserCart() {
-    //   try {
-    //     await this.props.createNewCart({
-    //       userId: this.props.user.id,
-    //       status: 'cart',
-    //     })
-    //   } catch (exception) {
-    //     console.log(exception)
-    //   }
-    // }
-
-  }, {
     key: "render",
     value: function render() {
       var _this = this;
@@ -1615,10 +1614,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1661,49 +1656,26 @@ function (_React$Component) {
   }
 
   _createClass(Products, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.load();
+
+      if (!this.props.user.id) {
+        var guestUser = {
+          id: 0,
+          email: '',
+          password: ''
+        };
+        sessionStorage.setItem('guestUser', JSON.stringify(guestUser));
+      }
+    }
+  }, {
     key: "onChange",
     value: function onChange(ev) {
       this.setState({
         category: ev.target.value
       });
     }
-  }, {
-    key: "componentDidMount",
-    value: function () {
-      var _componentDidMount = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee() {
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return this.props.load();
-
-              case 3:
-                _context.next = 8;
-                break;
-
-              case 5:
-                _context.prev = 5;
-                _context.t0 = _context["catch"](0);
-                console.error(_context.t0);
-
-              case 8:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this, [[0, 5]]);
-      }));
-
-      function componentDidMount() {
-        return _componentDidMount.apply(this, arguments);
-      }
-
-      return componentDidMount;
-    }()
   }, {
     key: "render",
     value: function render() {
@@ -1737,6 +1709,10 @@ function (_React$Component) {
           value: "Nintendo"
         }, "Switch")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "There are no games currently available"));
       } else {
+        if (!this.props.user.id) {
+          console.log(JSON.parse(sessionStorage.guestUser));
+        }
+
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "search-bar"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Search by Platform"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
@@ -1767,9 +1743,11 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 var mapStateToProps = function mapStateToProps(_ref) {
-  var products = _ref.products;
+  var products = _ref.products,
+      user = _ref.user;
   return {
-    products: products
+    products: products,
+    user: user
   };
 };
 
@@ -2488,7 +2466,7 @@ socket.on('connect', function () {
 /*!*******************************!*\
   !*** ./client/store/index.js ***!
   \*******************************/
-/*! exports provided: default, me, auth, logout, updateUser, removeUser, getUsers, user, users, products, product, getProducts, getDetails, createProduct, removeProduct, updateProduct, orderItems, orderItem, getOrderItem, getOrderItems, createOrderItem, updateOrderItem, deleteOrderItem */
+/*! exports provided: default, me, auth, logout, updateUser, removeUser, getUsers, user, users, orderItems, orderItem, getOrderItem, getOrderItems, createOrderItem, updateOrderItem, deleteOrderItem, products, product, getProducts, getDetails, createProduct, removeProduct, updateProduct */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3269,7 +3247,7 @@ var createProduct = function createProduct(product, push) {
               case 2:
                 response = _context3.sent;
                 dispatch(_createProduct(response.data));
-                push('/products');
+                push('/listings');
 
               case 5:
               case "end":
@@ -3338,7 +3316,7 @@ var updateProduct = function updateProduct(product, push) {
                 _ref6 = _context5.sent;
                 updatedProduct = _ref6.data;
                 dispatch(_updateProduct(updatedProduct));
-                push('/products');
+                push('/listings');
 
               case 6:
               case "end":

@@ -45,7 +45,7 @@ const createProduct = (product, push) => {
   return async dispatch => {
     const response = await axios.post('/api/products', product)
     dispatch(_createProduct(response.data))
-    push('/products')
+    push('/listings')
   }
 }
 
@@ -63,7 +63,7 @@ const updateProduct = (product, push) => {
       product
     )
     dispatch(_updateProduct(updatedProduct))
-    push('/products')
+    push('/listings')
   }
 }
 

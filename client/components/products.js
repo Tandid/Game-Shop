@@ -14,18 +14,18 @@ class Products extends React.Component {
     this.onChange = this.onChange.bind(this)
   }
 
+  componentDidMount() {
+    this.props.load()
+    if (!this.props.user.id) {
+      const guestUser = {id: 0, email: '', password: ''}
+      sessionStorage.setItem('guestUser', JSON.stringify(guestUser))
+    }
+  }
+
   onChange(ev) {
     this.setState({
       category: ev.target.value
     })
-  }
-
-  async componentDidMount() {
-    try {
-      await this.props.load()
-    } catch (error) {
-      console.error(error)
-    }
   }
 
   render() {
@@ -55,6 +55,9 @@ class Products extends React.Component {
         </div>
       )
     } else {
+      if (!this.props.user.id) {
+        console.log(JSON.parse(sessionStorage.guestUser))
+      }
       return (
         <div>
           <div className="search-bar">
@@ -81,8 +84,8 @@ class Products extends React.Component {
   }
 }
 
-const mapStateToProps = ({products}) => {
-  return {products}
+const mapStateToProps = ({products, user}) => {
+  return {products, user}
 }
 
 const mapDispatchToProps = dispatch => {

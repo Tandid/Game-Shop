@@ -25,9 +25,19 @@ router.delete('/:id', async (req, res, next) => {
     .catch(next)
 })
 
-router.put('/:id', async (req, res, next) => {
-  await Product.findByPk(req.params.id)
-    .then(product => product.update(req.body))
+router.put('/:id', (req, res, next) => {
+  Product.findByPk(req.params.id)
+    .then(product =>
+      product.update({
+        title: req.body.title,
+        description: req.body.description,
+        imageURL: req.body.imageURL,
+        price: req.body.price,
+        inventory: req.body.inventory,
+        category: req.body.category
+      })
+    )
+    .then(product => res.send(product))
     .catch(next)
 })
 

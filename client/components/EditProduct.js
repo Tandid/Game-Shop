@@ -103,7 +103,7 @@ class EditProduct extends React.Component {
     const {product} = this.props
     return (
       <div className="form-wrapper">
-        <form onSubmit={onSubmit} className="edit-form">
+        <form className="edit-form">
           {error}
           <h3>Edit Product Details</h3>
           <p>
@@ -146,7 +146,10 @@ class EditProduct extends React.Component {
 
           <p>
             Platform:{' '}
-            <select onChange={ev => this.setState({category: ev.target.value})}>
+            <select
+              value={category}
+              onChange={ev => this.setState({category: ev.target.value})}
+            >
               <option value="">--Select a Platform--</option>
               <option value="Xbox">Xbox</option>
               <option value="Playstation">Playstation</option>
@@ -164,6 +167,7 @@ class EditProduct extends React.Component {
               inventory === product.inventory &&
               category === product.category
             }
+            onClick={onSubmit}
           >
             Update
           </button>
