@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import ProductList from './productList.js'
 import {getOrders, updateOrder, createOrder} from '../store/orders'
 import {getOrderItems, deleteOrderItem} from '../store/orderItems.js'
+import {Link} from 'react-router-dom' //can delete later
 
 class Cart extends React.Component {
   constructor(props) {
@@ -70,6 +71,7 @@ class Cart extends React.Component {
           >
             Clear Cart
           </button>
+          <Link to="/checkout"> Checkout Form</Link>
         </div>
       )
     }

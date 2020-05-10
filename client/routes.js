@@ -13,7 +13,8 @@ import {
   Orders,
   Account,
   Listings,
-  UserList
+  UserList,
+  Checkout
 } from './components'
 import {me, getProducts, getUsers} from './store'
 import EditProduct from './components/EditProduct'
@@ -43,6 +44,7 @@ class Routes extends Component {
         <Route exact path="/products" component={Products} />
         <Route path="/cart" component={Cart} />
         <Route path="/orders" component={Orders} />
+        <Route path="/checkout" component={Checkout} />
         {isLoggedIn && (
           <Switch>
             <Route exact path="/account" component={Account} />
