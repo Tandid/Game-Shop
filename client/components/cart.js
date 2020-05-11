@@ -1,21 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import ProductList from './productList.js'
-import {getOrders, updateOrder, createOrder} from '../store/orders'
-import {getOrderItems, deleteOrderItem} from '../store/orderItems.js'
-import {Link} from 'react-router-dom' //can delete later
+import ProductList from './ProductList'
+import {updateOrder, createOrder} from '../store/orders'
+import {getOrderItems, deleteOrderItem} from '../store/orderItems'
 
 class Cart extends React.Component {
   constructor() {
     super()
     this.onSubmit = this.onSubmit.bind(this)
   }
-
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.orderItems.length !== prevProps.orderItems.length) {
-  //     this.props.loadOrderItems()
-  //   }
-  // }
 
   async onSubmit(event) {
     event.preventDefault()
@@ -35,9 +28,9 @@ class Cart extends React.Component {
 
   render() {
     const {onSubmit} = this
-    const {orderItems, cart, products, user} = this.props
-    if (!cart || !orderItems || !products) {
-      return <h3>Loading...</h3>
+    const {cart, orderItems} = this.props
+    if (!cart) {
+      return <h1>Loading...</h1>
     } else {
       return (
         <div className="cart-wrapper">
@@ -49,10 +42,9 @@ class Cart extends React.Component {
                 <ProductList key={Math.random()} {...orderItem} />
               ))}
           </ul>
-          <p> Total Price: $</p>
+          <p> Total Price: $ </p>
           <button className="cart-button" onClick={onSubmit}>
-            {' '}
-            Checkout{' '}
+            Checkout
           </button>
           <button
             className="cart-button"
@@ -64,26 +56,30 @@ class Cart extends React.Component {
           >
             Clear Cart
           </button>
-          <Link to="/checkout"> Checkout Form</Link>
         </div>
       )
     }
   }
 }
 
-const mapStateToProps = ({orderItems, products, orders, user}) => {
+const mapStateToProps = ({orders, products, orderItems, user}) => {
   const cart = orders.find(
-    order => order.status === 'cart' && order.userId === user.id
+    order => order.userId === user.id && order.status === 'cart'
   )
-  return {cart, orderItems, products, user}
+  return {
+    cart,
+    products,
+    orderItems,
+    user
+  }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    // loadOrderItems: () => dispatch(getOrderItems()),
-    removeFromCart: orderItem => dispatch(deleteOrderItem(orderItem)),
+    loadOrderItems: () => dispatch(getOrderItems()),
     acceptOrder: (order, push) => dispatch(updateOrder(order, push)),
-    createNewCart: order => dispatch(createOrder(order))
+    createNewCart: order => dispatch(createOrder(order)),
+    removeFromCart: orderItem => dispatch(deleteOrderItem(orderItem))
   }
 }
 

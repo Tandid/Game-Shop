@@ -83,12 +83,16 @@ const orderItems = function(state = initialState, action) {
     case UPDATE_ORDER_ITEM:
       state = state.map(
         orderItem =>
-          orderItem === action.orderItem ? action.orderItem : orderItem
+          orderItem.productId === action.orderItem.productId
+            ? action.orderItem
+            : orderItem
       )
       return state
 
     case DELETE_ORDER_ITEM:
-      state = state.filter(orderItem => orderItem !== action.orderItem)
+      state = state.filter(
+        orderItem => orderItem.productId !== action.orderItem.productId
+      )
       return state
 
     default:

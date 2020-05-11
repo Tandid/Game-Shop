@@ -26,7 +26,7 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
-// ORDER ITEMS
+// GET ALL ORDER ITEMS
 router.get('/:id/orderItems', (req, res, next) => {
   OrderItems.findAll({
     where: {orderId: req.params.id}
@@ -35,7 +35,7 @@ router.get('/:id/orderItems', (req, res, next) => {
     .catch(next)
 })
 
-// SINGLE ORDER ITEM
+// GET SINGLE ORDER ITEM
 router.get('/:id/orderItems/:productId', (req, res, next) => {
   OrderItems.findOne({
     where: {orderId: req.params.id, productId: req.params.productId}
@@ -44,15 +44,23 @@ router.get('/:id/orderItems/:productId', (req, res, next) => {
     .catch(next)
 })
 
+// CHANGE SINGLE ORDER ITEM
 router.put('/:id/orderItems/:productId', (req, res, next) => {
   OrderItems.findOne({
     where: {orderId: req.params.id, productId: req.params.productId}
   })
-    .then(orderItem => orderItem.update({quantity: req.body.quantity}))
+    .then(orderItem =>
+      orderItem.update({
+        orderId: req.body.orderId,
+        productId: req.body.productId,
+        quantity: req.body.quantity
+      })
+    )
     .then(orderItem => res.send(orderItem))
     .catch(next)
 })
 
+// DELETE SINGLE ORDER ITEM
 router.delete('/:id/orderItems/:productId', async (req, res, next) => {
   try {
     const orderItem = await OrderItems.findOne({

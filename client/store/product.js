@@ -21,8 +21,8 @@ const initialState = []
 const _getProducts = products => ({type: GET_PRODUCTS, products})
 const _getDetails = product => ({type: GET_DETAILS, product})
 const _createProduct = product => ({type: CREATE_PRODUCT, product})
-const _removeProduct = id => ({type: REMOVE_PRODUCT, id})
 const _updateProduct = product => ({type: UPDATE_PRODUCT, product})
+const _removeProduct = id => ({type: REMOVE_PRODUCT, id})
 
 /**
  * THUNK CREATORS -------------------------------------------------
@@ -49,13 +49,6 @@ const createProduct = (product, push) => {
   }
 }
 
-const removeProduct = id => {
-  return async dispatch => {
-    await axios.delete(`/api/products/${id}`)
-    dispatch(_removeProduct(id))
-  }
-}
-
 const updateProduct = (product, push) => {
   return async dispatch => {
     const {data: updatedProduct} = await axios.put(
@@ -67,6 +60,13 @@ const updateProduct = (product, push) => {
   }
 }
 
+const removeProduct = id => {
+  return async dispatch => {
+    await axios.delete(`/api/products/${id}`)
+    dispatch(_removeProduct(id))
+  }
+}
+
 /**
  * REDUCER -------------------------------------------------------
  */
@@ -74,15 +74,19 @@ const products = function(state = initialState, action) {
   switch (action.type) {
     case GET_PRODUCTS:
       return action.products
+
     case CREATE_PRODUCT:
       return [...state, action.product]
+
     case REMOVE_PRODUCT:
       return state.filter(product => product.id !== action.id)
+
     case UPDATE_PRODUCT:
       state = state.map(
         product => (product.id === action.product.id ? action.product : product)
       )
       return state
+
     default:
       return state
   }
