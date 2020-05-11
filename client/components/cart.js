@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import ProductList from './ProductList'
 import {updateOrder, createOrder} from '../store/orders'
-import {deleteOrderItem, getOrderItems} from '../store/orderItems'
+import {deleteOrderItem, getOrderItems, orderItem} from '../store/orderItems'
 
 class Cart extends React.Component {
   constructor() {
@@ -15,7 +15,7 @@ class Cart extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.cart !== prevProps.cart) {
+    if (this.props.orderItems.length !== prevProps.orderItems.length) {
       console.log('changed quantity')
     }
   }
@@ -42,15 +42,16 @@ class Cart extends React.Component {
     if (!cart || !orderItems) {
       return <h1>Loading...</h1>
     } else {
+      const cartOrderItems = orderItems.filter(
+        orderItem => orderItem.orderId === cart.id
+      )
       return (
         <div className="cart-wrapper">
           <h1>Cart</h1>
           <ul>
-            {orderItems
-              .filter(orderItem => orderItem.orderId === cart.id)
-              .map(orderItem => (
-                <ProductList key={Math.random()} {...orderItem} />
-              ))}
+            {cartOrderItems.map(orderItem => (
+              <ProductList key={Math.random()} {...orderItem} />
+            ))}
           </ul>
           <p> Total Price: $ </p>
           <button className="cart-button" onClick={onSubmit}>
@@ -59,9 +60,9 @@ class Cart extends React.Component {
           <button
             className="cart-button"
             onClick={() => {
-              orderItems
-                .filter(orderItem => orderItem.orderId === cart.id)
-                .forEach(orderItem => this.props.removeFromCart(orderItem))
+              cartOrderItems.forEach(orderItem =>
+                this.props.removeFromCart(orderItem)
+              )
             }}
           >
             Clear Cart
@@ -76,6 +77,7 @@ const mapStateToProps = ({orders, products, orderItems, user}) => {
   const cart = orders.find(
     order => order.userId === user.id && order.status === 'cart'
   )
+
   return {
     cart,
     products,

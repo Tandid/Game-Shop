@@ -278,7 +278,7 @@ function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      if (this.props.cart !== prevProps.cart) {
+      if (this.props.orderItems.length !== prevProps.orderItems.length) {
         console.log('changed quantity');
       }
     }
@@ -343,11 +343,12 @@ function (_React$Component) {
       if (!cart || !orderItems) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Loading...");
       } else {
+        var cartOrderItems = orderItems.filter(function (orderItem) {
+          return orderItem.orderId === cart.id;
+        });
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "cart-wrapper"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Cart"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, orderItems.filter(function (orderItem) {
-          return orderItem.orderId === cart.id;
-        }).map(function (orderItem) {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Cart"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, cartOrderItems.map(function (orderItem) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ProductList__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
             key: Math.random()
           }, orderItem));
@@ -357,9 +358,7 @@ function (_React$Component) {
         }, "Checkout"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "cart-button",
           onClick: function onClick() {
-            orderItems.filter(function (orderItem) {
-              return orderItem.orderId === cart.id;
-            }).forEach(function (orderItem) {
+            cartOrderItems.forEach(function (orderItem) {
               return _this2.props.removeFromCart(orderItem);
             });
           }
