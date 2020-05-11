@@ -8,7 +8,7 @@ class Orders extends React.Component {
     super()
   }
 
-  componentDidMount(prevProps) {
+  componentDidMount() {
     this.props.fetchOrders()
   }
 

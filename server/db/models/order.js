@@ -9,11 +9,6 @@ const Order = db.define('order', {
     type: Sequelize.STRING,
     defaultValue: 'cart'
   }
-  // completed: {
-  //   defaultValue: false,
-  //   type: Sequelize.BOOLEAN,
-  //   allowNull: false
-  // }
 })
 
 module.exports = Order

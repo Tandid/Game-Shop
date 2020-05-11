@@ -2,12 +2,22 @@ import React from 'react'
 import {connect} from 'react-redux'
 import ProductList from './ProductList'
 import {updateOrder, createOrder} from '../store/orders'
-import {getOrderItems, deleteOrderItem} from '../store/orderItems'
+import {deleteOrderItem, getOrderItems} from '../store/orderItems'
 
 class Cart extends React.Component {
   constructor() {
     super()
     this.onSubmit = this.onSubmit.bind(this)
+  }
+
+  componentDidMount() {
+    this.props.loadOrderItems()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.cart !== prevProps.cart) {
+      console.log('changed quantity')
+    }
   }
 
   async onSubmit(event) {
@@ -29,7 +39,7 @@ class Cart extends React.Component {
   render() {
     const {onSubmit} = this
     const {cart, orderItems} = this.props
-    if (!cart) {
+    if (!cart || !orderItems) {
       return <h1>Loading...</h1>
     } else {
       return (

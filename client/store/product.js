@@ -7,8 +7,8 @@ import history from '../history'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const GET_DETAILS = 'GET_DETAILS'
 const CREATE_PRODUCT = 'CREATE_PRODUCT'
-const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
+const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 
 /**
  * INITIAL STATE --------------------------------------------------

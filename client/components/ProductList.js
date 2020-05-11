@@ -1,6 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {deleteOrderItem, updateOrderItem} from '../store/orderItems'
+import {
+  deleteOrderItem,
+  updateOrderItem,
+  getOrderItem,
+  orderItems
+} from '../store/orderItems'
 
 class ProductList extends React.Component {
   constructor() {
@@ -8,7 +13,7 @@ class ProductList extends React.Component {
   }
 
   render() {
-    const {orderId, productId, quantity, products} = this.props
+    const {orderId, productId, quantity, products, orderItem} = this.props
     const product = products.find(product => product.id === productId)
     if (!product) {
       return <h1>Loading...</h1>
@@ -54,15 +59,17 @@ class ProductList extends React.Component {
   }
 }
 
-const mapStateToProps = ({products, orderItems}) => {
+const mapStateToProps = ({products, orderItems, orderItem}) => {
   return {
     products,
-    orderItems
+    orderItems,
+    orderItem
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
+    loadOrderItem: orderItem => dispatch(getOrderItem(orderItem)),
     addOrSubtract: orderItem => dispatch(updateOrderItem(orderItem)),
     removeFromCart: orderItem => dispatch(deleteOrderItem(orderItem))
   }

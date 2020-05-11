@@ -1,9 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {getProducts} from '../store'
 import ProductCard from './ProductCard.js'
-import orderItems, {createOrderItem} from '../store/orderItems'
+import {createOrderItem} from '../store/orderItems'
 
 class Products extends React.Component {
   constructor() {
@@ -12,14 +11,6 @@ class Products extends React.Component {
       category: 'all'
     }
     this.onChange = this.onChange.bind(this)
-  }
-
-  componentDidMount() {
-    this.props.load()
-    if (!this.props.user.id) {
-      const guestUser = {id: 0, email: '', password: ''}
-      sessionStorage.setItem('guestUser', JSON.stringify(guestUser))
-    }
   }
 
   onChange(ev) {
@@ -55,9 +46,6 @@ class Products extends React.Component {
         </div>
       )
     } else {
-      if (!this.props.user.id) {
-        console.log(JSON.parse(sessionStorage.guestUser))
-      }
       return (
         <div>
           <div className="search-bar">
