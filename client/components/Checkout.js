@@ -1,10 +1,8 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import axios from 'axios'
 import {connect} from 'react-redux'
 import ProductList from './ProductList'
 import {updateOrder, createOrder} from '../store/orders'
-import {deleteOrderItem, getOrderItems} from '../store/orderItems'
 
 // import Payment from './Payment' //add this component through STRIPE
 
@@ -101,6 +99,7 @@ class Checkout extends Component {
                 </button>
               </div>
             </div>
+
             <div className="checkout-form">
               <h1> Items in Cart </h1>
               <ul>
@@ -130,10 +129,8 @@ const mapStateToProps = ({user, orders, orderItems, products}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadOrderItems: () => dispatch(getOrderItems()),
     acceptOrder: (order, push) => dispatch(updateOrder(order, push)),
-    createNewCart: order => dispatch(createOrder(order)),
-    removeFromCart: orderItem => dispatch(deleteOrderItem(orderItem))
+    createNewCart: order => dispatch(createOrder(order))
   }
 }
 

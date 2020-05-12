@@ -277,7 +277,7 @@ tr:nth-child(even) {
   display: flex;
   border-radius: 1rem;
   background-color: beige;
-  margin: 0.5rem;
   padding: 1rem;
   list-style-type: none;
+  margin: 2rem 4rem;
 }
