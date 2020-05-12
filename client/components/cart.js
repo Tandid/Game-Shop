@@ -49,13 +49,13 @@ class Cart extends React.Component {
             ))}
           </ul>
           <p> Total Price: $ </p>
-          <button
+          {/* <button
             className="cart-button"
             onClick={onSubmit}
             disabled={!cartOrderItems.length}
           >
             Checkout
-          </button>
+          </button> */}
           <button
             className="cart-button"
             onClick={() => {
