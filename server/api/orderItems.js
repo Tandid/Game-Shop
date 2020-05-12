@@ -1,8 +1,16 @@
 const router = require('express').Router()
 const {OrderItems} = require('../db/models')
 
+// GET ALL ORDER ITEMS
 router.get('/', async (req, res, next) => {
   await OrderItems.findAll()
+    .then(orderItems =>
+      orderItems.sort(function(a, b) {
+        a = new Date(a.createdAt)
+        b = new Date(b.createdAt)
+        return a > b ? 1 : a < b ? -1 : 0
+      })
+    )
     .then(orderItems => res.send(orderItems))
     .catch(next)
 })
