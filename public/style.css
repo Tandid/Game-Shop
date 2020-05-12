@@ -171,10 +171,6 @@ select {
   width: 100%;
 }
 
-.OrderCard {
-  background-color: white;
-}
-
 /* search bar */
 
 .search-bar {
@@ -274,4 +270,14 @@ tr:nth-child(even) {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+}
+
+/* Order Card */
+.OrderCard {
+  display: flex;
+  border-radius: 1rem;
+  background-color: beige;
+  margin: 0.5rem;
+  padding: 1rem;
+  list-style-type: none;
 }
