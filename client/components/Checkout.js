@@ -32,41 +32,44 @@ class Checkout extends Component {
   render() {
     const {user} = this.props
     return (
-      <div className="wrapper">
-        <form onSubmit={this.handleSubmit}>
-          <h1>Checkout</h1>
-          <div>
-            <div>
-              <input
-                type="text"
-                name="firstName"
-                onChange={this.handleChange}
-                value={user.firstName ? user.firstName : this.state.firstName}
-                placeholder="First Name"
-              />
-              <input
-                type="text"
-                name="lastName"
-                onChange={this.handleChange}
-                value={user.lastName ? user.lastName : this.state.lastName}
-                placeholder="Last Name"
-              />
-              <input
-                type="text"
-                name="email"
-                onChange={this.handleChange}
-                value={user.email ? user.email : this.state.email}
-                placeholder="Email"
-              />
-              <input
-                type="text"
-                name="address"
-                onChange={this.handleChange}
-                value={user.address ? user.address : this.state.address}
-                placeholder="Address"
-              />
-              {/* <Payment/> */}
-            </div>
+      <div className="form-wrapper">
+        <form className="split" onSubmit={this.handleSubmit}>
+          <div className="checkout-form">
+            <h1>Shipping/Billing Information</h1>
+            <input
+              type="text"
+              name="firstName"
+              onChange={this.handleChange}
+              value={this.state.firstName}
+              placeholder="First Name"
+            />
+            <input
+              type="text"
+              name="lastName"
+              onChange={this.handleChange}
+              value={this.state.lastName}
+              placeholder="Last Name"
+            />
+            <input
+              type="text"
+              name="email"
+              onChange={this.handleChange}
+              value={this.state.email}
+              placeholder="Email"
+            />
+            <input
+              type="text"
+              name="address"
+              onChange={this.handleChange}
+              value={user.address ? user.address : this.state.address}
+              placeholder="Address"
+            />
+            <h1> Payment Method </h1>
+            {/* <Payment/> */}
+            <button disabled> Process Payment </button>
+          </div>
+          <div className="checkout-form">
+            <h1> Items in Cart </h1>
           </div>
         </form>
       </div>
