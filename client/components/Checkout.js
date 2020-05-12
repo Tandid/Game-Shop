@@ -102,11 +102,13 @@ class Checkout extends Component {
 
             <div className="checkout-form">
               <h1> Items in Cart </h1>
-              <ul>
-                {cartOrderItems.map(orderItem => (
-                  <ProductList key={Math.random()} {...orderItem} />
-                ))}
-              </ul>
+              <div className="cart-container">
+                <ul>
+                  {cartOrderItems.map(orderItem => (
+                    <ProductList key={Math.random()} {...orderItem} />
+                  ))}
+                </ul>
+              </div>
             </div>
           </form>
         </div>

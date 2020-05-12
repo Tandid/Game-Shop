@@ -266,6 +266,11 @@ tr:nth-child(even) {
   margin: 0.5rem;
 }
 
+.cart-container {
+  overflow: scroll;
+  height: 300px;
+}
+
 .split {
   display: flex;
   flex-direction: row;

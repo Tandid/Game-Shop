@@ -520,11 +520,13 @@ var Checkout = /*#__PURE__*/function (_Component) {
           disabled: !cartOrderItems.length
         }, "Process Payment"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "checkout-form"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, " Items in Cart "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, cartOrderItems.map(function (orderItem) {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, " Items in Cart "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "cart-container"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, cartOrderItems.map(function (orderItem) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ProductList__WEBPACK_IMPORTED_MODULE_3__["default"], _extends({
             key: Math.random()
           }, orderItem));
-        })))));
+        }))))));
       }
     }
   }]);
