@@ -262,9 +262,6 @@ tr:nth-child(even) {
   flex-direction: column;
   justify-content: space-around;
   padding: 1rem;
-}
-
-.checkout-form > h1 {
   text-align: center;
 }
 
