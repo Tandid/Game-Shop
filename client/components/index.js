@@ -13,6 +13,7 @@ export {default as CreateProduct} from './CreateProduct'
 export {default as Account} from './Account'
 export {default as Listings} from './Listings'
 export {default as UserList} from './UserList'
+export {default as OrderList} from './OrderList'
 export {default as Checkout} from './Checkout'
 
 export {Login, Signup} from './auth-form'

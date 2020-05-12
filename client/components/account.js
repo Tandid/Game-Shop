@@ -26,7 +26,7 @@ class Account extends Component {
               <Link className="link-button" to="/userlist">
                 Manage Users
               </Link>
-              <Link className="link-button" to="/orders">
+              <Link className="link-button" to="/orderlist">
                 Manage Orders
               </Link>
             </div>
