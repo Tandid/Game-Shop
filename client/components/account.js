@@ -11,7 +11,6 @@ class Account extends Component {
 
   render() {
     const {user} = this.props
-    console.log(user)
     return (
       <div className="profile-wrapper">
         <div>

@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import ProductList from './ProductList'
 import {updateOrder, createOrder} from '../store/orders'
-import {deleteOrderItem, getOrderItems, orderItem} from '../store/orderItems'
+import {deleteOrderItem, getOrderItems} from '../store/orderItems'
 
 class Cart extends React.Component {
   constructor() {
@@ -12,12 +12,6 @@ class Cart extends React.Component {
 
   componentDidMount() {
     this.props.loadOrderItems()
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.orderItems.length !== prevProps.orderItems.length) {
-      console.log('changed quantity')
-    }
   }
 
   async onSubmit(event) {
@@ -54,7 +48,11 @@ class Cart extends React.Component {
             ))}
           </ul>
           <p> Total Price: $ </p>
-          <button className="cart-button" onClick={onSubmit}>
+          <button
+            className="cart-button"
+            onClick={onSubmit}
+            disabled={!cartOrderItems.length}
+          >
             Checkout
           </button>
           <button
@@ -64,6 +62,7 @@ class Cart extends React.Component {
                 this.props.removeFromCart(orderItem)
               )
             }}
+            disabled={!cartOrderItems.length}
           >
             Clear Cart
           </button>

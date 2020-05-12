@@ -4,15 +4,43 @@ import {
   deleteOrderItem,
   updateOrderItem,
   getOrderItem,
-  orderItems
+  getOrderItems
 } from '../store/orderItems'
 
 class ProductList extends React.Component {
   constructor() {
     super()
+    this.iterate = this.iterate.bind(this)
+  }
+
+  async iterate(event) {
+    try {
+      if (event.target.value === '+') {
+        await this.props.addOrSubtract({
+          orderId: this.props.orderId,
+          productId: this.props.productId,
+          quantity: this.props.quantity + 1
+        })
+      } else if (this.props.quantity > 1) {
+        await this.props.addOrSubtract({
+          orderId: this.props.orderId,
+          productId: this.props.productId,
+          quantity: this.props.quantity - 1
+        })
+      } else {
+        this.props.removeFromCart({
+          orderId: this.props.orderId,
+          productId: this.props.productId
+        })
+      }
+      await this.props.loadOrderItems()
+    } catch (exception) {
+      console.log(exception)
+    }
   }
 
   render() {
+    const {iterate} = this
     const {orderId, productId, quantity, products, orderItem} = this.props
     const product = products.find(product => product.id === productId)
     if (!product) {
@@ -25,26 +53,10 @@ class ProductList extends React.Component {
           <p>${product.price * quantity}</p>
           <p>Quantity: {quantity}</p>
           <div>
-            <button
-              onClick={() => {
-                this.props.addOrSubtract({
-                  orderId,
-                  productId,
-                  quantity: quantity - 1
-                })
-              }}
-            >
+            <button value="-" onClick={iterate}>
               -
             </button>
-            <button
-              onClick={() => {
-                this.props.addOrSubtract({
-                  orderId,
-                  productId,
-                  quantity: quantity + 1
-                })
-              }}
-            >
+            <button value="+" onClick={iterate}>
               +
             </button>
           </div>
@@ -69,7 +81,7 @@ const mapStateToProps = ({products, orderItems, orderItem}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadOrderItem: orderItem => dispatch(getOrderItem(orderItem)),
+    loadOrderItems: () => dispatch(getOrderItems()),
     addOrSubtract: orderItem => dispatch(updateOrderItem(orderItem)),
     removeFromCart: orderItem => dispatch(deleteOrderItem(orderItem))
   }
