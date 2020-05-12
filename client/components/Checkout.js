@@ -109,6 +109,7 @@ class Checkout extends Component {
                   ))}
                 </ul>
               </div>
+              <p>Total Price: </p>
             </div>
           </form>
         </div>
