@@ -2,11 +2,15 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import ProductList from './ProductList'
-import {deleteOrderItem} from '../store/orderItems'
+import {deleteOrderItem, getOrderItems} from '../store/orderItems'
 
 class Cart extends React.Component {
   constructor() {
     super()
+  }
+
+  componentDidMount() {
+    this.props.loadOrderItems()
   }
 
   render() {
@@ -38,9 +42,13 @@ class Cart extends React.Component {
           >
             Clear Cart
           </button>
-          <Link className="link-button" to="/checkout">
-            Checkout Page
-          </Link>
+          <a href="/checkout">
+            <button disabled={!cartOrderItems.length}>
+              {/* <Link className="link-button" to="/checkout"> */}
+              Checkout Page
+              {/* </Link> */}
+            </button>
+          </a>
         </div>
       )
     }
@@ -61,6 +69,7 @@ const mapStateToProps = ({orders, orderItems, user}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    loadOrderItems: () => dispatch(getOrderItems()),
     removeFromCart: orderItem => dispatch(deleteOrderItem(orderItem))
   }
 }

@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {
   deleteOrderItem,
   updateOrderItem,
-  getOrderItem,
   getOrderItems
 } from '../store/orderItems'
 
@@ -14,6 +13,7 @@ class ProductList extends React.Component {
   }
 
   async iterate(event) {
+    event.preventDefault()
     try {
       if (event.target.value === '+') {
         await this.props.addOrSubtract({
