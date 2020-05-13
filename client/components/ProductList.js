@@ -10,6 +10,7 @@ class ProductList extends React.Component {
   constructor() {
     super()
     this.iterate = this.iterate.bind(this)
+    this.destroy = this.destroy.bind(this)
   }
 
   async iterate(event) {
@@ -39,8 +40,20 @@ class ProductList extends React.Component {
     }
   }
 
+  async destroy(event) {
+    event.preventDefault()
+    try {
+      await this.props.removeFromCart({
+        orderId: this.props.orderId,
+        productId: this.props.productId
+      })
+    } catch (exception) {
+      console.log(exception)
+    }
+  }
+
   render() {
-    const {iterate} = this
+    const {iterate, destroy} = this
     const {orderId, productId, quantity, products, orderItem} = this.props
     const product = products.find(product => product.id === productId)
     if (!product) {
@@ -60,11 +73,7 @@ class ProductList extends React.Component {
               +
             </button>
           </div>
-          <button
-            onClick={() => this.props.removeFromCart({orderId, productId})}
-          >
-            Remove From Cart
-          </button>
+          <button onClick={destroy}>Remove From Cart</button>
         </li>
       )
     }

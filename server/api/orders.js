@@ -15,7 +15,9 @@ router.get('/:id', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
   Order.findByPk(req.params.id)
-    .then(order => order.update({status: req.body.status}))
+    .then(order =>
+      order.update({status: req.body.status, totalPrice: req.body.totalPrice})
+    )
     .then(order => res.send(order))
     .catch(next)
 })
