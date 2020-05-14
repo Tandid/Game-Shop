@@ -10,6 +10,10 @@ class Cart extends React.Component {
     this.clearCart = this.clearCart.bind(this)
   }
 
+  componentDidMount() {
+    this.props.loadOrderItems()
+  }
+
   async clearCart(event) {
     event.preventDefault()
     const cartOrderItems = await this.props.orderItems.filter(
@@ -60,7 +64,7 @@ class Cart extends React.Component {
               <ProductList key={Math.random()} {...orderItem} />
             ))}
           </ul>
-          <p> Total Price: ${cart.totalPrice} </p>
+          <p> Total Price: ${parseFloat(cart.totalPrice).toFixed(2)} </p>
 
           <button
             className="cart-button"

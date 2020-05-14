@@ -110,9 +110,21 @@ async function seed() {
   const [SSBU, AC, LOZ, PS, G5, HALO, COD, FF7, GTAV] = products
 
   const orders = await Promise.all([
-    Order.create({userId: 2, status: 'cart', totalPrice: 0}),
-    Order.create({userId: 3, status: 'cart', totalPrice: 0}),
-    Order.create({userId: 2, status: 'completed', totalPrice: 0})
+    Order.create({
+      userId: 2,
+      status: 'cart',
+      totalPrice: parseFloat(SSBU.price) + parseFloat(AC.price)
+    }),
+    Order.create({
+      userId: 3,
+      status: 'cart',
+      totalPrice: parseFloat(SSBU.price) + parseFloat(GTAV.price)
+    }),
+    Order.create({
+      userId: 2,
+      status: 'completed',
+      totalPrice: parseFloat(FF7.price) + parseFloat(HALO.price)
+    })
   ])
 
   const [activeOrder1, activeOrder2, completedOrder] = orders

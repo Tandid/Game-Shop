@@ -270,6 +270,11 @@ function (_React$Component) {
   }
 
   _createClass(Cart, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.loadOrderItems();
+    }
+  }, {
     key: "clearCart",
     value: function () {
       var _clearCart = _asyncToGenerator(
@@ -356,7 +361,7 @@ function (_React$Component) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ProductList__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
             key: Math.random()
           }, orderItem));
-        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Total Price: $", cart.totalPrice, " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Total Price: $", parseFloat(cart.totalPrice).toFixed(2), " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "cart-button",
           onClick: clearCart,
           disabled: !cartOrderItems.length
@@ -2027,6 +2032,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _store_orderItems__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/orderItems */ "./client/store/orderItems.js");
+/* harmony import */ var _store_orders__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/orders */ "./client/store/orders.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2048,6 +2054,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -2075,71 +2082,98 @@ function (_React$Component) {
       var _iterate = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee(event) {
+        var _this2 = this;
+
+        var product;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 event.preventDefault();
-                _context.prev = 1;
+                product = this.props.products.find(function (product) {
+                  return product.id === _this2.props.productId;
+                });
+                _context.prev = 2;
 
                 if (!(event.target.value === '+')) {
-                  _context.next = 7;
+                  _context.next = 10;
                   break;
                 }
 
-                _context.next = 5;
+                _context.next = 6;
+                return this.props.updateTotalPrice({
+                  id: this.props.orderId,
+                  totalPrice: parseFloat(this.props.cart.totalPrice) + parseFloat(product.price)
+                }, function () {});
+
+              case 6:
+                _context.next = 8;
                 return this.props.addOrSubtract({
                   orderId: this.props.orderId,
                   productId: this.props.productId,
                   quantity: this.props.quantity + 1
                 });
 
-              case 5:
-                _context.next = 13;
+              case 8:
+                _context.next = 20;
                 break;
 
-              case 7:
+              case 10:
                 if (!(this.props.quantity > 1)) {
-                  _context.next = 12;
+                  _context.next = 17;
                   break;
                 }
 
-                _context.next = 10;
+                _context.next = 13;
+                return this.props.updateTotalPrice({
+                  id: this.props.orderId,
+                  totalPrice: parseFloat(this.props.cart.totalPrice) - parseFloat(product.price)
+                }, function () {});
+
+              case 13:
+                _context.next = 15;
                 return this.props.addOrSubtract({
                   orderId: this.props.orderId,
                   productId: this.props.productId,
                   quantity: this.props.quantity - 1
                 });
 
-              case 10:
-                _context.next = 13;
-                break;
-
-              case 12:
-                this.props.removeFromCart({
-                  orderId: this.props.orderId,
-                  productId: this.props.productId
-                });
-
-              case 13:
-                _context.next = 15;
-                return this.props.loadOrderItems();
-
               case 15:
                 _context.next = 20;
                 break;
 
               case 17:
-                _context.prev = 17;
-                _context.t0 = _context["catch"](1);
-                console.log(_context.t0);
+                _context.next = 19;
+                return this.props.updateTotalPrice({
+                  id: this.props.orderId,
+                  totalPrice: parseFloat(this.props.cart.totalPrice) - parseFloat(product.price)
+                }, function () {});
+
+              case 19:
+                this.props.removeFromCart({
+                  orderId: this.props.orderId,
+                  productId: this.props.productId
+                });
 
               case 20:
+                _context.next = 22;
+                return this.props.loadOrderItems();
+
+              case 22:
+                _context.next = 27;
+                break;
+
+              case 24:
+                _context.prev = 24;
+                _context.t0 = _context["catch"](2);
+                console.log(_context.t0);
+
+              case 27:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[1, 17]]);
+        }, _callee, this, [[2, 24]]);
       }));
 
       function iterate(_x) {
@@ -2154,33 +2188,46 @@ function (_React$Component) {
       var _destroy = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2(event) {
+        var _this3 = this;
+
+        var product;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 event.preventDefault();
-                _context2.prev = 1;
-                _context2.next = 4;
+                product = this.props.products.find(function (product) {
+                  return product.id === _this3.props.productId;
+                });
+                _context2.prev = 2;
+                _context2.next = 5;
+                return this.props.updateTotalPrice({
+                  id: this.props.orderId,
+                  totalPrice: parseFloat(this.props.cart.totalPrice) - parseFloat(product.price * this.props.quantity)
+                }, function () {});
+
+              case 5:
+                _context2.next = 7;
                 return this.props.removeFromCart({
                   orderId: this.props.orderId,
                   productId: this.props.productId
                 });
 
-              case 4:
-                _context2.next = 9;
+              case 7:
+                _context2.next = 12;
                 break;
 
-              case 6:
-                _context2.prev = 6;
-                _context2.t0 = _context2["catch"](1);
+              case 9:
+                _context2.prev = 9;
+                _context2.t0 = _context2["catch"](2);
                 console.log(_context2.t0);
 
-              case 9:
+              case 12:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[1, 6]]);
+        }, _callee2, this, [[2, 9]]);
       }));
 
       function destroy(_x2) {
@@ -2230,11 +2277,17 @@ function (_React$Component) {
 var mapStateToProps = function mapStateToProps(_ref) {
   var products = _ref.products,
       orderItems = _ref.orderItems,
-      orderItem = _ref.orderItem;
+      orderItem = _ref.orderItem,
+      orders = _ref.orders,
+      user = _ref.user;
+  var cart = orders.find(function (order) {
+    return order.userId === user.id && order.status === 'cart';
+  });
   return {
     products: products,
     orderItems: orderItems,
-    orderItem: orderItem
+    orderItem: orderItem,
+    cart: cart
   };
 };
 
@@ -2248,6 +2301,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     removeFromCart: function removeFromCart(orderItem) {
       return dispatch(Object(_store_orderItems__WEBPACK_IMPORTED_MODULE_2__["deleteOrderItem"])(orderItem));
+    },
+    updateTotalPrice: function updateTotalPrice(order, push) {
+      return dispatch(Object(_store_orders__WEBPACK_IMPORTED_MODULE_3__["updateOrder"])(order, push));
     }
   };
 };
@@ -47764,7 +47820,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
