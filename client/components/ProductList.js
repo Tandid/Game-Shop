@@ -3,31 +3,60 @@ import {connect} from 'react-redux'
 import {
   deleteOrderItem,
   updateOrderItem,
-  getOrderItem,
   getOrderItems
 } from '../store/orderItems'
+import {updateOrder} from '../store/orders'
 
 class ProductList extends React.Component {
   constructor() {
     super()
     this.iterate = this.iterate.bind(this)
+    this.destroy = this.destroy.bind(this)
   }
 
   async iterate(event) {
+    event.preventDefault()
+    const product = this.props.products.find(
+      product => product.id === this.props.productId
+    )
     try {
       if (event.target.value === '+') {
+        await this.props.updateTotalPrice(
+          {
+            id: this.props.orderId,
+            totalPrice:
+              parseFloat(this.props.cart.totalPrice) + parseFloat(product.price)
+          },
+          () => {}
+        )
         await this.props.addOrSubtract({
           orderId: this.props.orderId,
           productId: this.props.productId,
           quantity: this.props.quantity + 1
         })
       } else if (this.props.quantity > 1) {
+        await this.props.updateTotalPrice(
+          {
+            id: this.props.orderId,
+            totalPrice:
+              parseFloat(this.props.cart.totalPrice) - parseFloat(product.price)
+          },
+          () => {}
+        )
         await this.props.addOrSubtract({
           orderId: this.props.orderId,
           productId: this.props.productId,
           quantity: this.props.quantity - 1
         })
       } else {
+        await this.props.updateTotalPrice(
+          {
+            id: this.props.orderId,
+            totalPrice:
+              parseFloat(this.props.cart.totalPrice) - parseFloat(product.price)
+          },
+          () => {}
+        )
         this.props.removeFromCart({
           orderId: this.props.orderId,
           productId: this.props.productId
@@ -39,8 +68,32 @@ class ProductList extends React.Component {
     }
   }
 
+  async destroy(event) {
+    event.preventDefault()
+    const product = this.props.products.find(
+      product => product.id === this.props.productId
+    )
+    try {
+      await this.props.updateTotalPrice(
+        {
+          id: this.props.orderId,
+          totalPrice:
+            parseFloat(this.props.cart.totalPrice) -
+            parseFloat(product.price * this.props.quantity)
+        },
+        () => {}
+      )
+      await this.props.removeFromCart({
+        orderId: this.props.orderId,
+        productId: this.props.productId
+      })
+    } catch (exception) {
+      console.log(exception)
+    }
+  }
+
   render() {
-    const {iterate} = this
+    const {iterate, destroy} = this
     const {orderId, productId, quantity, products, orderItem} = this.props
     const product = products.find(product => product.id === productId)
     if (!product) {
@@ -60,22 +113,23 @@ class ProductList extends React.Component {
               +
             </button>
           </div>
-          <button
-            onClick={() => this.props.removeFromCart({orderId, productId})}
-          >
-            Remove From Cart
-          </button>
+          <button onClick={destroy}>Remove From Cart</button>
         </li>
       )
     }
   }
 }
 
-const mapStateToProps = ({products, orderItems, orderItem}) => {
+const mapStateToProps = ({products, orderItems, orderItem, orders, user}) => {
+  const cart = orders.find(
+    order => order.userId === user.id && order.status === 'cart'
+  )
+
   return {
     products,
     orderItems,
-    orderItem
+    orderItem,
+    cart
   }
 }
 
@@ -83,7 +137,8 @@ const mapDispatchToProps = dispatch => {
   return {
     loadOrderItems: () => dispatch(getOrderItems()),
     addOrSubtract: orderItem => dispatch(updateOrderItem(orderItem)),
-    removeFromCart: orderItem => dispatch(deleteOrderItem(orderItem))
+    removeFromCart: orderItem => dispatch(deleteOrderItem(orderItem)),
+    updateTotalPrice: (order, push) => dispatch(updateOrder(order, push))
   }
 }
 

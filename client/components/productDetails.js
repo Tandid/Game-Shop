@@ -1,12 +1,13 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {getDetails} from '../store/product'
-import orderItems, {createOrderItem, updateOrderItem} from '../store/orderItems'
+import {createOrderItem, updateOrderItem} from '../store/orderItems'
+import {updateOrder} from '../store/orders'
 
 class ProductDetails extends React.Component {
   constructor() {
     super()
+    this.addToCart = this.addToCart.bind(this)
   }
 
   componentDidMount() {
@@ -14,7 +15,42 @@ class ProductDetails extends React.Component {
     this.props.getProduct(productId)
   }
 
+  async addToCart(event) {
+    event.preventDefault()
+    try {
+      const existingOrderItem = this.props.orderItems.find(
+        orderItem =>
+          orderItem.productId === this.props.product.id &&
+          orderItem.orderId === this.props.cart.id
+      )
+      if (!existingOrderItem) {
+        await this.props.newOrderItem({
+          productId: this.props.product.id,
+          orderId: this.props.cart.id
+        })
+      } else {
+        await this.props.incrementOrderItem({
+          productId: this.props.product.id,
+          orderId: this.props.cart.id,
+          quantity: existingOrderItem.quantity + 1
+        })
+      }
+      await this.props.updateTotalPrice(
+        {
+          id: this.props.cart.id,
+          totalPrice:
+            parseFloat(this.props.cart.totalPrice) +
+            parseFloat(this.props.product.price)
+        },
+        () => {}
+      )
+    } catch (exception) {
+      console.log(exception)
+    }
+  }
+
   render() {
+    const {addToCart} = this
     const {product, cart, orderItems} = this.props
     if (!orderItems || !cart) {
       return <h1>Loading...</h1>
@@ -39,24 +75,7 @@ class ProductDetails extends React.Component {
           <div className="details-3">
             <p>${product.price}</p>
             <p>Quantity: {product.inventory}</p>
-            <button
-              onClick={() => {
-                if (!existingOrderItem) {
-                  this.props.addToCart({
-                    productId: product.id,
-                    orderId: cart.id
-                  })
-                } else {
-                  this.props.increment({
-                    productId: product.id,
-                    orderId: cart.id,
-                    quantity: existingOrderItem.quantity + 1
-                  })
-                }
-              }}
-            >
-              Add to Cart
-            </button>
+            <button onClick={addToCart}>Add to Cart</button>
           </div>
         </div>
       )
@@ -64,10 +83,7 @@ class ProductDetails extends React.Component {
   }
 }
 
-const mapStateToProps = (
-  {products, product, orders, user, orderItems},
-  {match}
-) => {
+const mapStateToProps = ({products, product, orders, user, orderItems}) => {
   const cart = orders.find(
     order => order.status === 'cart' && order.userId === user.id
   )
@@ -76,6 +92,7 @@ const mapStateToProps = (
     products,
     product,
     cart,
+    orders,
     user,
     orderItems
   }
@@ -84,8 +101,9 @@ const mapStateToProps = (
 const mapDispatchToProps = dispatch => {
   return {
     getProduct: id => dispatch(getDetails(id)),
-    addToCart: orderItem => dispatch(createOrderItem(orderItem)),
-    increment: orderItem => dispatch(updateOrderItem(orderItem))
+    newOrderItem: orderItem => dispatch(createOrderItem(orderItem)),
+    incrementOrderItem: orderItem => dispatch(updateOrderItem(orderItem)),
+    updateTotalPrice: (order, push) => dispatch(updateOrder(order, push))
   }
 }
 

@@ -2,20 +2,58 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {createOrderItem, updateOrderItem} from '../store/orderItems'
+import {updateOrder} from '../store/orders'
 
 class ProductCard extends React.Component {
   constructor() {
     super()
+    this.addToCart = this.addToCart.bind(this)
+  }
+
+  async addToCart(event) {
+    event.preventDefault()
+    try {
+      const existingOrderItem = this.props.orderItems.find(
+        orderItem =>
+          orderItem.productId === this.props.id &&
+          orderItem.orderId === this.props.cart.id
+      )
+      if (!existingOrderItem) {
+        await this.props.newOrderItem({
+          productId: this.props.id,
+          orderId: this.props.cart.id
+        })
+      } else {
+        await this.props.incrementOrderItem({
+          productId: this.props.id,
+          orderId: this.props.cart.id,
+          quantity: existingOrderItem.quantity + 1
+        })
+      }
+      await this.props.updateTotalPrice(
+        {
+          id: this.props.cart.id,
+          totalPrice:
+            parseFloat(this.props.cart.totalPrice) +
+            parseFloat(this.props.price)
+        },
+        () => {}
+      )
+    } catch (exception) {
+      console.log(exception)
+    }
   }
 
   render() {
+    const {addToCart} = this
     const {id, title, imageURL, price, inventory, cart, orderItems} = this.props
     if (!id || !cart) {
       return <h1>Loading...</h1>
     } else {
-      const existingOrderItem = orderItems.find(
-        orderItem => orderItem.productId === id && orderItem.orderId === cart.id
-      )
+      // const existingOrderItem = orderItems.find(
+      //   (orderItem) =>
+      //     orderItem.productId === id && orderItem.orderId === cart.id
+      // )
       return (
         <li key={id} className="card">
           <h4>{title}</h4>
@@ -25,24 +63,7 @@ class ProductCard extends React.Component {
           <Link to={`/products/${id}`} className="productLink">
             More Details
           </Link>
-          <button
-            onClick={() => {
-              if (!existingOrderItem) {
-                this.props.addToCart({
-                  productId: id,
-                  orderId: cart.id
-                })
-              } else {
-                this.props.increment({
-                  productId: id,
-                  orderId: cart.id,
-                  quantity: existingOrderItem.quantity + 1
-                })
-              }
-            }}
-          >
-            Add to Cart
-          </button>
+          <button onClick={addToCart}>Add to Cart</button>
           <p>Inventory: {inventory}</p>
         </li>
       )
@@ -63,8 +84,10 @@ const mapStateToProps = ({orders, user, orderItems}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addToCart: orderItem => dispatch(createOrderItem(orderItem)),
-    increment: orderItem => dispatch(updateOrderItem(orderItem))
+    loadOrders: () => dispatch(getOrders()),
+    newOrderItem: orderItem => dispatch(createOrderItem(orderItem)),
+    incrementOrderItem: orderItem => dispatch(updateOrderItem(orderItem)),
+    updateTotalPrice: (order, push) => dispatch(updateOrder(order, push))
   }
 }
 

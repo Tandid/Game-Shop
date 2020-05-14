@@ -62,6 +62,7 @@ export default function(state = [], action) {
       state = state.map(
         order => (order.id === action.order.id ? action.order : order)
       )
+      return state
 
     case CREATE_ORDER:
       state = [...state, action.order]

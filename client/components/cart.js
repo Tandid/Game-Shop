@@ -1,15 +1,54 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import ProductList from './ProductList'
-import {deleteOrderItem} from '../store/orderItems'
+import {deleteOrderItem, getOrderItems} from '../store/orderItems'
+import {updateOrder} from '../store/orders'
 
 class Cart extends React.Component {
   constructor() {
     super()
+    this.clearCart = this.clearCart.bind(this)
+  }
+
+  componentDidMount() {
+    this.props.loadOrderItems()
+  }
+
+  async clearCart(event) {
+    event.preventDefault()
+    const cartOrderItems = await this.props.orderItems.filter(
+      orderItem => orderItem.orderId === this.props.cart.id
+    )
+    try {
+      let orderItemsPrice = 0
+      await cartOrderItems.forEach(orderItem => {
+        console.log(orderItemsPrice)
+        orderItemsPrice =
+          orderItemsPrice +
+          parseFloat(
+            this.props.products.find(
+              product => product.id === orderItem.productId
+            ).price
+          ) *
+            orderItem.quantity
+      })
+      await this.props.updateTotalPrice(
+        {
+          id: this.props.cart.id,
+          totalPrice: this.props.cart.totalPrice - orderItemsPrice
+        },
+        () => {}
+      )
+      await cartOrderItems.forEach(orderItem => {
+        this.props.removeFromCart(orderItem)
+      })
+    } catch (exception) {
+      console.log(exception)
+    }
   }
 
   render() {
+    const {clearCart} = this
     const {cart, orderItems} = this.props
     if (!cart || !orderItems) {
       return <h1>Loading...</h1>
@@ -25,29 +64,25 @@ class Cart extends React.Component {
               <ProductList key={Math.random()} {...orderItem} />
             ))}
           </ul>
-          <p> Total Price: $ </p>
+          <p> Total Price: ${parseFloat(cart.totalPrice).toFixed(2)} </p>
 
           <button
             className="cart-button"
-            onClick={() => {
-              cartOrderItems.forEach(orderItem =>
-                this.props.removeFromCart(orderItem)
-              )
-            }}
+            onClick={clearCart}
             disabled={!cartOrderItems.length}
           >
             Clear Cart
           </button>
-          <Link className="link-button" to="/checkout">
-            Checkout Page
-          </Link>
+          <a href="/checkout">
+            <button disabled={!cartOrderItems.length}>Checkout Page</button>
+          </a>
         </div>
       )
     }
   }
 }
 
-const mapStateToProps = ({orders, orderItems, user}) => {
+const mapStateToProps = ({orders, orderItems, user, products}) => {
   const cart = orders.find(
     order => order.userId === user.id && order.status === 'cart'
   )
@@ -55,13 +90,16 @@ const mapStateToProps = ({orders, orderItems, user}) => {
   return {
     cart,
     orderItems,
-    user
+    user,
+    products
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    removeFromCart: orderItem => dispatch(deleteOrderItem(orderItem))
+    loadOrderItems: () => dispatch(getOrderItems()),
+    removeFromCart: orderItem => dispatch(deleteOrderItem(orderItem)),
+    updateTotalPrice: (order, push) => dispatch(updateOrder(order, push))
   }
 }
 

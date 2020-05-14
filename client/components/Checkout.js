@@ -44,7 +44,6 @@ class Checkout extends Component {
   render() {
     const {onSubmit} = this
     const {user, cart, orderItems, products} = this.props
-    console.log({CART: cart, ORDER: orderItems, PRODUCT: products})
     if (!cart || !orderItems) {
       return <h1>Loading...</h1>
     } else {

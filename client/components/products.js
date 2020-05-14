@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {getProducts} from '../store'
 import ProductCard from './ProductCard.js'
 import {createOrderItem} from '../store/orderItems'
+import {getOrders} from '../store/orders'
 
 class Products extends React.Component {
   constructor() {
@@ -79,6 +80,7 @@ const mapStateToProps = ({products, user}) => {
 const mapDispatchToProps = dispatch => {
   return {
     load: () => dispatch(getProducts()),
+    loadOrders: () => dispatch(getOrders()),
     addToCart: orderItem => dispatch(createOrderItem(orderItem))
   }
 }
