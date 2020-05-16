@@ -121,9 +121,13 @@ class ProductList extends React.Component {
 }
 
 const mapStateToProps = ({products, orderItems, orderItem, orders, user}) => {
-  const cart = orders.find(
-    order => order.userId === user.id && order.status === 'cart'
-  )
+  const cart = user.id
+    ? orders.find(order => order.status === 'cart' && order.userId === user.id)
+    : orders.find(
+        order =>
+          order.status === 'cart' &&
+          order.userId === parseInt(localStorage.getItem('guestId'))
+      )
 
   return {
     products,

@@ -15,3 +15,9 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.post('/', async (req, res, next) => {
+  await User.create(req.body)
+    .then(user => res.send(user))
+    .catch(next)
+})

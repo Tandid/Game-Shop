@@ -27,7 +27,9 @@ class Checkout extends Component {
         this.props.history.push
       )
       await this.props.createNewCart({
-        userId: this.props.user.id,
+        userId: this.props.user.id
+          ? this.props.user.id
+          : parseInt(localStorage.getItem('guestId')),
         status: 'cart'
       })
     } catch (exception) {
@@ -117,9 +119,13 @@ class Checkout extends Component {
 }
 
 const mapStateToProps = ({user, orders, orderItems, products}) => {
-  const cart = orders.find(
-    order => order.userId === user.id && order.status === 'cart'
-  )
+  const cart = user.id
+    ? orders.find(order => order.status === 'cart' && order.userId === user.id)
+    : orders.find(
+        order =>
+          order.status === 'cart' &&
+          order.userId === parseInt(localStorage.getItem('guestId'))
+      )
   return {
     user,
     cart,

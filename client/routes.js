@@ -20,14 +20,32 @@ import {
 import {me, getProducts, getUsers} from './store'
 import EditProduct from './components/EditProduct'
 import {getOrderItems} from './store/orderItems'
-import {getOrders} from './store/orders'
+import {getOrders, createOrder} from './store/orders'
+import {createUser} from './store/user'
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
+  constructor() {
+    super()
+    this.createGuestUser = this.createGuestUser.bind(this)
+  }
+
   componentDidMount() {
     this.props.loadInitialData()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!this.props.user.id && !localStorage.guestId) {
+      this.createGuestUser()
+    }
+  }
+
+  async createGuestUser() {
+    await localStorage.setItem('guestId', this.props.users.length + 1)
+    await this.props.createUser()
+    await this.props.createGuestCart({userId: localStorage.getItem('guestId')})
   }
 
   render() {
@@ -72,7 +90,8 @@ const mapStateToProps = state => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
-    user: state.user
+    user: state.user,
+    users: state.users
   }
 }
 
@@ -84,7 +103,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(getProducts())
       dispatch(getOrders())
       dispatch(getOrderItems())
-    }
+    },
+    createUser: user => dispatch(createUser(user)),
+    createGuestCart: order => dispatch(createOrder(order))
   }
 }
 
