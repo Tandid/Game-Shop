@@ -19,8 +19,14 @@ import {
 } from './components'
 import {me, getProducts, getUsers} from './store'
 import EditProduct from './components/EditProduct'
-import {getOrderItems} from './store/orderItems'
-import {getOrders, createOrder} from './store/orders'
+import {
+  getOrderItems,
+  orderItems,
+  deleteOrderItem,
+  createOrderItem,
+  updateOrderItem
+} from './store/orderItems'
+import {getOrders, createOrder, updateOrder} from './store/orders'
 import {createUser} from './store/user'
 
 /**
@@ -30,6 +36,7 @@ class Routes extends Component {
   constructor() {
     super()
     this.createGuestUser = this.createGuestUser.bind(this)
+    this.mergeCart = this.mergeCart.bind(this)
   }
 
   componentDidMount() {
@@ -40,12 +47,89 @@ class Routes extends Component {
     if (!this.props.user.id && !localStorage.guestId) {
       this.createGuestUser()
     }
+
+    if (this.props.isLoggedIn && !prevProps.isLoggedIn) {
+      this.mergeCart()
+    }
   }
 
   async createGuestUser() {
     await localStorage.setItem('guestId', this.props.users.length + 1)
     await this.props.createUser()
     await this.props.createGuestCart({userId: localStorage.getItem('guestId')})
+  }
+
+  async mergeCart() {
+    const {orders, orderItems, user, products} = this.props
+
+    const userCart = await orders.find(
+      order => order.userId === user.id && order.status === 'cart'
+    )
+
+    const guestCart = await orders.find(
+      order =>
+        order.userId === parseInt(localStorage.getItem('guestId')) &&
+        order.status === 'cart'
+    )
+
+    const userOrderItems = await orderItems.filter(
+      orderItem => orderItem.orderId === userCart.id
+    )
+
+    const guestOrderItems = await orderItems.filter(
+      orderItem => orderItem.orderId === guestCart.id
+    )
+
+    let guestOrderItemsPrice = 0
+    await guestOrderItems.forEach(guestOrderItem => {
+      guestOrderItemsPrice =
+        guestOrderItemsPrice +
+        parseFloat(
+          products.find(product => product.id === guestOrderItem.productId)
+            .price
+        ) *
+          guestOrderItem.quantity
+
+      const existingOrderItem = userOrderItems.find(
+        userOrderItem =>
+          userOrderItem.productId === guestOrderItem.productId &&
+          userOrderItem.orderId === userCart.id
+      )
+
+      if (!existingOrderItem) {
+        this.props.newOrderItem({
+          productId: guestOrderItem.productId,
+          orderId: userCart.id
+        })
+      } else {
+        this.props.incrementOrderItem({
+          productId: guestOrderItem.productId,
+          orderId: userCart.id,
+          quantity: existingOrderItem.quantity + guestOrderItem.quantity
+        })
+      }
+    })
+
+    await this.props.updateTotalPrice(
+      {
+        id: guestCart.id,
+        totalPrice: 0
+      },
+      () => {}
+    )
+
+    await this.props.updateTotalPrice(
+      {
+        id: userCart.id,
+        totalPrice:
+          parseFloat(userCart.totalPrice) + parseFloat(guestOrderItemsPrice)
+      },
+      () => {}
+    )
+
+    await guestOrderItems.forEach(orderItem =>
+      this.props.removeFromGuestCart(orderItem)
+    )
   }
 
   render() {
@@ -91,7 +175,10 @@ const mapStateToProps = state => {
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
     user: state.user,
-    users: state.users
+    users: state.users,
+    orders: state.orders,
+    orderItems: state.orderItems,
+    products: state.products
   }
 }
 
@@ -105,7 +192,11 @@ const mapDispatchToProps = dispatch => {
       dispatch(getOrderItems())
     },
     createUser: user => dispatch(createUser(user)),
-    createGuestCart: order => dispatch(createOrder(order))
+    createGuestCart: order => dispatch(createOrder(order)),
+    removeFromGuestCart: orderItem => dispatch(deleteOrderItem(orderItem)),
+    updateTotalPrice: (order, push) => dispatch(updateOrder(order, push)),
+    newOrderItem: orderItem => dispatch(createOrderItem(orderItem)),
+    incrementOrderItem: orderItem => dispatch(updateOrderItem(orderItem))
   }
 }
 

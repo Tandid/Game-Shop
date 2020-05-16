@@ -1754,10 +1754,6 @@ function (_React$Component) {
       if (!id || !cart) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Loading...");
       } else {
-        // const existingOrderItem = orderItems.find(
-        //   (orderItem) =>
-        //     orderItem.productId === id && orderItem.orderId === cart.id
-        // )
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: id,
           className: "card"
@@ -2640,19 +2636,21 @@ var AuthForm = function AuthForm(props) {
  */
 
 
-var mapLogin = function mapLogin(state) {
+var mapLogin = function mapLogin(_ref) {
+  var user = _ref.user;
   return {
     name: 'login',
     displayName: 'Login',
-    error: state.user.error
+    error: user.error
   };
 };
 
-var mapSignup = function mapSignup(state) {
+var mapSignup = function mapSignup(_ref2) {
+  var user = _ref2.user;
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    error: state.user.error
+    error: user.error
   };
 };
 
@@ -2922,6 +2920,7 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Routes).call(this));
     _this.createGuestUser = _this.createGuestUser.bind(_assertThisInitialized(_this));
+    _this.mergeCart = _this.mergeCart.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2935,6 +2934,10 @@ function (_Component) {
     value: function componentDidUpdate(prevProps) {
       if (!this.props.user.id && !localStorage.guestId) {
         this.createGuestUser();
+      }
+
+      if (this.props.isLoggedIn && !prevProps.isLoggedIn) {
+        this.mergeCart();
       }
     }
   }, {
@@ -2973,6 +2976,107 @@ function (_Component) {
       }
 
       return createGuestUser;
+    }()
+  }, {
+    key: "mergeCart",
+    value: function () {
+      var _mergeCart = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2() {
+        var _this2 = this;
+
+        var _this$props, orders, orderItems, user, products, userCart, guestCart, userOrderItems, guestOrderItems, guestOrderItemsPrice;
+
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this$props = this.props, orders = _this$props.orders, orderItems = _this$props.orderItems, user = _this$props.user, products = _this$props.products;
+                _context2.next = 3;
+                return orders.find(function (order) {
+                  return order.userId === user.id && order.status === 'cart';
+                });
+
+              case 3:
+                userCart = _context2.sent;
+                _context2.next = 6;
+                return orders.find(function (order) {
+                  return order.userId === parseInt(localStorage.getItem('guestId')) && order.status === 'cart';
+                });
+
+              case 6:
+                guestCart = _context2.sent;
+                _context2.next = 9;
+                return orderItems.filter(function (orderItem) {
+                  return orderItem.orderId === userCart.id;
+                });
+
+              case 9:
+                userOrderItems = _context2.sent;
+                _context2.next = 12;
+                return orderItems.filter(function (orderItem) {
+                  return orderItem.orderId === guestCart.id;
+                });
+
+              case 12:
+                guestOrderItems = _context2.sent;
+                guestOrderItemsPrice = 0;
+                _context2.next = 16;
+                return guestOrderItems.forEach(function (guestOrderItem) {
+                  guestOrderItemsPrice = guestOrderItemsPrice + parseFloat(products.find(function (product) {
+                    return product.id === guestOrderItem.productId;
+                  }).price) * guestOrderItem.quantity;
+                  var existingOrderItem = userOrderItems.find(function (userOrderItem) {
+                    return userOrderItem.productId === guestOrderItem.productId && userOrderItem.orderId === userCart.id;
+                  });
+
+                  if (!existingOrderItem) {
+                    _this2.props.newOrderItem({
+                      productId: guestOrderItem.productId,
+                      orderId: userCart.id
+                    });
+                  } else {
+                    _this2.props.incrementOrderItem({
+                      productId: guestOrderItem.productId,
+                      orderId: userCart.id,
+                      quantity: existingOrderItem.quantity + guestOrderItem.quantity
+                    });
+                  }
+                });
+
+              case 16:
+                _context2.next = 18;
+                return this.props.updateTotalPrice({
+                  id: guestCart.id,
+                  totalPrice: 0
+                }, function () {});
+
+              case 18:
+                _context2.next = 20;
+                return this.props.updateTotalPrice({
+                  id: userCart.id,
+                  totalPrice: parseFloat(userCart.totalPrice) + parseFloat(guestOrderItemsPrice)
+                }, function () {});
+
+              case 20:
+                _context2.next = 22;
+                return guestOrderItems.forEach(function (orderItem) {
+                  return _this2.props.removeFromGuestCart(orderItem);
+                });
+
+              case 22:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function mergeCart() {
+        return _mergeCart.apply(this, arguments);
+      }
+
+      return mergeCart;
     }()
   }, {
     key: "render",
@@ -3049,7 +3153,10 @@ var mapStateToProps = function mapStateToProps(state) {
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
     user: state.user,
-    users: state.users
+    users: state.users,
+    orders: state.orders,
+    orderItems: state.orderItems,
+    products: state.products
   };
 };
 
@@ -3067,6 +3174,18 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     createGuestCart: function createGuestCart(order) {
       return dispatch(Object(_store_orders__WEBPACK_IMPORTED_MODULE_8__["createOrder"])(order));
+    },
+    removeFromGuestCart: function removeFromGuestCart(orderItem) {
+      return dispatch(Object(_store_orderItems__WEBPACK_IMPORTED_MODULE_7__["deleteOrderItem"])(orderItem));
+    },
+    updateTotalPrice: function updateTotalPrice(order, push) {
+      return dispatch(Object(_store_orders__WEBPACK_IMPORTED_MODULE_8__["updateOrder"])(order, push));
+    },
+    newOrderItem: function newOrderItem(orderItem) {
+      return dispatch(Object(_store_orderItems__WEBPACK_IMPORTED_MODULE_7__["createOrderItem"])(orderItem));
+    },
+    incrementOrderItem: function incrementOrderItem(orderItem) {
+      return dispatch(Object(_store_orderItems__WEBPACK_IMPORTED_MODULE_7__["updateOrderItem"])(orderItem));
     }
   };
 }; // The `withRouter` wrapper makes sure that updates are not blocked
@@ -47947,7 +48066,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
