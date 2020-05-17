@@ -39,7 +39,7 @@ class UserList extends React.Component {
                     <td>{user.firstName}</td>
                     <td>{user.lastName}</td>
                     <td>{user.email}</td>
-                    <td>{user.admin === true ? 'Active' : 'Inactive'}</td>
+                    <td>{user.admin === true ? 'Admin' : 'User'}</td>
                     <td>
                       <button>
                         {user.admin === true ? 'Remove Admin' : 'Make Admin'}
