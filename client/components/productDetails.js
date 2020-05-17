@@ -21,20 +21,20 @@ class ProductDetails extends React.Component {
     event.preventDefault()
     try {
       const existingOrderItem = this.props.orderItems.find(
-        (orderItem) =>
+        orderItem =>
           orderItem.productId === this.props.product.id &&
           orderItem.orderId === this.props.cart.id
       )
       if (!existingOrderItem) {
         await this.props.newOrderItem({
           productId: this.props.product.id,
-          orderId: this.props.cart.id,
+          orderId: this.props.cart.id
         })
       } else {
         await this.props.incrementOrderItem({
           productId: this.props.product.id,
           orderId: this.props.cart.id,
-          quantity: existingOrderItem.quantity + 1,
+          quantity: existingOrderItem.quantity + 1
         })
       }
       await this.props.updateTotalPrice(
@@ -42,7 +42,7 @@ class ProductDetails extends React.Component {
           id: this.props.cart.id,
           totalPrice:
             parseFloat(this.props.cart.totalPrice) +
-            parseFloat(this.props.product.price),
+            parseFloat(this.props.product.price)
         },
         () => {}
       )
@@ -58,7 +58,7 @@ class ProductDetails extends React.Component {
       return <h1>Loading...</h1>
     } else {
       const existingOrderItem = orderItems.find(
-        (orderItem) =>
+        orderItem =>
           orderItem.productId === product.id && orderItem.orderId === cart.id
       )
       return (
@@ -74,8 +74,8 @@ class ProductDetails extends React.Component {
             <ul>
               Reviews
               {reviews
-                .filter((review) => review.productId === product.id)
-                .map((review) => (
+                .filter(review => review.productId === product.id)
+                .map(review => (
                   <ul key={review.id}>
                     {review.userId}
                     <li>{review.stars} / 5.0</li>
@@ -102,14 +102,12 @@ const mapStateToProps = ({
   orders,
   user,
   orderItems,
-  reviews,
+  reviews
 }) => {
   const cart = user.id
-    ? orders.find(
-        (order) => order.status === 'cart' && order.userId === user.id
-      )
+    ? orders.find(order => order.status === 'cart' && order.userId === user.id)
     : orders.find(
-        (order) =>
+        order =>
           order.status === 'cart' &&
           order.userId === parseInt(localStorage.getItem('guestId'))
       )
@@ -121,17 +119,17 @@ const mapStateToProps = ({
     orders,
     user,
     orderItems,
-    reviews,
+    reviews
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getProduct: (id) => dispatch(getDetails(id)),
-    newOrderItem: (orderItem) => dispatch(createOrderItem(orderItem)),
-    incrementOrderItem: (orderItem) => dispatch(updateOrderItem(orderItem)),
+    getProduct: id => dispatch(getDetails(id)),
+    newOrderItem: orderItem => dispatch(createOrderItem(orderItem)),
+    incrementOrderItem: orderItem => dispatch(updateOrderItem(orderItem)),
     updateTotalPrice: (order, push) => dispatch(updateOrder(order, push)),
-    loadReviews: () => dispatch(getReviews()),
+    loadReviews: () => dispatch(getReviews())
   }
 }
 

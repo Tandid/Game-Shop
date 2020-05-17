@@ -14,21 +14,21 @@ const initialState = []
 /**
  * ACTION CREATORS
  */
-const _getReviews = (reviews) => ({type: GET_REVIEWS, reviews})
-const _createReview = (review) => ({type: CREATE_REVIEW, review})
+const _getReviews = reviews => ({type: GET_REVIEWS, reviews})
+const _createReview = review => ({type: CREATE_REVIEW, review})
 
 /**
  * THUNK CREATORS -------------------------------------------------
  */
 const getReviews = () => {
-  return async (dispatch) => {
+  return async dispatch => {
     const response = await axios.get(`/api/reviews`)
     dispatch(_getReviews(response.data))
   }
 }
 
-const createReview = (review) => {
-  return async (dispatch) => {
+const createReview = review => {
+  return async dispatch => {
     j
     const response = await axios.post('/api/reviews', review)
     dispatch(_createReview(response.data))
@@ -38,7 +38,7 @@ const createReview = (review) => {
 /**
  * REDUCER -------------------------------------------------------
  */
-const reviews = function (state = initialState, action) {
+const reviews = function(state = initialState, action) {
   switch (action.type) {
     case GET_REVIEWS:
       return action.reviews

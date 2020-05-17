@@ -16,7 +16,7 @@ const reducer = combineReducers({
   orders,
   orderItems,
   orderItem,
-  reviews,
+  reviews
 })
 
 const middleware = composeWithDevTools(
