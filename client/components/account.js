@@ -29,6 +29,9 @@ class Account extends Component {
               <Link className="link-button" to="/orderlist">
                 Manage Orders
               </Link>
+              <Link className="link-button" to="/reviews">
+                Manage Reviews
+              </Link>
             </div>
           )}
           <p> Status: {user.admin === true ? 'Admin' : 'User'}</p>

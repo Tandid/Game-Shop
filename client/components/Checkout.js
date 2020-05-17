@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import ProductList from './ProductList'
 import {updateOrder, createOrder} from '../store/orders'
+import StripeCheckout from 'react-stripe-checkout'
+import axios from 'axios'
 
 // import Payment from './Payment' //add this component through STRIPE
 
@@ -17,6 +19,7 @@ class Checkout extends Component {
     }
     this.onSubmit = this.onSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleToken = this.handleToken.bind(this)
   }
 
   async onSubmit(event) {
@@ -27,7 +30,9 @@ class Checkout extends Component {
         this.props.history.push
       )
       await this.props.createNewCart({
-        userId: this.props.user.id,
+        userId: this.props.user.id
+          ? this.props.user.id
+          : parseInt(localStorage.getItem('guestId')),
         status: 'cart'
       })
     } catch (exception) {
@@ -41,8 +46,26 @@ class Checkout extends Component {
     })
   }
 
+  async handleToken(token) {
+    // console.log({token, addresses})
+    const response = await axios.post('/api/stripe/checkout', {
+      token,
+      order: this.props.cart
+    })
+
+    const {status} = response.data
+
+    console.log(status)
+
+    // if (status === 'success') {
+    //   console.log('success! check emails for details')
+    // } else {
+    //   console.log('something went wrong')
+    // }
+  }
+
   render() {
-    const {onSubmit} = this
+    const {onSubmit, handleToken} = this
     const {user, cart, orderItems, products} = this.props
     if (!cart || !orderItems) {
       return <h1>Loading...</h1>
@@ -111,6 +134,13 @@ class Checkout extends Component {
               <p>Total Price: </p>
             </div>
           </form>
+          <StripeCheckout
+            stripeKey="pk_test_E1dVa6505p5SZc6KIGv6yrQB00yOT20RJM"
+            token={handleToken}
+            billingAddress
+            shippingAddress
+            amount={cart.totalPrice * 100}
+          />
         </div>
       )
     }
@@ -118,9 +148,13 @@ class Checkout extends Component {
 }
 
 const mapStateToProps = ({user, orders, orderItems, products}) => {
-  const cart = orders.find(
-    order => order.userId === user.id && order.status === 'cart'
-  )
+  const cart = user.id
+    ? orders.find(order => order.status === 'cart' && order.userId === user.id)
+    : orders.find(
+        order =>
+          order.status === 'cart' &&
+          order.userId === parseInt(localStorage.getItem('guestId'))
+      )
   return {
     user,
     cart,

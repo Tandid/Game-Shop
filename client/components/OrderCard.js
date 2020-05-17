@@ -1,5 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
+import {product} from '../store'
 
 const OrderCard = ({id, status, totalPrice, orderItems, products}) => {
   if (!orderItems.length || !products.length) {
@@ -16,12 +18,18 @@ const OrderCard = ({id, status, totalPrice, orderItems, products}) => {
             {orderItems
               .filter(orderItem => orderItem.orderId === id)
               .map(orderItem => (
-                <li key={Math.random()}>
+                <li className="orderItem-title" key={Math.random()}>
                   {
                     products.find(product => product.id === orderItem.productId)
                       .title
                   }{' '}
                   x {orderItem.quantity}
+                  <Link
+                    className="link-button"
+                    to={`/review/${id}/${orderItem.productId}`}
+                  >
+                    Review
+                  </Link>
                 </li>
               ))}
           </ul>

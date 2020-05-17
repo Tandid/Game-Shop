@@ -50,10 +50,6 @@ class ProductCard extends React.Component {
     if (!id || !cart) {
       return <h1>Loading...</h1>
     } else {
-      // const existingOrderItem = orderItems.find(
-      //   (orderItem) =>
-      //     orderItem.productId === id && orderItem.orderId === cart.id
-      // )
       return (
         <li key={id} className="card">
           <h4>{title}</h4>
@@ -72,9 +68,13 @@ class ProductCard extends React.Component {
 }
 
 const mapStateToProps = ({orders, user, orderItems}) => {
-  const cart = orders.find(
-    order => order.status === 'cart' && order.userId === user.id
-  )
+  const cart = user.id
+    ? orders.find(order => order.status === 'cart' && order.userId === user.id)
+    : orders.find(
+        order =>
+          order.status === 'cart' &&
+          order.userId === parseInt(localStorage.getItem('guestId'))
+      )
   return {
     cart,
     user,

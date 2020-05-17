@@ -8,6 +8,7 @@ const GET_USERS = 'GET_USERS'
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 const UPDATE_USER = 'UPDATE_USER'
+const CREATE_USER = 'CREATE_USER'
 
 /**
  * INITIAL STATE
@@ -21,6 +22,7 @@ const _getUsers = users => ({type: GET_USERS, users})
 const getUser = user => ({type: GET_USER, user})
 const _removeUser = id => ({type: REMOVE_USER, user: id})
 const _updateUser = () => ({type: UPDATE_USER})
+const _createUser = user => ({type: CREATE_USER, user})
 
 /**
  * THUNK CREATORS
@@ -82,6 +84,13 @@ const updateUser = user => {
   }
 }
 
+const createUser = user => {
+  return async dispatch => {
+    const response = await axios.post('/api/users', user)
+    dispatch(_createUser(response.data))
+  }
+}
+
 /**
  * REDUCER
  */
@@ -99,13 +108,27 @@ const user = function(state = defaultUser, action) {
   }
 }
 
-const users = function(state = {}, action) {
+const users = function(state = [], action) {
   switch (action.type) {
     case GET_USERS:
       return action.users
+
+    case CREATE_USER:
+      return [...state, action.user]
+
     default:
       return state
   }
 }
 
-export {me, auth, logout, updateUser, removeUser, getUsers, user, users}
+export {
+  me,
+  auth,
+  logout,
+  updateUser,
+  removeUser,
+  getUsers,
+  user,
+  users,
+  createUser
+}

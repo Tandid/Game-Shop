@@ -15,19 +15,122 @@ import {
   Listings,
   UserList,
   OrderList,
-  Checkout
+  Checkout,
+  UserReviews
 } from './components'
 import {me, getProducts, getUsers} from './store'
 import EditProduct from './components/EditProduct'
-import {getOrderItems} from './store/orderItems'
-import {getOrders} from './store/orders'
+import {
+  getOrderItems,
+  orderItems,
+  deleteOrderItem,
+  createOrderItem,
+  updateOrderItem
+} from './store/orderItems'
+import {getOrders, createOrder, updateOrder} from './store/orders'
+import {createUser} from './store/user'
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
+  constructor() {
+    super()
+    this.createGuestUser = this.createGuestUser.bind(this)
+    this.mergeCart = this.mergeCart.bind(this)
+  }
+
   componentDidMount() {
     this.props.loadInitialData()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!this.props.user.id && !localStorage.guestId) {
+      this.createGuestUser()
+    }
+
+    if (this.props.isLoggedIn && !prevProps.isLoggedIn) {
+      this.mergeCart()
+    }
+  }
+
+  async createGuestUser() {
+    await localStorage.setItem('guestId', this.props.users.length + 1)
+    await this.props.createUser()
+    await this.props.createGuestCart({userId: localStorage.getItem('guestId')})
+  }
+
+  async mergeCart() {
+    const {orders, orderItems, user, products} = this.props
+
+    const userCart = await orders.find(
+      order => order.userId === user.id && order.status === 'cart'
+    )
+
+    const guestCart = await orders.find(
+      order =>
+        order.userId === parseInt(localStorage.getItem('guestId')) &&
+        order.status === 'cart'
+    )
+
+    const userOrderItems = await orderItems.filter(
+      orderItem => orderItem.orderId === userCart.id
+    )
+
+    const guestOrderItems = await orderItems.filter(
+      orderItem => orderItem.orderId === guestCart.id
+    )
+
+    let guestOrderItemsPrice = 0
+    await guestOrderItems.forEach(guestOrderItem => {
+      guestOrderItemsPrice =
+        guestOrderItemsPrice +
+        parseFloat(
+          products.find(product => product.id === guestOrderItem.productId)
+            .price
+        ) *
+          guestOrderItem.quantity
+
+      const existingOrderItem = userOrderItems.find(
+        userOrderItem =>
+          userOrderItem.productId === guestOrderItem.productId &&
+          userOrderItem.orderId === userCart.id
+      )
+
+      if (!existingOrderItem) {
+        this.props.newOrderItem({
+          productId: guestOrderItem.productId,
+          orderId: userCart.id
+        })
+      } else {
+        this.props.incrementOrderItem({
+          productId: guestOrderItem.productId,
+          orderId: userCart.id,
+          quantity: existingOrderItem.quantity + guestOrderItem.quantity
+        })
+      }
+    })
+
+    await this.props.updateTotalPrice(
+      {
+        id: guestCart.id,
+        totalPrice: 0
+      },
+      () => {}
+    )
+
+    await this.props.updateTotalPrice(
+      {
+        id: userCart.id,
+        totalPrice:
+          parseFloat(userCart.totalPrice) + parseFloat(guestOrderItemsPrice)
+      },
+      () => {}
+    )
+
+    await guestOrderItems.forEach(orderItem =>
+      this.props.removeFromGuestCart(orderItem)
+    )
   }
 
   render() {
@@ -51,6 +154,11 @@ class Routes extends Component {
             <Route exact path="/listings" component={Listings} />
             <Route exact path="/userlist" component={UserList} />
             <Route exact path="/orderlist" component={OrderList} />
+            <Route
+              exact
+              path="/review/:orderId/:productId"
+              component={UserReviews}
+            />
             <Route exact path="/products/:id/edit" component={EditProduct} />
             <Route exact path="/newProduct" component={CreateProduct} />
             {/* Routes placed here are only available after logging in */}
@@ -72,7 +180,11 @@ const mapStateToProps = state => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
-    user: state.user
+    user: state.user,
+    users: state.users,
+    orders: state.orders,
+    orderItems: state.orderItems,
+    products: state.products
   }
 }
 
@@ -84,7 +196,13 @@ const mapDispatchToProps = dispatch => {
       dispatch(getProducts())
       dispatch(getOrders())
       dispatch(getOrderItems())
-    }
+    },
+    createUser: user => dispatch(createUser(user)),
+    createGuestCart: order => dispatch(createOrder(order)),
+    removeFromGuestCart: orderItem => dispatch(deleteOrderItem(orderItem)),
+    updateTotalPrice: (order, push) => dispatch(updateOrder(order, push)),
+    newOrderItem: orderItem => dispatch(createOrderItem(orderItem)),
+    incrementOrderItem: orderItem => dispatch(updateOrderItem(orderItem))
   }
 }
 
