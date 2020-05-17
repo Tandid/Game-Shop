@@ -7,7 +7,7 @@ const Review = db.define('review', {
     allowNull: false
   },
   stars: {
-    type: Sequelize.DECIMAL,
+    type: Sequelize.INTEGER,
     allowNull: false
   }
 })

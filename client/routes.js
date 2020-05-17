@@ -15,7 +15,8 @@ import {
   Listings,
   UserList,
   OrderList,
-  Checkout
+  Checkout,
+  UserReviews
 } from './components'
 import {me, getProducts, getUsers} from './store'
 import EditProduct from './components/EditProduct'
@@ -153,6 +154,11 @@ class Routes extends Component {
             <Route exact path="/listings" component={Listings} />
             <Route exact path="/userlist" component={UserList} />
             <Route exact path="/orderlist" component={OrderList} />
+            <Route
+              exact
+              path="/review/:orderId/:productId"
+              component={UserReviews}
+            />
             <Route exact path="/products/:id/edit" component={EditProduct} />
             <Route exact path="/newProduct" component={CreateProduct} />
             {/* Routes placed here are only available after logging in */}

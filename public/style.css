@@ -286,3 +286,7 @@ tr:nth-child(even) {
   list-style-type: none;
   margin: 2rem 4rem;
 }
+
+.orderItem-title {
+  padding: 1rem;
+}

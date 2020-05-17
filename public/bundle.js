@@ -181,7 +181,10 @@ function (_Component) {
       }, "Manage Users"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         className: "link-button",
         to: "/orderlist"
-      }, "Manage Orders")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Status: ", user.admin === true ? 'Admin' : 'User'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " First Name: ", user.firstName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Last Name: ", user.lastName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Address: ", user.address), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Email: ", user.email), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "Manage Orders"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+        className: "link-button",
+        to: "/reviews"
+      }, "Manage Reviews")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Status: ", user.admin === true ? 'Admin' : 'User'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " First Name: ", user.firstName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Last Name: ", user.lastName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Address: ", user.address), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Email: ", user.email), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "button-edit"
       }, "Edit Profile")));
     }
@@ -1486,6 +1489,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store */ "./client/store/index.js");
+
+
 
 
 
@@ -1506,10 +1513,14 @@ var OrderCard = function OrderCard(_ref) {
       return orderItem.orderId === id;
     }).map(function (orderItem) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "orderItem-title",
         key: Math.random()
       }, products.find(function (product) {
         return product.id === orderItem.productId;
-      }).title, ' ', "x ", orderItem.quantity);
+      }).title, ' ', "x ", orderItem.quantity, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+        className: "link-button",
+        to: "/review/".concat(id, "/").concat(orderItem.productId)
+      }, "Review"));
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "$", totalPrice)));
   }
 };
@@ -2064,9 +2075,10 @@ function (_React$Component) {
           product = _this$props.product,
           cart = _this$props.cart,
           orderItems = _this$props.orderItems,
-          reviews = _this$props.reviews;
+          reviews = _this$props.reviews,
+          users = _this$props.users;
 
-      if (!orderItems || !cart || !reviews) {
+      if (!orderItems || !cart || !reviews || !users) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Loading...");
       } else {
         var existingOrderItem = orderItems.find(function (orderItem) {
@@ -2086,7 +2098,9 @@ function (_React$Component) {
         }).map(function (review) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
             key: review.id
-          }, review.userId, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, review.stars, " / 5.0"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, review.text));
+          }, users.find(function (_user) {
+            return _user.id === review.userId;
+          }).firstName, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, review.stars, " / 10"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, review.text));
         }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "details-3"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$", product.price), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Quantity: ", product.inventory), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -2105,7 +2119,8 @@ var mapStateToProps = function mapStateToProps(_ref) {
       orders = _ref.orders,
       user = _ref.user,
       orderItems = _ref.orderItems,
-      reviews = _ref.reviews;
+      reviews = _ref.reviews,
+      users = _ref.users;
   var cart = user.id ? orders.find(function (order) {
     return order.status === 'cart' && order.userId === user.id;
   }) : orders.find(function (order) {
@@ -2118,7 +2133,8 @@ var mapStateToProps = function mapStateToProps(_ref) {
     orders: orders,
     user: user,
     orderItems: orderItems,
-    reviews: reviews
+    reviews: reviews,
+    users: users
   };
 };
 
@@ -2701,6 +2717,191 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
+/***/ "./client/components/UserReviews.js":
+/*!******************************************!*\
+  !*** ./client/components/UserReviews.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_product__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/product */ "./client/store/product.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store */ "./client/store/index.js");
+/* harmony import */ var _store_reviews__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/reviews */ "./client/store/reviews.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+var UserReviews =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(UserReviews, _React$Component);
+
+  function UserReviews() {
+    var _this;
+
+    _classCallCheck(this, UserReviews);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(UserReviews).call(this));
+    _this.state = {
+      stars: 0,
+      text: ''
+    };
+    _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(UserReviews, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var productId = this.props.match.params.productId;
+      this.props.getProduct(productId);
+    }
+  }, {
+    key: "onSubmit",
+    value: function () {
+      var _onSubmit = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee(event) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                event.preventDefault();
+
+                try {
+                  this.props.postReview({
+                    stars: this.state.stars,
+                    text: this.state.text,
+                    userId: this.props.user.id,
+                    productId: this.props.product.id
+                  }, this.props.history.push);
+                } catch (exception) {
+                  console.log(exception);
+                }
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function onSubmit(_x) {
+        return _onSubmit.apply(this, arguments);
+      }
+
+      return onSubmit;
+    }()
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var onSubmit = this.onSubmit;
+      var product = this.props.product;
+      var _this$state = this.state,
+          stars = _this$state.stars,
+          text = _this$state.text;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: onSubmit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, product.title, " - Review"), "Number of Stars", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        onChange: function onChange(event) {
+          return _this2.setState({
+            stars: event.target.value
+          });
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: ""
+      }, "-- Select --"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: 1
+      }, "1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: 2
+      }, "2"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: 3
+      }, "3"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: 4
+      }, "4"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: 5
+      }, "5"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: 6
+      }, "6"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: 7
+      }, "7"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: 8
+      }, "8"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: 9
+      }, "9"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: 10
+      }, "10")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        value: text,
+        onChange: function onChange(event) {
+          return _this2.setState({
+            text: event.target.value
+          });
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        disabled: !stars || !text
+      }, "Submit Review"));
+    }
+  }]);
+
+  return UserReviews;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var mapStateToProps = function mapStateToProps(_ref) {
+  var product = _ref.product,
+      user = _ref.user;
+  return {
+    product: product,
+    user: user
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    getProduct: function getProduct(id) {
+      return dispatch(Object(_store_product__WEBPACK_IMPORTED_MODULE_2__["getDetails"])(id));
+    },
+    postReview: function postReview(review, push) {
+      return dispatch(Object(_store_reviews__WEBPACK_IMPORTED_MODULE_4__["createReview"])(review, push));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(UserReviews));
+
+/***/ }),
+
 /***/ "./client/components/auth-form.js":
 /*!****************************************!*\
   !*** ./client/components/auth-form.js ***!
@@ -2808,7 +3009,7 @@ AuthForm.propTypes = {
 /*!************************************!*\
   !*** ./client/components/index.js ***!
   \************************************/
-/*! exports provided: Navbar, UserHome, Products, Cart, Orders, ProductDetails, CreateProduct, Account, Listings, UserList, OrderList, Checkout, Login, Signup */
+/*! exports provided: Navbar, UserHome, Products, Cart, Orders, ProductDetails, CreateProduct, Account, Listings, UserList, OrderList, Checkout, UserReviews, Login, Signup */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2849,16 +3050,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Checkout__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Checkout */ "./client/components/Checkout.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Checkout", function() { return _Checkout__WEBPACK_IMPORTED_MODULE_11__["default"]; });
 
-/* harmony import */ var _auth_form__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./auth-form */ "./client/components/auth-form.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Login", function() { return _auth_form__WEBPACK_IMPORTED_MODULE_12__["Login"]; });
+/* harmony import */ var _UserReviews__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./UserReviews */ "./client/components/UserReviews.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UserReviews", function() { return _UserReviews__WEBPACK_IMPORTED_MODULE_12__["default"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Signup", function() { return _auth_form__WEBPACK_IMPORTED_MODULE_12__["Signup"]; });
+/* harmony import */ var _auth_form__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./auth-form */ "./client/components/auth-form.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Login", function() { return _auth_form__WEBPACK_IMPORTED_MODULE_13__["Login"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Signup", function() { return _auth_form__WEBPACK_IMPORTED_MODULE_13__["Signup"]; });
 
 /**
  * `components/index.js` exists simply as a 'central export' for our components.
  * This way, we can import all of our components from the same place, rather than
  * having to figure out which file they belong to!
  */
+
 
 
 
@@ -3249,6 +3454,10 @@ function (_Component) {
         exact: true,
         path: "/orderlist",
         component: _components__WEBPACK_IMPORTED_MODULE_4__["OrderList"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        exact: true,
+        path: "/review/:orderId/:productId",
+        component: _components__WEBPACK_IMPORTED_MODULE_4__["UserReviews"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         exact: true,
         path: "/products/:id/edit",
@@ -4370,7 +4579,7 @@ var getReviews = function getReviews() {
   );
 };
 
-var createReview = function createReview(review) {
+var createReview = function createReview(review, push) {
   return (
     /*#__PURE__*/
     function () {
@@ -4382,13 +4591,13 @@ var createReview = function createReview(review) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                j;
-                _context2.next = 3;
+                _context2.next = 2;
                 return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/reviews', review);
 
-              case 3:
+              case 2:
                 response = _context2.sent;
                 dispatch(_createReview(response.data));
+                push('/orders');
 
               case 5:
               case "end":

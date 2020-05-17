@@ -27,11 +27,11 @@ const getReviews = () => {
   }
 }
 
-const createReview = review => {
+const createReview = (review, push) => {
   return async dispatch => {
-    j
     const response = await axios.post('/api/reviews', review)
     dispatch(_createReview(response.data))
+    push('/orders')
   }
 }
 

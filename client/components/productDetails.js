@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {getDetails, product} from '../store/product'
+import {getDetails} from '../store/product'
 import {createOrderItem, updateOrderItem} from '../store/orderItems'
 import {updateOrder} from '../store/orders'
 import {getReviews} from '../store/reviews'
@@ -53,8 +53,8 @@ class ProductDetails extends React.Component {
 
   render() {
     const {addToCart} = this
-    const {product, cart, orderItems, reviews} = this.props
-    if (!orderItems || !cart || !reviews) {
+    const {product, cart, orderItems, reviews, users} = this.props
+    if (!orderItems || !cart || !reviews || !users) {
       return <h1>Loading...</h1>
     } else {
       const existingOrderItem = orderItems.find(
@@ -77,8 +77,8 @@ class ProductDetails extends React.Component {
                 .filter(review => review.productId === product.id)
                 .map(review => (
                   <ul key={review.id}>
-                    {review.userId}
-                    <li>{review.stars} / 5.0</li>
+                    {users.find(_user => _user.id === review.userId).firstName}
+                    <li>{review.stars} / 10</li>
                     <li>{review.text}</li>
                   </ul>
                 ))}
@@ -102,7 +102,8 @@ const mapStateToProps = ({
   orders,
   user,
   orderItems,
-  reviews
+  reviews,
+  users
 }) => {
   const cart = user.id
     ? orders.find(order => order.status === 'cart' && order.userId === user.id)
@@ -119,7 +120,8 @@ const mapStateToProps = ({
     orders,
     user,
     orderItems,
-    reviews
+    reviews,
+    users
   }
 }
 
