@@ -1,8 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {getDetails} from '../store/product'
+import {getDetails, product} from '../store/product'
 import {createOrderItem, updateOrderItem} from '../store/orderItems'
 import {updateOrder} from '../store/orders'
+import {getReviews} from '../store/reviews'
 
 class ProductDetails extends React.Component {
   constructor() {
@@ -13,26 +14,27 @@ class ProductDetails extends React.Component {
   componentDidMount() {
     const productId = this.props.match.params.id
     this.props.getProduct(productId)
+    this.props.loadReviews()
   }
 
   async addToCart(event) {
     event.preventDefault()
     try {
       const existingOrderItem = this.props.orderItems.find(
-        orderItem =>
+        (orderItem) =>
           orderItem.productId === this.props.product.id &&
           orderItem.orderId === this.props.cart.id
       )
       if (!existingOrderItem) {
         await this.props.newOrderItem({
           productId: this.props.product.id,
-          orderId: this.props.cart.id
+          orderId: this.props.cart.id,
         })
       } else {
         await this.props.incrementOrderItem({
           productId: this.props.product.id,
           orderId: this.props.cart.id,
-          quantity: existingOrderItem.quantity + 1
+          quantity: existingOrderItem.quantity + 1,
         })
       }
       await this.props.updateTotalPrice(
@@ -40,7 +42,7 @@ class ProductDetails extends React.Component {
           id: this.props.cart.id,
           totalPrice:
             parseFloat(this.props.cart.totalPrice) +
-            parseFloat(this.props.product.price)
+            parseFloat(this.props.product.price),
         },
         () => {}
       )
@@ -51,12 +53,12 @@ class ProductDetails extends React.Component {
 
   render() {
     const {addToCart} = this
-    const {product, cart, orderItems} = this.props
-    if (!orderItems || !cart) {
+    const {product, cart, orderItems, reviews} = this.props
+    if (!orderItems || !cart || !reviews) {
       return <h1>Loading...</h1>
     } else {
       const existingOrderItem = orderItems.find(
-        orderItem =>
+        (orderItem) =>
           orderItem.productId === product.id && orderItem.orderId === cart.id
       )
       return (
@@ -69,7 +71,18 @@ class ProductDetails extends React.Component {
           <div className="details-2">
             <p>Description: {product.description}</p>
             <p>Platform: {product.category}</p>
-            <p>Reviews</p>
+            <ul>
+              Reviews
+              {reviews
+                .filter((review) => review.productId === product.id)
+                .map((review) => (
+                  <ul key={review.id}>
+                    {review.userId}
+                    <li>{review.stars} / 5.0</li>
+                    <li>{review.text}</li>
+                  </ul>
+                ))}
+            </ul>
           </div>
 
           <div className="details-3">
@@ -83,11 +96,20 @@ class ProductDetails extends React.Component {
   }
 }
 
-const mapStateToProps = ({products, product, orders, user, orderItems}) => {
+const mapStateToProps = ({
+  products,
+  product,
+  orders,
+  user,
+  orderItems,
+  reviews,
+}) => {
   const cart = user.id
-    ? orders.find(order => order.status === 'cart' && order.userId === user.id)
+    ? orders.find(
+        (order) => order.status === 'cart' && order.userId === user.id
+      )
     : orders.find(
-        order =>
+        (order) =>
           order.status === 'cart' &&
           order.userId === parseInt(localStorage.getItem('guestId'))
       )
@@ -98,16 +120,18 @@ const mapStateToProps = ({products, product, orders, user, orderItems}) => {
     cart,
     orders,
     user,
-    orderItems
+    orderItems,
+    reviews,
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getProduct: id => dispatch(getDetails(id)),
-    newOrderItem: orderItem => dispatch(createOrderItem(orderItem)),
-    incrementOrderItem: orderItem => dispatch(updateOrderItem(orderItem)),
-    updateTotalPrice: (order, push) => dispatch(updateOrder(order, push))
+    getProduct: (id) => dispatch(getDetails(id)),
+    newOrderItem: (orderItem) => dispatch(createOrderItem(orderItem)),
+    incrementOrderItem: (orderItem) => dispatch(updateOrderItem(orderItem)),
+    updateTotalPrice: (order, push) => dispatch(updateOrder(order, push)),
+    loadReviews: () => dispatch(getReviews()),
   }
 }
 

@@ -1,7 +1,13 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Product, OrderItems, Order} = require('../server/db/models')
+const {
+  User,
+  Product,
+  OrderItems,
+  Order,
+  Review,
+} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -13,14 +19,14 @@ async function seed() {
       email: 'dennis@gmail.com',
       password: '123',
       admin: true,
-      firstName: 'Dennis'
+      firstName: 'Dennis',
     }),
     User.create({
       email: 'tandid@gmail.com',
       password: '123',
       admin: true,
-      firstName: 'Tandid'
-    })
+      firstName: 'Tandid',
+    }),
   ])
 
   const products = await Promise.all([
@@ -31,7 +37,7 @@ async function seed() {
         'https://images-na.ssl-images-amazon.com/images/I/81aJ-R4E6gL._SL1500_.jpg',
       price: 59.99,
       inventory: 5,
-      category: 'Nintendo'
+      category: 'Nintendo',
     }),
     Product.create({
       title: 'Animal Crossing New Horizons',
@@ -40,7 +46,7 @@ async function seed() {
         'https://media.gamestop.com/i/gamestop/10168434/Animal-Crossing-New-Horizons',
       price: 59.99,
       inventory: 5,
-      category: 'Nintendo'
+      category: 'Nintendo',
     }),
     Product.create({
       title: 'The Legend of Zelda: Breath of the Wild',
@@ -49,7 +55,7 @@ async function seed() {
         'https://media.gamestop.com/i/gamestop/10141904/The-Legend-of-Zelda-Breath-of-the-Wild',
       price: 59.99,
       inventory: 5,
-      category: 'Nintendo'
+      category: 'Nintendo',
     }),
     Product.create({
       title: 'Pokemon Shield',
@@ -58,7 +64,7 @@ async function seed() {
         'https://images-na.ssl-images-amazon.com/images/I/71lz62-F84L._SY445_.jpg',
       price: 59.99,
       inventory: 5,
-      category: 'Nintendo'
+      category: 'Nintendo',
     }),
     Product.create({
       title: 'Gears 5',
@@ -67,7 +73,7 @@ async function seed() {
         'https://cdn.cdkeys.com/500x706/media/catalog/product/g/e/gears-5-cd-keys-xbox-discount.jpg',
       price: 59.99,
       inventory: 5,
-      category: 'Xbox'
+      category: 'Xbox',
     }),
     Product.create({
       title: 'Halo 5: Guardians',
@@ -76,7 +82,7 @@ async function seed() {
         'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/9441/9441137_sa.jpg;maxHeight=640;maxWidth=550',
       price: 59.99,
       inventory: 5,
-      category: 'Xbox'
+      category: 'Xbox',
     }),
     Product.create({
       title: 'Call of Duty: Modern Warfare',
@@ -85,7 +91,7 @@ async function seed() {
         'https://cdn.cdkeys.com/500x706/media/catalog/product/c/o/cod-modern-warfare-xp-boost-dlc-ps4.jpg',
       price: 59.99,
       inventory: 5,
-      category: 'Playstation'
+      category: 'Playstation',
     }),
     Product.create({
       title: 'Final Fantasy VII',
@@ -94,7 +100,7 @@ async function seed() {
         'https://upload.wikimedia.org/wikipedia/en/c/ce/FFVIIRemake.png',
       price: 59.99,
       inventory: 5,
-      category: 'Playstation'
+      category: 'Playstation',
     }),
     Product.create({
       title: 'GTA V',
@@ -103,8 +109,8 @@ async function seed() {
         'https://cdn.cdkeys.com/500x706/media/catalog/product/g/r/grand_theft_auto_v_5_gta_5_pc_3.jpg',
       price: 59.99,
       inventory: 5,
-      category: 'PC'
-    })
+      category: 'PC',
+    }),
   ])
 
   const [SSBU, AC, LOZ, PS, G5, HALO, COD, FF7, GTAV] = products
@@ -113,40 +119,45 @@ async function seed() {
     Order.create({
       userId: 2,
       status: 'cart',
-      totalPrice: parseFloat(SSBU.price) + parseFloat(AC.price)
+      totalPrice: parseFloat(SSBU.price) + parseFloat(AC.price),
     }),
     Order.create({
       userId: 3,
       status: 'cart',
-      totalPrice: parseFloat(SSBU.price) + parseFloat(GTAV.price)
+      totalPrice: parseFloat(SSBU.price) + parseFloat(GTAV.price),
     }),
     Order.create({
       userId: 2,
       status: 'completed',
-      totalPrice: parseFloat(FF7.price) + parseFloat(HALO.price)
-    })
+      totalPrice: parseFloat(FF7.price) + parseFloat(HALO.price),
+    }),
   ])
 
   const [activeOrder1, activeOrder2, completedOrder] = orders
 
   const cart1 = await Promise.all([
     OrderItems.create({productId: SSBU.id, orderId: activeOrder1.id}),
-    OrderItems.create({productId: AC.id, orderId: activeOrder1.id})
+    OrderItems.create({productId: AC.id, orderId: activeOrder1.id}),
   ])
 
   const cart2 = await Promise.all([
     OrderItems.create({productId: SSBU.id, orderId: activeOrder2.id}),
-    OrderItems.create({productId: GTAV.id, orderId: activeOrder2.id})
+    OrderItems.create({productId: GTAV.id, orderId: activeOrder2.id}),
   ])
 
   const compOrd = await Promise.all([
     OrderItems.create({productId: FF7.id, orderId: completedOrder.id}),
-    OrderItems.create({productId: HALO.id, orderId: completedOrder.id})
+    OrderItems.create({productId: HALO.id, orderId: completedOrder.id}),
+  ])
+
+  const reviews = await Promise.all([
+    Review.create({text: 'perfect game', stars: 4.3, userId: 2, productId: 1}),
   ])
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${products.length} products`)
   console.log(`seeded ${orders.length} orders`)
+  console.log(`seeded ${reviews.length} reviews`)
   console.log(`seeded successfully`)
 }
 

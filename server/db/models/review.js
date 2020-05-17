@@ -4,12 +4,12 @@ const db = require('../db')
 const Review = db.define('review', {
   text: {
     type: Sequelize.TEXT,
-    allowNull: false
+    allowNull: false,
   },
   stars: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  }
+    type: Sequelize.DECIMAL,
+    allowNull: false,
+  },
 })
 
 module.exports = Review

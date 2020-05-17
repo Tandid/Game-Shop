@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {product} from './product'
 
 /**
  * ACTION TYPES ------------------------------------------------
@@ -18,22 +17,22 @@ const CREATE_ORDER = 'CREATE_ORDER'
 /**
  * ACTION CREATORS
  */
-const _getOrders = orders => ({type: GET_ORDERS, orders})
-const _updateOrder = order => ({type: UPDATE_ORDER, order})
-const _createOrder = order => ({type: CREATE_ORDER, order})
+const _getOrders = (orders) => ({type: GET_ORDERS, orders})
+const _updateOrder = (order) => ({type: UPDATE_ORDER, order})
+const _createOrder = (order) => ({type: CREATE_ORDER, order})
 
 /**
  * THUNK CREATORS -------------------------------------------------
  */
 const getOrders = () => {
-  return async dispatch => {
+  return async (dispatch) => {
     const response = await axios.get(`/api/orders`)
     dispatch(_getOrders(response.data))
   }
 }
 
 const updateOrder = (order, push) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const {data: updatedOrder} = await axios.put(
       `/api/orders/${order.id}`,
       order
@@ -43,8 +42,8 @@ const updateOrder = (order, push) => {
   }
 }
 
-const createOrder = order => {
-  return async dispatch => {
+const createOrder = (order) => {
+  return async (dispatch) => {
     const response = await axios.post('/api/orders', order)
     dispatch(_createOrder(response.data))
   }
@@ -53,14 +52,14 @@ const createOrder = order => {
 /**
  * REDUCER -------------------------------------------------------
  */
-export default function(state = [], action) {
+export default function (state = [], action) {
   switch (action.type) {
     case GET_ORDERS:
       return action.orders
 
     case UPDATE_ORDER:
-      state = state.map(
-        order => (order.id === action.order.id ? action.order : order)
+      state = state.map((order) =>
+        order.id === action.order.id ? action.order : order
       )
       return state
 

@@ -6,6 +6,7 @@ import {user, users} from './user'
 import {products, product} from './product'
 import orders from './orders'
 import {orderItems, orderItem} from './orderItems'
+import {reviews} from './reviews'
 
 const reducer = combineReducers({
   user,
@@ -14,7 +15,8 @@ const reducer = combineReducers({
   product,
   orders,
   orderItems,
-  orderItem
+  orderItem,
+  reviews,
 })
 
 const middleware = composeWithDevTools(

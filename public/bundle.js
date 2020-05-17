@@ -1932,6 +1932,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_product__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/product */ "./client/store/product.js");
 /* harmony import */ var _store_orderItems__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/orderItems */ "./client/store/orderItems.js");
 /* harmony import */ var _store_orders__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/orders */ "./client/store/orders.js");
+/* harmony import */ var _store_reviews__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../store/reviews */ "./client/store/reviews.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -1960,6 +1961,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var ProductDetails =
 /*#__PURE__*/
 function (_React$Component) {
@@ -1980,6 +1982,7 @@ function (_React$Component) {
     value: function componentDidMount() {
       var productId = this.props.match.params.id;
       this.props.getProduct(productId);
+      this.props.loadReviews();
     }
   }, {
     key: "addToCart",
@@ -2060,9 +2063,10 @@ function (_React$Component) {
       var _this$props = this.props,
           product = _this$props.product,
           cart = _this$props.cart,
-          orderItems = _this$props.orderItems;
+          orderItems = _this$props.orderItems,
+          reviews = _this$props.reviews;
 
-      if (!orderItems || !cart) {
+      if (!orderItems || !cart || !reviews) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Loading...");
       } else {
         var existingOrderItem = orderItems.find(function (orderItem) {
@@ -2077,7 +2081,13 @@ function (_React$Component) {
           src: product.imageURL
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "details-2"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Description: ", product.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Platform: ", product.category), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Reviews")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Description: ", product.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Platform: ", product.category), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, "Reviews", reviews.filter(function (review) {
+          return review.productId === product.id;
+        }).map(function (review) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+            key: review.id
+          }, review.userId, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, review.stars, " / 5.0"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, review.text));
+        }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "details-3"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$", product.price), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Quantity: ", product.inventory), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           onClick: addToCart
@@ -2094,7 +2104,8 @@ var mapStateToProps = function mapStateToProps(_ref) {
       product = _ref.product,
       orders = _ref.orders,
       user = _ref.user,
-      orderItems = _ref.orderItems;
+      orderItems = _ref.orderItems,
+      reviews = _ref.reviews;
   var cart = user.id ? orders.find(function (order) {
     return order.status === 'cart' && order.userId === user.id;
   }) : orders.find(function (order) {
@@ -2106,7 +2117,8 @@ var mapStateToProps = function mapStateToProps(_ref) {
     cart: cart,
     orders: orders,
     user: user,
-    orderItems: orderItems
+    orderItems: orderItems,
+    reviews: reviews
   };
 };
 
@@ -2123,6 +2135,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     updateTotalPrice: function updateTotalPrice(order, push) {
       return dispatch(Object(_store_orders__WEBPACK_IMPORTED_MODULE_4__["updateOrder"])(order, push));
+    },
+    loadReviews: function loadReviews() {
+      return dispatch(Object(_store_reviews__WEBPACK_IMPORTED_MODULE_5__["getReviews"])());
     }
   };
 };
@@ -3351,6 +3366,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _product__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./product */ "./client/store/product.js");
 /* harmony import */ var _orders__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./orders */ "./client/store/orders.js");
 /* harmony import */ var _orderItems__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./orderItems */ "./client/store/orderItems.js");
+/* harmony import */ var _reviews__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./reviews */ "./client/store/reviews.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "me", function() { return _user__WEBPACK_IMPORTED_MODULE_4__["me"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "auth", function() { return _user__WEBPACK_IMPORTED_MODULE_4__["auth"]; });
@@ -3405,6 +3421,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var reducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   user: _user__WEBPACK_IMPORTED_MODULE_4__["user"],
   users: _user__WEBPACK_IMPORTED_MODULE_4__["users"],
@@ -3412,7 +3429,8 @@ var reducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   product: _product__WEBPACK_IMPORTED_MODULE_5__["product"],
   orders: _orders__WEBPACK_IMPORTED_MODULE_6__["default"],
   orderItems: _orderItems__WEBPACK_IMPORTED_MODULE_7__["orderItems"],
-  orderItem: _orderItems__WEBPACK_IMPORTED_MODULE_7__["orderItem"]
+  orderItem: _orderItems__WEBPACK_IMPORTED_MODULE_7__["orderItem"],
+  reviews: _reviews__WEBPACK_IMPORTED_MODULE_8__["reviews"]
 });
 var middleware = Object(redux_devtools_extension__WEBPACK_IMPORTED_MODULE_3__["composeWithDevTools"])(Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_2__["default"], Object(redux_logger__WEBPACK_IMPORTED_MODULE_1__["createLogger"])({
   collapsed: true
@@ -3752,7 +3770,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createOrder", function() { return createOrder; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _product__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./product */ "./client/store/product.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -3764,7 +3781,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 
 
 /**
@@ -4249,6 +4265,160 @@ var product = function product() {
 
     case UPDATE_PRODUCT:
       state = action.product;
+      return state;
+
+    default:
+      return state;
+  }
+};
+
+
+
+/***/ }),
+
+/***/ "./client/store/reviews.js":
+/*!*********************************!*\
+  !*** ./client/store/reviews.js ***!
+  \*********************************/
+/*! exports provided: reviews, getReviews, createReview */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "reviews", function() { return reviews; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getReviews", function() { return getReviews; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createReview", function() { return createReview; });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+/**
+ * ACTION TYPES ------------------------------------------------
+ */
+
+var GET_REVIEWS = 'GET_REVIEWS';
+var CREATE_REVIEW = 'CREATE_REVIEW';
+/**
+ * INITIAL STATE --------------------------------------------------
+ */
+
+var initialState = [];
+/**
+ * ACTION CREATORS
+ */
+
+var _getReviews = function _getReviews(reviews) {
+  return {
+    type: GET_REVIEWS,
+    reviews: reviews
+  };
+};
+
+var _createReview = function _createReview(review) {
+  return {
+    type: CREATE_REVIEW,
+    review: review
+  };
+};
+/**
+ * THUNK CREATORS -------------------------------------------------
+ */
+
+
+var getReviews = function getReviews() {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee(dispatch) {
+        var response;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/reviews");
+
+              case 2:
+                response = _context.sent;
+                dispatch(_getReviews(response.data));
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function (_x) {
+        return _ref.apply(this, arguments);
+      };
+    }()
+  );
+};
+
+var createReview = function createReview(review) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref2 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2(dispatch) {
+        var response;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                j;
+                _context2.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/reviews', review);
+
+              case 3:
+                response = _context2.sent;
+                dispatch(_createReview(response.data));
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      return function (_x2) {
+        return _ref2.apply(this, arguments);
+      };
+    }()
+  );
+};
+/**
+ * REDUCER -------------------------------------------------------
+ */
+
+
+var reviews = function reviews() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case GET_REVIEWS:
+      return action.reviews;
+
+    case CREATE_REVIEW:
+      state = [].concat(_toConsumableArray(state), [action.review]);
       return state;
 
     default:
@@ -48174,7 +48344,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
