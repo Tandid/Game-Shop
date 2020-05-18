@@ -921,6 +921,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -950,6 +951,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var Confirmation = /*#__PURE__*/function (_Component) {
   _inherits(Confirmation, _Component);
 
@@ -963,7 +965,9 @@ var Confirmation = /*#__PURE__*/function (_Component) {
     _this = _super.call(this);
     _this.state = {
       user: {},
-      products: {}
+      order: {},
+      orderItems: {} //   products: {},
+
     };
     return _this;
   }
@@ -972,7 +976,7 @@ var Confirmation = /*#__PURE__*/function (_Component) {
     key: "componentDidMount",
     value: function () {
       var _componentDidMount = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var user;
+        var user, order, orderItems, recentOrder, recentOrderItems;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -982,13 +986,36 @@ var Confirmation = /*#__PURE__*/function (_Component) {
 
               case 2:
                 user = _context.sent;
-                // const recentOrder = await axios.get('/api/orders/')
+                _context.next = 5;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/orders/');
+
+              case 5:
+                order = _context.sent;
+                _context.next = 8;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/orderitems/');
+
+              case 8:
+                orderItems = _context.sent;
+                // const products = await axios.get('/api/products/')
+                recentOrder = order.data.filter(function (_order) {
+                  return _order.userId === user.data.id;
+                }).slice(-1)[0];
+                recentOrderItems = orderItems.data.filter(function (orderItem) {
+                  return orderItem.orderId === recentOrder.id;
+                }); // const recentProducts = products.data.find(
+                //   (product) => product.id === recentOrderItems.productId
+                // )
+
+                console.log(recentOrder);
+                console.log(recentOrderItems);
                 this.setState({
-                  user: user.data //   products: recentOrder.data.products,
+                  user: user.data,
+                  order: recentOrder,
+                  orderItems: recentOrderItems //   products: recentProducts,
 
                 });
 
-              case 4:
+              case 14:
               case "end":
                 return _context.stop();
             }
@@ -1005,16 +1032,33 @@ var Confirmation = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var user = this.state.user;
-      var products = this.state.products;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Thank you for shopping with us!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "You will receive an email confirmation soon with shipping and tracking details"));
+      // const {orders, user} = this.props
+      var order = this.state.order;
+      var orderItems = this.state.orderItems;
+      var products = this.state;
+
+      if (!orderItems.length) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Loading...");
+      } else {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Thank you for shopping with us!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "You will receive an email confirmation soon with shipping and tracking details")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+          key: Math.random(),
+          className: "OrderCard"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Order #: ", orderItems.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Status: ", orderItems.status)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "$", order.totalPrice))));
+      }
     }
   }]);
 
   return Confirmation;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (Confirmation);
+var mapStateToProps = function mapStateToProps(_ref) {
+  var products = _ref.products;
+  return {
+    products: products
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps)(Confirmation));
 
 /***/ }),
 
