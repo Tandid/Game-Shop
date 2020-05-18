@@ -53,7 +53,15 @@ class ProductDetails extends React.Component {
 
   render() {
     const {addToCart} = this
-    const {product, cart, orderItems, reviews, users} = this.props
+    const {
+      product,
+      cart,
+      orderItems,
+      reviews,
+      users,
+      totalReviews,
+      averageRating
+    } = this.props
     if (!orderItems || !cart || !reviews || !users) {
       return <h1>Loading...</h1>
     } else {
@@ -69,26 +77,38 @@ class ProductDetails extends React.Component {
           </div>
 
           <div className="details-2">
-            <p>Description: {product.description}</p>
-            <p>Platform: {product.category}</p>
-            <ul>
-              Reviews
-              {reviews
-                .filter(review => review.productId === product.id)
-                .map(review => (
-                  <ul key={review.id}>
-                    {users.find(_user => _user.id === review.userId).firstName}
-                    <li>{review.stars} / 10</li>
-                    <li>{review.text}</li>
-                  </ul>
-                ))}
-            </ul>
+            <h3>Description:</h3>
+            <p className="description-overflow">{product.description}</p>
+            <h4>Platform: {product.category}</h4>
+
+            <h4>Price ${product.price}</h4>
+            {/* <p>Quantity: {product.inventory}</p> */}
+            <button onClick={addToCart}>Add to Cart</button>
           </div>
 
           <div className="details-3">
-            <p>${product.price}</p>
-            <p>Quantity: {product.inventory}</p>
-            <button onClick={addToCart}>Add to Cart</button>
+            <h3> Reviews </h3>
+            <h4> Total Reviews: {totalReviews} </h4>
+            <h4> Average Rating: {averageRating}/10</h4>
+            <div className="review-overflow">
+              {reviews
+                .filter(review => review.productId === product.id)
+                .map(review => (
+                  <li className="review" key={review.id}>
+                    <p> ------------------------------</p>
+                    <p>Rating: {review.stars} / 10</p>
+                    <q> {review.text} </q>
+                    <p>
+                      -
+                      {
+                        users.find(_user => _user.id === review.userId)
+                          .firstName
+                      }
+                    </p>
+                    <p> ------------------------------</p>
+                  </li>
+                ))}
+            </div>
           </div>
         </div>
       )
@@ -113,6 +133,12 @@ const mapStateToProps = ({
           order.userId === parseInt(localStorage.getItem('guestId'))
       )
 
+  const totalReviews = reviews.length
+  const totalRating = reviews.reduce((accum, review) => {
+    return (accum += review.stars)
+  }, 0)
+  const averageRating = totalRating / totalReviews
+
   return {
     products,
     product,
@@ -121,7 +147,9 @@ const mapStateToProps = ({
     user,
     orderItems,
     reviews,
-    users
+    users,
+    totalReviews,
+    averageRating
   }
 }
 

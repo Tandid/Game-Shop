@@ -27,8 +27,8 @@ class Navbar extends React.Component {
               <NavLink to="/">ProGamerz</NavLink>
               <NavLink to="/products"> Games </NavLink>
               <NavLink to="/cart"> Cart </NavLink>
-              <NavLink to="/orders"> Orders </NavLink>
-              <NavLink to="/account"> Account Info </NavLink>
+              <NavLink to="/orders"> Order History </NavLink>
+              <NavLink to="/account"> Account </NavLink>
               <a href="#" onClick={userSignOut}>
                 Logout
               </a>

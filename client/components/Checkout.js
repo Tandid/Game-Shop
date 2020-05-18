@@ -14,8 +14,7 @@ class Checkout extends Component {
     this.state = {
       firstName: '',
       lastName: '',
-      email: '',
-      address: ''
+      email: ''
     }
     this.onSubmit = this.onSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -96,26 +95,18 @@ class Checkout extends Component {
                 value={this.state.email}
                 placeholder="Email"
               />
-              <input
-                type="text"
-                name="address"
-                onChange={this.handleChange}
-                value={user.address ? user.address : this.state.address}
-                placeholder="Address"
-              />
               <div>
                 <h1> Payment Method </h1>
                 <Link className="link-button" to="/cart">
                   Edit Cart
                 </Link>
-                {/* <Payment/> */}
-                <button
+                {/* <button
                   className="cart-button"
                   onClick={onSubmit}
                   disabled={!cartOrderItems.length}
                 >
                   Process Payment
-                </button>
+                </button> */}
               </div>
             </div>
 

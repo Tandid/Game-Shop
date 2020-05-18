@@ -52,7 +52,7 @@ class CreateProduct extends React.Component {
         <form className="new-form" onSubmit={onSubmit}>
           {error}
           <h3> Create New Game </h3>
-          <p>
+          <p className="row">
             Title:
             <input
               value={title}
@@ -60,7 +60,7 @@ class CreateProduct extends React.Component {
               placeholder="Title"
             />
           </p>
-          <p>
+          <p className="row">
             Description:
             <input
               value={description}
@@ -70,7 +70,7 @@ class CreateProduct extends React.Component {
               placeholder="Description"
             />
           </p>
-          <p>
+          <p className="row">
             ImageURL:
             <input
               value={imageURL}
@@ -78,7 +78,7 @@ class CreateProduct extends React.Component {
               placeholder="Image Url"
             />
           </p>
-          <p>
+          <p className="row">
             Price:
             <input
               value={price}
@@ -86,7 +86,7 @@ class CreateProduct extends React.Component {
               placeholder="Price"
             />
           </p>
-          <p>
+          <p className="row">
             Inventory:
             <input
               value={inventory}
@@ -94,7 +94,7 @@ class CreateProduct extends React.Component {
               placeholder="Inventory"
             />
           </p>
-          <p>
+          <p className="row">
             Platform:
             <select
               onChange={event => this.setState({category: event.target.value})}

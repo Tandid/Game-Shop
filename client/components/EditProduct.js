@@ -106,14 +106,14 @@ class EditProduct extends React.Component {
         <form className="edit-form">
           {error}
           <h3>Edit Product Details</h3>
-          <p>
+          <p className="row">
             Product Title:{' '}
             <input
               value={title}
               onChange={event => this.setState({title: event.target.value})}
             />
           </p>
-          <p>
+          <p className="row">
             Description:{' '}
             <input
               value={description}
@@ -122,21 +122,21 @@ class EditProduct extends React.Component {
               }
             />
           </p>
-          <p>
+          <p className="row">
             ImageURL:{' '}
             <input
               value={imageURL}
               onChange={event => this.setState({imageURL: event.target.value})}
             />
           </p>
-          <p>
+          <p className="row">
             Price:{' '}
             <input
               value={price}
               onChange={event => this.setState({price: event.target.value})}
             />
           </p>
-          <p>
+          <p className="row">
             Inventory:{' '}
             <input
               value={inventory}
@@ -144,7 +144,7 @@ class EditProduct extends React.Component {
             />
           </p>
 
-          <p>
+          <p className="row">
             Platform:{' '}
             <select
               value={category}

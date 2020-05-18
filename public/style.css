@@ -133,6 +133,7 @@ button {
   text-align: center;
   margin: 2rem;
   border-radius: 1rem;
+  padding: 1rem;
 }
 
 .details-1,
@@ -289,4 +290,33 @@ tr:nth-child(even) {
 
 .orderItem-title {
   padding: 1rem;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.row > * {
+  width: 80%;
+}
+
+.description-overflow {
+  overflow: scroll;
+  height: 250px;
+}
+
+.review-overflow {
+  overflow: scroll;
+  height: 250px;
+}
+
+.review {
+  list-style-type: none;
+}
+
+.details-3 {
+  border-left: solid 1px black;
+  border-right: solid 1px black;
 }

@@ -127,6 +127,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store */ "./client/store/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -158,21 +162,137 @@ function (_Component) {
 
     _classCallCheck(this, Account);
 
+<<<<<<< HEAD
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Account).call(this, props));
     _this.state = {};
+=======
+    var firstName = '';
+    var lastName = '';
+    var email = '';
+    var imageURL = '';
+
+    if (props.user) {
+      if (props.user.firstName) {
+        firstName = props.user.firstName;
+      }
+
+      if (props.user.lastName) {
+        lastName = props.user.lastName;
+      }
+
+      if (props.user.email) {
+        email = props.user.email;
+      }
+
+      if (props.user.imageURL) {
+        imageURL = props.user.imageURL;
+      }
+    }
+
+    _this = _super.call(this);
+    _this.state = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      imageURL: imageURL,
+      error: ''
+    };
+    _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
+>>>>>>> master
     return _this;
   }
 
   _createClass(Account, [{
+    key: "onSubmit",
+    value: function () {
+      var _onSubmit = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(event) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                event.preventDefault();
+
+                try {
+                  this.props.update({
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    email: this.state.email,
+                    imageURL: this.state.imageURL
+                  }, this.props.history.push);
+                } catch (exception) {
+                  this.setState({
+                    error: exception.response.data.message
+                  });
+                }
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function onSubmit(_x) {
+        return _onSubmit.apply(this, arguments);
+      }
+
+      return onSubmit;
+    }()
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.user.firstName !== this.props.user.firstName) {
+        this.setState({
+          firstName: this.props.user.firstName
+        });
+      }
+
+      if (prevProps.user.lastName !== this.props.user.lastName) {
+        this.setState({
+          lastName: this.props.user.lastName
+        });
+      }
+
+      if (prevProps.user.email !== this.props.user.email) {
+        this.setState({
+          email: this.props.user.email
+        });
+      }
+
+      if (prevProps.user.imageURL !== this.props.user.imageURL) {
+        this.setState({
+          imageURL: this.props.user.imageURL
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
+      var onSubmit = this.onSubmit;
       var user = this.props.user;
+<<<<<<< HEAD
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+=======
+      var _this$state = this.state,
+          firstName = _this$state.firstName,
+          lastName = _this$state.lastName,
+          email = _this$state.email,
+          imageURL = _this$state.imageURL;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+>>>>>>> master
         className: "profile-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "User Profile"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "img-details",
+<<<<<<< HEAD
         src: user.imageURL
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, user.admin === true && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+=======
+        src: imageURL
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, user.admin === true && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+>>>>>>> master
         className: "link-button",
         to: "/listings"
       }, "Manage Products"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
@@ -184,9 +304,52 @@ function (_Component) {
       }, "Manage Orders"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         className: "link-button",
         to: "/reviews"
+<<<<<<< HEAD
       }, "Manage Reviews")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Status: ", user.admin === true ? 'Admin' : 'User'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " First Name: ", user.firstName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Last Name: ", user.lastName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Address: ", user.address), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Email: ", user.email), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "button-edit"
       }, "Edit Profile")));
+=======
+      }, "Manage Reviews")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Status: ", user.admin === true ? 'Admin' : 'User'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "row"
+      }, "First Name:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        value: firstName,
+        onChange: function onChange(event) {
+          return _this2.setState({
+            firstName: event.target.value
+          });
+        }
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "row"
+      }, "Last Name:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        value: lastName,
+        onChange: function onChange(event) {
+          return _this2.setState({
+            lastName: event.target.value
+          });
+        }
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "row"
+      }, "Email:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        value: email,
+        onChange: function onChange(event) {
+          return _this2.setState({
+            email: event.target.value
+          });
+        }
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "row"
+      }, "imageURL:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        value: imageURL,
+        onChange: function onChange(event) {
+          return _this2.setState({
+            imageURL: event.target.value
+          });
+        }
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: onSubmit,
+        disabled: firstName === user.title && lastName === user.lastName && email === user.email && imageURL === user.imageURL
+      }, "Update Profile")));
+>>>>>>> master
     }
   }]);
 
@@ -202,8 +365,8 @@ var mapStateToProps = function mapStateToProps(_ref) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    updateUser: function updateUser(id) {
-      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["updateUser"])(id));
+    update: function update(user, push) {
+      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["updateUser"])(user, push));
     }
   };
 };
@@ -483,8 +646,7 @@ function (_Component) {
     _this.state = {
       firstName: '',
       lastName: '',
-      email: '',
-      address: ''
+      email: ''
     };
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
@@ -631,6 +793,7 @@ function (_Component) {
           onChange: this.handleChange,
           value: this.state.email,
           placeholder: "Email"
+<<<<<<< HEAD
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           name: "address",
@@ -645,6 +808,12 @@ function (_Component) {
           onClick: onSubmit,
           disabled: !cartOrderItems.length
         }, "Process Payment"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+=======
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, " Payment Method "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+          className: "link-button",
+          to: "/cart"
+        }, "Edit Cart"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+>>>>>>> master
           className: "checkout-form"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, " Items in Cart "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "cart-container"
@@ -828,7 +997,13 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "new-form",
         onSubmit: onSubmit
+<<<<<<< HEAD
       }, error, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, " Create New Game "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Title:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+=======
+      }, error, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, " Create New Game "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "row"
+      }, "Title:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+>>>>>>> master
         value: title,
         onChange: function onChange(event) {
           return _this2.setState({
@@ -836,7 +1011,13 @@ function (_React$Component) {
           });
         },
         placeholder: "Title"
+<<<<<<< HEAD
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Description:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+=======
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "row"
+      }, "Description:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+>>>>>>> master
         value: description,
         onChange: function onChange(event) {
           return _this2.setState({
@@ -844,7 +1025,13 @@ function (_React$Component) {
           });
         },
         placeholder: "Description"
+<<<<<<< HEAD
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "ImageURL:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+=======
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "row"
+      }, "ImageURL:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+>>>>>>> master
         value: imageURL,
         onChange: function onChange(event) {
           return _this2.setState({
@@ -852,7 +1039,13 @@ function (_React$Component) {
           });
         },
         placeholder: "Image Url"
+<<<<<<< HEAD
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Price:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+=======
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "row"
+      }, "Price:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+>>>>>>> master
         value: price,
         onChange: function onChange(event) {
           return _this2.setState({
@@ -860,7 +1053,13 @@ function (_React$Component) {
           });
         },
         placeholder: "Price"
+<<<<<<< HEAD
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Inventory:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+=======
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "row"
+      }, "Inventory:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+>>>>>>> master
         value: inventory,
         onChange: function onChange(event) {
           return _this2.setState({
@@ -868,7 +1067,13 @@ function (_React$Component) {
           });
         },
         placeholder: "Inventory"
+<<<<<<< HEAD
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Platform:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+=======
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "row"
+      }, "Platform:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+>>>>>>> master
         onChange: function onChange(event) {
           return _this2.setState({
             category: event.target.value
@@ -1113,42 +1318,78 @@ function (_React$Component) {
         className: "form-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "edit-form"
+<<<<<<< HEAD
       }, error, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Edit Product Details"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Product Title:", ' ', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+=======
+      }, error, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Edit Product Details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "row"
+      }, "Product Title:", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+>>>>>>> master
         value: title,
         onChange: function onChange(event) {
           return _this2.setState({
             title: event.target.value
           });
         }
+<<<<<<< HEAD
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Description:", ' ', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+=======
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "row"
+      }, "Description:", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+>>>>>>> master
         value: description,
         onChange: function onChange(event) {
           return _this2.setState({
             description: event.target.value
           });
         }
+<<<<<<< HEAD
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "ImageURL:", ' ', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+=======
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "row"
+      }, "ImageURL:", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+>>>>>>> master
         value: imageURL,
         onChange: function onChange(event) {
           return _this2.setState({
             imageURL: event.target.value
           });
         }
+<<<<<<< HEAD
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Price:", ' ', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+=======
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "row"
+      }, "Price:", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+>>>>>>> master
         value: price,
         onChange: function onChange(event) {
           return _this2.setState({
             price: event.target.value
           });
         }
+<<<<<<< HEAD
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Inventory:", ' ', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+=======
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "row"
+      }, "Inventory:", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+>>>>>>> master
         value: inventory,
         onChange: function onChange(event) {
           return _this2.setState({
             inventory: event.target.value
           });
         }
+<<<<<<< HEAD
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Platform:", ' ', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+=======
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "row"
+      }, "Platform:", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+>>>>>>> master
         value: category,
         onChange: function onChange(ev) {
           return _this2.setState({
@@ -1451,9 +1692,15 @@ function (_React$Component) {
         to: "/cart"
       }, " Cart "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["NavLink"], {
         to: "/orders"
+<<<<<<< HEAD
       }, " Orders "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["NavLink"], {
         to: "/account"
       }, " Account Info "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+=======
+      }, " Order History "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["NavLink"], {
+        to: "/account"
+      }, " Account "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+>>>>>>> master
         href: "#",
         onClick: userSignOut
       }, "Logout")) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["NavLink"], {
@@ -2134,7 +2381,9 @@ function (_React$Component) {
           cart = _this$props.cart,
           orderItems = _this$props.orderItems,
           reviews = _this$props.reviews,
-          users = _this$props.users;
+          users = _this$props.users,
+          totalReviews = _this$props.totalReviews,
+          averageRating = _this$props.averageRating;
 
       if (!orderItems || !cart || !reviews || !users) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Loading...");
@@ -2151,19 +2400,40 @@ function (_React$Component) {
           src: product.imageURL
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "details-2"
+<<<<<<< HEAD
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Description: ", product.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Platform: ", product.category), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, "Reviews", reviews.filter(function (review) {
           return review.productId === product.id;
         }).map(function (review) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+=======
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Description:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "description-overflow"
+        }, product.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Platform: ", product.category), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Price $", product.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: addToCart
+        }, "Add to Cart")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "details-3"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, " Reviews "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, " Total Reviews: ", totalReviews, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, " Average Rating: ", averageRating, "/10"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "review-overflow"
+        }, reviews.filter(function (review) {
+          return review.productId === product.id;
+        }).map(function (review) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            className: "review",
+>>>>>>> master
             key: review.id
-          }, users.find(function (_user) {
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ------------------------------"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Rating: ", review.stars, " / 10"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("q", null, " ", review.text, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "-", users.find(function (_user) {
             return _user.id === review.userId;
+<<<<<<< HEAD
           }).firstName, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, review.stars, " / 10"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, review.text));
         }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "details-3"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$", product.price), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Quantity: ", product.inventory), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           onClick: addToCart
         }, "Add to Cart")));
+=======
+          }).firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ------------------------------"));
+        }))));
+>>>>>>> master
       }
     }
   }]);
@@ -2184,6 +2454,11 @@ var mapStateToProps = function mapStateToProps(_ref) {
   }) : orders.find(function (order) {
     return order.status === 'cart' && order.userId === parseInt(localStorage.getItem('guestId'));
   });
+  var totalReviews = reviews.length;
+  var totalRating = reviews.reduce(function (accum, review) {
+    return accum += review.stars;
+  }, 0);
+  var averageRating = totalRating / totalReviews;
   return {
     products: products,
     product: product,
@@ -2192,7 +2467,9 @@ var mapStateToProps = function mapStateToProps(_ref) {
     user: user,
     orderItems: orderItems,
     reviews: reviews,
-    users: users
+    users: users,
+    totalReviews: totalReviews,
+    averageRating: averageRating
   };
 };
 
@@ -4984,6 +5261,7 @@ var removeUser = function removeUser(id) {
         }, _callee5);
       }));
 
+<<<<<<< HEAD
       return function (_x5) {
         return _ref5.apply(this, arguments);
       };
@@ -5014,6 +5292,41 @@ var updateUser = function updateUser(user) {
               case "end":
                 return _context6.stop();
             }
+=======
+    return function (_x5) {
+      return _ref5.apply(this, arguments);
+    };
+  }();
+}; // const updateUser = (user) => {
+//   return async (dispatch) => {
+//     const response = await axios.put(`/api/users/${user.id}`, user)
+//     dispatch(_updateUser(response.data))
+//   }
+// }
+
+
+var updateUser = function updateUser(user, push) {
+  return /*#__PURE__*/function () {
+    var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(dispatch) {
+      var _yield$axios$put, updatedUser;
+
+      return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              _context6.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/users/".concat(user.id), user);
+
+            case 2:
+              _yield$axios$put = _context6.sent;
+              updatedUser = _yield$axios$put.data;
+              dispatch(_updateUser(updatedUser));
+              push('/userlist');
+
+            case 6:
+            case "end":
+              return _context6.stop();
+>>>>>>> master
           }
         }, _callee6);
       }));
