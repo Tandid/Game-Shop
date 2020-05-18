@@ -1040,7 +1040,9 @@ var CreateProduct = /*#__PURE__*/function (_React$Component) {
         placeholder: "Title"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "row"
-      }, "Description:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, "Description:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        rows: "5",
+        cols: "10",
         value: description,
         onChange: function onChange(event) {
           return _this2.setState({
@@ -1338,7 +1340,9 @@ var EditProduct = /*#__PURE__*/function (_React$Component) {
         }
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "row"
-      }, "Description:", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, "Description:", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        rows: "5",
+        cols: "10",
         value: description,
         onChange: function onChange(event) {
           return _this2.setState({
@@ -3212,8 +3216,11 @@ var UserReviews = /*#__PURE__*/function (_React$Component) {
           stars = _this$state.stars,
           text = _this$state.text;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "user-review",
         onSubmit: onSubmit
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, product.title, " - Review"), "Number of Stars", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, product.title, " - Review"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, "Rating", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         onChange: function onChange(event) {
           return _this2.setState({
             stars: event.target.value
@@ -3241,7 +3248,10 @@ var UserReviews = /*#__PURE__*/function (_React$Component) {
         value: 9
       }, "9"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: 10
-      }, "10")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, "10"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        rows: "5",
+        cols: "10",
+        placeholder: "This is the default text",
         value: text,
         onChange: function onChange(event) {
           return _this2.setState({

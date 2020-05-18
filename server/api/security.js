@@ -4,7 +4,7 @@ const isLoggedIn = (req, res, next) => {
 }
 
 const isAdmin = (req, res, next) => {
-  if (req.user && req.user.admin) return next()
+  if (req.user && req.user.admin === true) return next()
   return res.sendStatus(401)
 }
 
