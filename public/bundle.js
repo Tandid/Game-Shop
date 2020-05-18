@@ -622,7 +622,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
- // import Payment from './Payment' //add this component through STRIPE
+
 
 var Checkout = /*#__PURE__*/function (_Component) {
   _inherits(Checkout, _Component);
@@ -719,7 +719,7 @@ var Checkout = /*#__PURE__*/function (_Component) {
                   lastName: this.state.lastName,
                   email: this.state.email,
                   address: this.state.address
-                }, this.props.history.push);
+                }, this.props.history.push('/confirmation'));
 
               case 3:
                 _context.next = 5;

@@ -7,8 +7,6 @@ import StripeCheckout from 'react-stripe-checkout'
 import axios from 'axios'
 import {me} from '../store'
 
-// import Payment from './Payment' //add this component through STRIPE
-
 class Checkout extends Component {
   constructor(props) {
     let firstName = ''
@@ -83,7 +81,7 @@ class Checkout extends Component {
           email: this.state.email,
           address: this.state.address
         },
-        this.props.history.push
+        this.props.history.push('/confirmation')
       )
       await this.props.createNewCart({
         userId: this.props.user.id
