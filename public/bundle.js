@@ -1840,7 +1840,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+<<<<<<< HEAD
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+=======
+/* harmony import */ var _store_orders__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/orders */ "./client/store/orders.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+>>>>>>> workingStripe
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1865,7 +1870,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
  // import {removeOrder} from '../store'
 
+<<<<<<< HEAD
 var OrderList = /*#__PURE__*/function (_React$Component) {
+=======
+
+
+var OrderList =
+/*#__PURE__*/
+function (_React$Component) {
+>>>>>>> workingStripe
   _inherits(OrderList, _React$Component);
 
   var _super = _createSuper(OrderList);
@@ -1873,12 +1886,22 @@ var OrderList = /*#__PURE__*/function (_React$Component) {
   function OrderList() {
     _classCallCheck(this, OrderList);
 
+<<<<<<< HEAD
     return _super.call(this);
   }
+=======
+    return _possibleConstructorReturn(this, _getPrototypeOf(OrderList).call(this)); // this.completeOrder = this.completeOrder.bind(this)
+  } // async completeOrder(event) {
+  //   await this.props.updateOrder({id: event.target.value, status: 'completed'})
+  // }
+
+>>>>>>> workingStripe
 
   _createClass(OrderList, [{
     key: "render",
     value: function render() {
+      var _this = this;
+
       var _this$props = this.props,
           users = _this$props.users,
           orders = _this$props.orders,
@@ -1886,6 +1909,7 @@ var OrderList = /*#__PURE__*/function (_React$Component) {
       console.log(orders, users);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "wrapper"
+<<<<<<< HEAD
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Orders"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "table-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Order #"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Customer Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Order Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Change Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Cancellation"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, orders && orders.map(function (order) {
@@ -1894,6 +1918,32 @@ var OrderList = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, order.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, users.find(function (user) {
           return user.id === order.userId;
         }).firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, order.status), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, " Complete Order ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Cancel Order")));
+=======
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Accepted Orders"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "table-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Order #"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Customer Name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Email"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Address"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Complete Order"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Cancel Order"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, orders && orders.filter(function (order) {
+        return order.status === 'accepted';
+      }).map(function (order) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+          key: order.id
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, order.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, order.firstName, " ", order.lastName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, order.email), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, order.address), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          disabled: order.status !== 'accepted',
+          onClick: function onClick() {
+            return _this.props.updateOrder({
+              id: order.id,
+              status: 'completed'
+            }, function () {});
+          }
+        }, ' ', "Complete Order", ' ')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          disabled: order.status !== 'accepted',
+          onClick: function onClick() {
+            return _this.props.updateOrder({
+              id: order.id,
+              status: 'canceled'
+            }, function () {});
+          }
+        }, "Cancel Order")));
+>>>>>>> workingStripe
       })))));
     }
   }]);
@@ -1918,6 +1968,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     "delete": function _delete(id) {
       return dispatch(removeOrder(id));
+    },
+    updateOrder: function updateOrder(order, push) {
+      return dispatch(Object(_store_orders__WEBPACK_IMPORTED_MODULE_2__["updateOrder"])(order, push));
     }
   };
 };
@@ -53851,7 +53904,11 @@ if (false) {} else {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
+<<<<<<< HEAD
 /*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
+=======
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+>>>>>>> workingStripe
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
