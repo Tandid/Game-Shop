@@ -329,8 +329,3 @@ tr:nth-child(even) {
   border-radius: 1rem;
   padding: 3rem;
 }
-
-textarea {
-  rows: 2;
-  columns: 25;
-}

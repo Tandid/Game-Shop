@@ -1040,7 +1040,9 @@ var CreateProduct = /*#__PURE__*/function (_React$Component) {
         placeholder: "Title"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "row"
-      }, "Description:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, "Description:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        rows: "5",
+        cols: "10",
         value: description,
         onChange: function onChange(event) {
           return _this2.setState({
@@ -1338,7 +1340,9 @@ var EditProduct = /*#__PURE__*/function (_React$Component) {
         }
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "row"
-      }, "Description:", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, "Description:", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        rows: "5",
+        cols: "10",
         value: description,
         onChange: function onChange(event) {
           return _this2.setState({
