@@ -584,12 +584,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_stripe_checkout__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_stripe_checkout__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
-<<<<<<< HEAD
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-=======
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../store */ "./client/store/index.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
->>>>>>> 046cf944b0d26367492c1c1c09d839330e42eeea
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
@@ -638,13 +634,6 @@ var Checkout = /*#__PURE__*/function (_Component) {
 
     _classCallCheck(this, Checkout);
 
-<<<<<<< HEAD
-    _this = _super.call(this, props);
-    _this.state = {
-      firstName: '',
-      lastName: '',
-      email: ''
-=======
     var firstName = '';
     var lastName = '';
     var email = '';
@@ -668,13 +657,12 @@ var Checkout = /*#__PURE__*/function (_Component) {
       }
     }
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Checkout).call(this));
+    _this = _super.call(this);
     _this.state = {
       firstName: firstName,
       lastName: lastName,
       email: email,
       address: address
->>>>>>> 046cf944b0d26367492c1c1c09d839330e42eeea
     };
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
@@ -717,14 +705,13 @@ var Checkout = /*#__PURE__*/function (_Component) {
   }, {
     key: "onSubmit",
     value: function () {
-      var _onSubmit = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(event) {
+      var _onSubmit = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                event.preventDefault();
-                _context.prev = 1;
-                _context.next = 4;
+                _context.prev = 0;
+                _context.next = 3;
                 return this.props.acceptOrder({
                   id: this.props.cart.id,
                   status: 'accepted',
@@ -734,31 +721,31 @@ var Checkout = /*#__PURE__*/function (_Component) {
                   address: this.state.address
                 }, this.props.history.push);
 
-              case 4:
-                _context.next = 6;
+              case 3:
+                _context.next = 5;
                 return this.props.createNewCart({
                   userId: this.props.user.id ? this.props.user.id : parseInt(localStorage.getItem('guestId')),
                   status: 'cart'
                 });
 
-              case 6:
-                _context.next = 11;
+              case 5:
+                _context.next = 10;
                 break;
 
-              case 8:
-                _context.prev = 8;
-                _context.t0 = _context["catch"](1);
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](0);
                 console.log(_context.t0);
 
-              case 11:
+              case 10:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[1, 8]]);
+        }, _callee, this, [[0, 7]]);
       }));
 
-      function onSubmit(_x) {
+      function onSubmit() {
         return _onSubmit.apply(this, arguments);
       }
 
@@ -801,7 +788,7 @@ var Checkout = /*#__PURE__*/function (_Component) {
         }, _callee2, this);
       }));
 
-      function handleToken(_x2) {
+      function handleToken(_x) {
         return _handleToken.apply(this, arguments);
       }
 
