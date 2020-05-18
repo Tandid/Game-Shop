@@ -16,5 +16,6 @@ export {default as UserList} from './UserList'
 export {default as OrderList} from './OrderList'
 export {default as Checkout} from './Checkout'
 export {default as UserReviews} from './UserReviews'
+export {default as Confirmation} from './Confirmation'
 
 export {Login, Signup} from './auth-form'

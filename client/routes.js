@@ -16,7 +16,8 @@ import {
   UserList,
   OrderList,
   Checkout,
-  UserReviews
+  UserReviews,
+  Confirmation
 } from './components'
 import {me, getProducts, getUsers} from './store'
 import EditProduct from './components/EditProduct'
@@ -148,6 +149,7 @@ class Routes extends Component {
         <Route path="/cart" component={Cart} />
         <Route path="/orders" component={Orders} />
         <Route path="/checkout" component={Checkout} />
+        <Route path="/confirmation" component={Confirmation} />
         {isLoggedIn && (
           <Switch>
             <Route exact path="/account" component={Account} />
