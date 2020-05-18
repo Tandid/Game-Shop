@@ -81,7 +81,7 @@ class Checkout extends Component {
           email: this.state.email,
           address: this.state.address
         },
-        this.props.history.push('/confirmation')
+        this.props.history.push
       )
       await this.props.createNewCart({
         userId: this.props.user.id

@@ -38,7 +38,7 @@ const updateOrder = (order, push) => {
       order
     )
     dispatch(_updateOrder(updatedOrder))
-    push('/orders')
+    push('/confirmation')
   }
 }
 
