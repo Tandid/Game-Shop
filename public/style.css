@@ -300,3 +300,8 @@ tr:nth-child(even) {
 .row > * {
   width: 80%;
 }
+
+.overflow {
+  overflow: scroll;
+  height: 250px;
+}

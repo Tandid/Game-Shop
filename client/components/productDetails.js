@@ -69,10 +69,18 @@ class ProductDetails extends React.Component {
           </div>
 
           <div className="details-2">
-            <p>Description: {product.description}</p>
-            <p>Platform: {product.category}</p>
-            <ul>
-              Reviews
+            <h3>Description:</h3>
+            <p className="overflow">{product.description}</p>
+            <h4>Platform: {product.category}</h4>
+
+            <h4>Price ${product.price}</h4>
+            {/* <p>Quantity: {product.inventory}</p> */}
+            <button onClick={addToCart}>Add to Cart</button>
+          </div>
+
+          <div className="details-3">
+            <div>
+              <h3> Reviews </h3>
               {reviews
                 .filter(review => review.productId === product.id)
                 .map(review => (
@@ -82,13 +90,7 @@ class ProductDetails extends React.Component {
                     <li>{review.text}</li>
                   </ul>
                 ))}
-            </ul>
-          </div>
-
-          <div className="details-3">
-            <p>${product.price}</p>
-            <p>Quantity: {product.inventory}</p>
-            <button onClick={addToCart}>Add to Cart</button>
+            </div>
           </div>
         </div>
       )
