@@ -115,7 +115,9 @@ class EditProduct extends React.Component {
           </p>
           <p className="row">
             Description:{' '}
-            <input
+            <textarea
+              rows="5"
+              cols="10"
               value={description}
               onChange={event =>
                 this.setState({description: event.target.value})

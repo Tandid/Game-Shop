@@ -41,23 +41,31 @@ class UserReviews extends React.Component {
     const {product} = this.props
     const {stars, text} = this.state
     return (
-      <form onSubmit={onSubmit}>
+      <form className="user-review" onSubmit={onSubmit}>
         <h1>{product.title} - Review</h1>
-        Number of Stars
-        <select onChange={event => this.setState({stars: event.target.value})}>
-          <option value="">-- Select --</option>
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-          <option value={6}>6</option>
-          <option value={7}>7</option>
-          <option value={8}>8</option>
-          <option value={9}>9</option>
-          <option value={10}>10</option>
-        </select>
-        <input
+        <div className="row">
+          Rating
+          <select
+            onChange={event => this.setState({stars: event.target.value})}
+          >
+            <option value="">-- Select --</option>
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
+            <option value={5}>5</option>
+            <option value={6}>6</option>
+            <option value={7}>7</option>
+            <option value={8}>8</option>
+            <option value={9}>9</option>
+            <option value={10}>10</option>
+          </select>
+        </div>
+
+        <textarea
+          rows="5"
+          cols="10"
+          placeholder="This is the default text"
           value={text}
           onChange={event => this.setState({text: event.target.value})}
         />
