@@ -22,8 +22,7 @@ class Checkout extends Component {
     this.handleToken = this.handleToken.bind(this)
   }
 
-  async onSubmit(event) {
-    event.preventDefault()
+  async onSubmit() {
     try {
       await this.props.acceptOrder(
         {id: this.props.cart.id, status: 'accepted'},
@@ -47,7 +46,6 @@ class Checkout extends Component {
   }
 
   async handleToken(token) {
-    // console.log({token, addresses})
     const response = await axios.post('/api/stripe/checkout', {
       token,
       order: this.props.cart
@@ -57,15 +55,14 @@ class Checkout extends Component {
 
     console.log(status)
 
-    // if (status === 'success') {
-    //   console.log('success! check emails for details')
-    // } else {
-    //   console.log('something went wrong')
-    // }
+    if (status === 'success') {
+      this.onSubmit()
+    }
   }
 
   render() {
     const {onSubmit, handleToken} = this
+    const {firstName, lastName, email, address} = this.state
     const {user, cart, orderItems, products} = this.props
     if (!cart || !orderItems) {
       return <h1>Loading...</h1>
@@ -131,15 +128,15 @@ class Checkout extends Component {
                   ))}
                 </ul>
               </div>
-              <p>Total Price: </p>
+              <p>Total Price: ${parseFloat(cart.totalPrice).toFixed(2)}</p>
             </div>
           </form>
           <StripeCheckout
+            disabled={!firstName || !lastName || !email || !address}
             stripeKey="pk_test_E1dVa6505p5SZc6KIGv6yrQB00yOT20RJM"
             token={handleToken}
-            billingAddress
-            shippingAddress
-            amount={cart.totalPrice * 100}
+            email={email}
+            amount={parseFloat(cart.totalPrice).toFixed(2) * 100}
           />
         </div>
       )
