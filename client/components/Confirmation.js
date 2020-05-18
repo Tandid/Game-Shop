@@ -45,13 +45,14 @@ class Confirmation extends Component {
     // const {orders, user} = this.props
     const order = this.state.order
     const orderItems = this.state.orderItems
-    const products = this.state
+    const {products} = this.props
+    console.log(products)
 
     if (!orderItems.length) {
       return <h1>Loading...</h1>
     } else {
       return (
-        <div>
+        <div className="OrderCard">
           <div>
             <p>Thank you for shopping with us!</p>
             <p>
@@ -60,24 +61,24 @@ class Confirmation extends Component {
             </p>
           </div>
 
-          <ul key={Math.random()} className="OrderCard">
+          <ul key={Math.random()}>
             <div>
               <li>Order #: {orderItems.id}</li>
               <li>Status: {orderItems.status}</li>
             </div>
             <div>
-              {/* <ul>
-                {orderItems.map((orderItem) => (
+              <ul>
+                {orderItems.map(orderItem => (
                   <li className="orderItem-title" key={Math.random()}>
                     {
                       products.find(
-                        (product) => product.id === orderItem.productId
+                        product => product.id === orderItem.productId
                       ).title
-                    }{' '}
+                    }
                     x {orderItem.quantity}
                   </li>
                 ))}
-              </ul> */}
+              </ul>
               <div>${order.totalPrice}</div>
             </div>
           </ul>
