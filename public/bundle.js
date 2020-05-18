@@ -1837,6 +1837,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_orders__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/orders */ "./client/store/orders.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1858,6 +1859,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
  // import {removeOrder} from '../store'
 
+
+
 var OrderList =
 /*#__PURE__*/
 function (_React$Component) {
@@ -1866,12 +1869,17 @@ function (_React$Component) {
   function OrderList() {
     _classCallCheck(this, OrderList);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(OrderList).call(this));
-  }
+    return _possibleConstructorReturn(this, _getPrototypeOf(OrderList).call(this)); // this.completeOrder = this.completeOrder.bind(this)
+  } // async completeOrder(event) {
+  //   await this.props.updateOrder({id: event.target.value, status: 'completed'})
+  // }
+
 
   _createClass(OrderList, [{
     key: "render",
     value: function render() {
+      var _this = this;
+
       var _this$props = this.props,
           users = _this$props.users,
           orders = _this$props.orders,
@@ -1879,14 +1887,30 @@ function (_React$Component) {
       console.log(orders, users);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "wrapper"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Orders"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Accepted Orders"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "table-wrapper"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Order #"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Customer Name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Order Status"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Change Status"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Cancellation"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, orders && orders.map(function (order) {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Order #"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Customer Name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Email"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Address"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Complete Order"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Cancel Order"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, orders && orders.filter(function (order) {
+        return order.status === 'accepted';
+      }).map(function (order) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: order.id
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, order.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, users.find(function (user) {
-          return user.id === order.userId;
-        }).firstName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, order.status), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, " Complete Order ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Cancel Order")));
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, order.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, order.firstName, " ", order.lastName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, order.email), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, order.address), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          disabled: order.status !== 'accepted',
+          onClick: function onClick() {
+            return _this.props.updateOrder({
+              id: order.id,
+              status: 'completed'
+            }, function () {});
+          }
+        }, ' ', "Complete Order", ' ')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          disabled: order.status !== 'accepted',
+          onClick: function onClick() {
+            return _this.props.updateOrder({
+              id: order.id,
+              status: 'canceled'
+            }, function () {});
+          }
+        }, "Cancel Order")));
       })))));
     }
   }]);
@@ -1911,6 +1935,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     "delete": function _delete(id) {
       return dispatch(removeOrder(id));
+    },
+    updateOrder: function updateOrder(order, push) {
+      return dispatch(Object(_store_orders__WEBPACK_IMPORTED_MODULE_2__["updateOrder"])(order, push));
     }
   };
 };

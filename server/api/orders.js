@@ -3,6 +3,13 @@ const {Order, OrderItems} = require('../db/models')
 
 router.get('/', (req, res, next) => {
   Order.findAll()
+    .then(orders =>
+      orders.sort(function(a, b) {
+        a = new Date(a.updatedAt)
+        b = new Date(b.updatedAt)
+        return a > b ? 1 : a < b ? -1 : 0
+      })
+    )
     .then(orders => res.send(orders))
     .catch(next)
 })
