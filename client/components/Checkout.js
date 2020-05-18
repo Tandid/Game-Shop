@@ -14,15 +14,15 @@ class Checkout extends Component {
     this.state = {
       firstName: '',
       lastName: '',
-      email: '',
-      address: ''
+      email: ''
     }
     this.onSubmit = this.onSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleToken = this.handleToken.bind(this)
   }
 
-  async onSubmit() {
+  async onSubmit(event) {
+    event.preventDefault()
     try {
       await this.props.acceptOrder(
         {id: this.props.cart.id, status: 'accepted'},
@@ -46,6 +46,7 @@ class Checkout extends Component {
   }
 
   async handleToken(token) {
+    // console.log({token, addresses})
     const response = await axios.post('/api/stripe/checkout', {
       token,
       order: this.props.cart
@@ -55,14 +56,15 @@ class Checkout extends Component {
 
     console.log(status)
 
-    if (status === 'success') {
-      this.onSubmit()
-    }
+    // if (status === 'success') {
+    //   console.log('success! check emails for details')
+    // } else {
+    //   console.log('something went wrong')
+    // }
   }
 
   render() {
     const {onSubmit, handleToken} = this
-    const {firstName, lastName, email, address} = this.state
     const {user, cart, orderItems, products} = this.props
     if (!cart || !orderItems) {
       return <h1>Loading...</h1>
@@ -96,20 +98,21 @@ class Checkout extends Component {
                 value={this.state.email}
                 placeholder="Email"
               />
-              <input
-                type="text"
-                name="address"
-                onChange={this.handleChange}
-                value={this.state.address}
-                placeholder="Address"
-              />
               <div>
                 <h1> Payment Method </h1>
                 <Link className="link-button" to="/cart">
                   Edit Cart
                 </Link>
+                {/* <button
+                  className="cart-button"
+                  onClick={onSubmit}
+                  disabled={!cartOrderItems.length}
+                >
+                  Process Payment
+                </button> */}
               </div>
             </div>
+
             <div className="checkout-form">
               <h1> Items in Cart </h1>
               <div className="cart-container">
@@ -119,15 +122,15 @@ class Checkout extends Component {
                   ))}
                 </ul>
               </div>
-              <p>Total Price: ${parseFloat(cart.totalPrice).toFixed(2)}</p>
+              <p>Total Price: </p>
             </div>
           </form>
           <StripeCheckout
-            disabled={!firstName || !lastName || !email || !address}
             stripeKey="pk_test_E1dVa6505p5SZc6KIGv6yrQB00yOT20RJM"
             token={handleToken}
-            email={email}
-            amount={parseFloat(cart.totalPrice).toFixed(2) * 100}
+            billingAddress
+            shippingAddress
+            amount={cart.totalPrice * 100}
           />
         </div>
       )

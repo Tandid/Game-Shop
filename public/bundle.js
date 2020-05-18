@@ -636,8 +636,7 @@ var Checkout = /*#__PURE__*/function (_Component) {
     _this.state = {
       firstName: '',
       lastName: '',
-      email: '',
-      address: ''
+      email: ''
     };
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
@@ -648,43 +647,44 @@ var Checkout = /*#__PURE__*/function (_Component) {
   _createClass(Checkout, [{
     key: "onSubmit",
     value: function () {
-      var _onSubmit = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      var _onSubmit = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(event) {
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.prev = 0;
-                _context.next = 3;
+                event.preventDefault();
+                _context.prev = 1;
+                _context.next = 4;
                 return this.props.acceptOrder({
                   id: this.props.cart.id,
                   status: 'accepted'
                 }, this.props.history.push);
 
-              case 3:
-                _context.next = 5;
+              case 4:
+                _context.next = 6;
                 return this.props.createNewCart({
                   userId: this.props.user.id ? this.props.user.id : parseInt(localStorage.getItem('guestId')),
                   status: 'cart'
                 });
 
-              case 5:
-                _context.next = 10;
+              case 6:
+                _context.next = 11;
                 break;
 
-              case 7:
-                _context.prev = 7;
-                _context.t0 = _context["catch"](0);
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](1);
                 console.log(_context.t0);
 
-              case 10:
+              case 11:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 7]]);
+        }, _callee, this, [[1, 8]]);
       }));
 
-      function onSubmit() {
+      function onSubmit(_x) {
         return _onSubmit.apply(this, arguments);
       }
 
@@ -713,13 +713,13 @@ var Checkout = /*#__PURE__*/function (_Component) {
               case 2:
                 response = _context2.sent;
                 status = response.data.status;
-                console.log(status);
+                console.log(status); // if (status === 'success') {
+                //   console.log('success! check emails for details')
+                // } else {
+                //   console.log('something went wrong')
+                // }
 
-                if (status === 'success') {
-                  this.onSubmit();
-                }
-
-              case 6:
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -727,7 +727,7 @@ var Checkout = /*#__PURE__*/function (_Component) {
         }, _callee2, this);
       }));
 
-      function handleToken(_x) {
+      function handleToken(_x2) {
         return _handleToken.apply(this, arguments);
       }
 
@@ -738,11 +738,6 @@ var Checkout = /*#__PURE__*/function (_Component) {
     value: function render() {
       var onSubmit = this.onSubmit,
           handleToken = this.handleToken;
-      var _this$state = this.state,
-          firstName = _this$state.firstName,
-          lastName = _this$state.lastName,
-          email = _this$state.email,
-          address = _this$state.address;
       var _this$props = this.props,
           user = _this$props.user,
           cart = _this$props.cart,
@@ -780,12 +775,6 @@ var Checkout = /*#__PURE__*/function (_Component) {
           onChange: this.handleChange,
           value: this.state.email,
           placeholder: "Email"
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "text",
-          name: "address",
-          onChange: this.handleChange,
-          value: this.state.address,
-          placeholder: "Address"
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, " Payment Method "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           className: "link-button",
           to: "/cart"
@@ -797,12 +786,12 @@ var Checkout = /*#__PURE__*/function (_Component) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ProductList__WEBPACK_IMPORTED_MODULE_3__["default"], _extends({
             key: Math.random()
           }, orderItem));
-        }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Total Price: $", parseFloat(cart.totalPrice).toFixed(2)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_stripe_checkout__WEBPACK_IMPORTED_MODULE_5___default.a, {
-          disabled: !firstName || !lastName || !email || !address,
+        }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Total Price: "))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_stripe_checkout__WEBPACK_IMPORTED_MODULE_5___default.a, {
           stripeKey: "pk_test_E1dVa6505p5SZc6KIGv6yrQB00yOT20RJM",
           token: handleToken,
-          email: email,
-          amount: parseFloat(cart.totalPrice).toFixed(2) * 100
+          billingAddress: true,
+          shippingAddress: true,
+          amount: cart.totalPrice * 100
         }));
       }
     }

@@ -1,10 +1,8 @@
 const router = require('express').Router()
 const {User} = require('../db/models')
-const {isAdmin, isCurrentUser} = require('./security.js')
-
 module.exports = router
 
-router.get('/', isAdmin, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and email fields - even though
@@ -18,19 +16,19 @@ router.get('/', isAdmin, async (req, res, next) => {
   }
 })
 
-router.get('/:id', isCurrentUser, async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   await User.findByPk(req.params.id)
     .then(user => res.send(user))
     .catch(next)
 })
 
-router.post('/', isAdmin, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   await User.create(req.body)
     .then(user => res.send(user))
     .catch(next)
 })
 
-router.put('/:id', isCurrentUser, (req, res, next) => {
+router.put('/:id', (req, res, next) => {
   User.findByPk(req.params.id)
     .then(user =>
       user.update({

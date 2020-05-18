@@ -23,7 +23,7 @@ router.post('/checkout', async (req, res) => {
     const idempotency_key = uuidv4()
     const charge = await stripe.charges.create(
       {
-        amount: parseFloat(order.totalPrice).toFixed(2) * 100,
+        amount: order.price * 100,
         currency: 'usd',
         customer: customer.id,
         receipt_email: token.email,
