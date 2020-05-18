@@ -16,8 +16,32 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/:id', async (req, res, next) => {
+  await User.findByPk(req.params.id)
+    .then(user => res.send(user))
+    .catch(next)
+})
+
 router.post('/', async (req, res, next) => {
   await User.create(req.body)
+    .then(user => res.send(user))
+    .catch(next)
+})
+
+router.put('/:id', (req, res, next) => {
+  User.findByPk(req.params.id)
+    .then(user =>
+      user.update({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        imageURL: req.body.imageURL,
+        ...user
+        // price: req.body.price,
+        // inventory: req.body.inventory,
+        // category: req.body.category
+      })
+    )
     .then(user => res.send(user))
     .catch(next)
 })

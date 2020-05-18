@@ -77,10 +77,18 @@ const removeUser = id => {
   }
 }
 
-const updateUser = user => {
+// const updateUser = (user) => {
+//   return async (dispatch) => {
+//     const response = await axios.put(`/api/users/${user.id}`, user)
+//     dispatch(_updateUser(response.data))
+//   }
+// }
+
+const updateUser = (user, push) => {
   return async dispatch => {
-    const response = await axios.put(`/api/users/${user.id}`, user)
-    dispatch(_updateUser(response.data))
+    const {data: updatedUser} = await axios.put(`/api/users/${user.id}`, user)
+    dispatch(_updateUser(updatedUser))
+    push('/userlist')
   }
 }
 
