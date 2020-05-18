@@ -16,7 +16,14 @@ router.get('/:id', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   Order.findByPk(req.params.id)
     .then(order =>
-      order.update({status: req.body.status, totalPrice: req.body.totalPrice})
+      order.update({
+        status: req.body.status,
+        totalPrice: req.body.totalPrice,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        address: req.body.address
+      })
     )
     .then(order => res.send(order))
     .catch(next)

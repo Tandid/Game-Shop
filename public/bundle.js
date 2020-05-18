@@ -580,6 +580,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_stripe_checkout__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_stripe_checkout__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../store */ "./client/store/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
@@ -612,6 +613,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
  // import Payment from './Payment' //add this component through STRIPE
 
 var Checkout =
@@ -624,12 +626,35 @@ function (_Component) {
 
     _classCallCheck(this, Checkout);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Checkout).call(this, props));
+    var firstName = '';
+    var lastName = '';
+    var email = '';
+    var address = '';
+
+    if (props.user) {
+      if (props.user.firstName) {
+        firstName = props.user.firstName;
+      }
+
+      if (props.user.lastName) {
+        lastName = props.user.lastName;
+      }
+
+      if (props.user.email) {
+        email = props.user.email;
+      }
+
+      if (props.user.address) {
+        address = props.user.address;
+      }
+    }
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Checkout).call(this));
     _this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      address: ''
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      address: address
     };
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
@@ -638,6 +663,38 @@ function (_Component) {
   }
 
   _createClass(Checkout, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.loadUser();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.user.firstName !== this.props.user.firstName && this.props.user.firstName) {
+        this.setState({
+          firstName: this.props.user.firstName
+        });
+      }
+
+      if (prevProps.user.lastName !== this.props.user.lastName && this.props.user.lastName) {
+        this.setState({
+          lastName: this.props.user.lastName
+        });
+      }
+
+      if (prevProps.user.email !== this.props.user.email && this.props.user.email) {
+        this.setState({
+          email: this.props.user.email
+        });
+      }
+
+      if (prevProps.user.address !== this.props.user.address && this.props.user.address) {
+        this.setState({
+          address: this.props.user.address
+        });
+      }
+    }
+  }, {
     key: "onSubmit",
     value: function () {
       var _onSubmit = _asyncToGenerator(
@@ -651,7 +708,11 @@ function (_Component) {
                 _context.next = 3;
                 return this.props.acceptOrder({
                   id: this.props.cart.id,
-                  status: 'accepted'
+                  status: 'accepted',
+                  firstName: this.state.firstName,
+                  lastName: this.state.lastName,
+                  email: this.state.email,
+                  address: this.state.address
                 }, this.props.history.push);
 
               case 3:
@@ -832,6 +893,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     createNewCart: function createNewCart(order) {
       return dispatch(Object(_store_orders__WEBPACK_IMPORTED_MODULE_4__["createOrder"])(order));
+    },
+    loadUser: function loadUser() {
+      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_7__["me"])());
     }
   };
 };

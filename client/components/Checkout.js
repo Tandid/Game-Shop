@@ -5,27 +5,84 @@ import ProductList from './ProductList'
 import {updateOrder, createOrder} from '../store/orders'
 import StripeCheckout from 'react-stripe-checkout'
 import axios from 'axios'
+import {me} from '../store'
 
 // import Payment from './Payment' //add this component through STRIPE
 
 class Checkout extends Component {
   constructor(props) {
-    super(props)
+    let firstName = ''
+    let lastName = ''
+    let email = ''
+    let address = ''
+    if (props.user) {
+      if (props.user.firstName) {
+        firstName = props.user.firstName
+      }
+      if (props.user.lastName) {
+        lastName = props.user.lastName
+      }
+      if (props.user.email) {
+        email = props.user.email
+      }
+      if (props.user.address) {
+        address = props.user.address
+      }
+    }
+    super()
     this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      address: ''
+      firstName,
+      lastName,
+      email,
+      address
     }
     this.onSubmit = this.onSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleToken = this.handleToken.bind(this)
   }
 
+  componentDidMount() {
+    this.props.loadUser()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.user.firstName !== this.props.user.firstName &&
+      this.props.user.firstName
+    ) {
+      this.setState({firstName: this.props.user.firstName})
+    }
+    if (
+      prevProps.user.lastName !== this.props.user.lastName &&
+      this.props.user.lastName
+    ) {
+      this.setState({lastName: this.props.user.lastName})
+    }
+    if (
+      prevProps.user.email !== this.props.user.email &&
+      this.props.user.email
+    ) {
+      this.setState({email: this.props.user.email})
+    }
+    if (
+      prevProps.user.address !== this.props.user.address &&
+      this.props.user.address
+    ) {
+      this.setState({address: this.props.user.address})
+    }
+  }
+
   async onSubmit() {
     try {
       await this.props.acceptOrder(
-        {id: this.props.cart.id, status: 'accepted'},
+        {
+          id: this.props.cart.id,
+          status: 'accepted',
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          email: this.state.email,
+          address: this.state.address
+        },
         this.props.history.push
       )
       await this.props.createNewCart({
@@ -154,7 +211,8 @@ const mapStateToProps = ({user, orders, orderItems, products}) => {
 const mapDispatchToProps = dispatch => {
   return {
     acceptOrder: (order, push) => dispatch(updateOrder(order, push)),
-    createNewCart: order => dispatch(createOrder(order))
+    createNewCart: order => dispatch(createOrder(order)),
+    loadUser: () => dispatch(me())
   }
 }
 

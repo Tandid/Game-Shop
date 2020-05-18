@@ -9,6 +9,18 @@ const Order = db.define('order', {
   totalPrice: {
     type: Sequelize.DECIMAL,
     defaultValue: 0
+  },
+  firstName: {
+    type: Sequelize.STRING
+  },
+  lastName: {
+    type: Sequelize.STRING
+  },
+  email: {
+    type: Sequelize.STRING
+  },
+  address: {
+    type: Sequelize.TEXT
   }
 })
 
