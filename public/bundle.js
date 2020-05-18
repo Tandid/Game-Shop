@@ -2314,7 +2314,9 @@ var ProductDetails = /*#__PURE__*/function (_React$Component) {
           cart = _this$props.cart,
           orderItems = _this$props.orderItems,
           reviews = _this$props.reviews,
-          users = _this$props.users;
+          users = _this$props.users,
+          totalReviews = _this$props.totalReviews,
+          averageRating = _this$props.averageRating;
 
       if (!orderItems || !cart || !reviews || !users) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Loading...");
@@ -2332,19 +2334,22 @@ var ProductDetails = /*#__PURE__*/function (_React$Component) {
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "details-2"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Description:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-          className: "overflow"
+          className: "description-overflow"
         }, product.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Platform: ", product.category), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Price $", product.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           onClick: addToCart
         }, "Add to Cart")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "details-3"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, " Reviews "), reviews.filter(function (review) {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, " Reviews "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, " Total Reviews: ", totalReviews, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, " Average Rating: ", averageRating, "/10"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "review-overflow"
+        }, reviews.filter(function (review) {
           return review.productId === product.id;
         }).map(function (review) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            className: "review",
             key: review.id
-          }, users.find(function (_user) {
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ------------------------------"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Rating: ", review.stars, " / 10"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("q", null, " ", review.text, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "-", users.find(function (_user) {
             return _user.id === review.userId;
-          }).firstName, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, review.stars, " / 10"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, review.text));
+          }).firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " ------------------------------"));
         }))));
       }
     }
@@ -2366,6 +2371,11 @@ var mapStateToProps = function mapStateToProps(_ref) {
   }) : orders.find(function (order) {
     return order.status === 'cart' && order.userId === parseInt(localStorage.getItem('guestId'));
   });
+  var totalReviews = reviews.length;
+  var totalRating = reviews.reduce(function (accum, review) {
+    return accum += review.stars;
+  }, 0);
+  var averageRating = totalRating / totalReviews;
   return {
     products: products,
     product: product,
@@ -2374,7 +2384,9 @@ var mapStateToProps = function mapStateToProps(_ref) {
     user: user,
     orderItems: orderItems,
     reviews: reviews,
-    users: users
+    users: users,
+    totalReviews: totalReviews,
+    averageRating: averageRating
   };
 };
 
