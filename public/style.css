@@ -279,17 +279,41 @@ tr:nth-child(even) {
 }
 
 /* Order Card */
-.OrderCard {
+/* .OrderCard {
   display: flex;
   border-radius: 1rem;
   background-color: beige;
   padding: 1rem;
   list-style-type: none;
   margin: 2rem 4rem;
+} */
+.order-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  background-color: beige;
+  margin: 2rem 4rem;
+  padding: 1rem;
+  list-style-type: none;
+  border-radius: 10px;
 }
 
-.orderItem-title {
+.order-card {
+  border: solid 1px black;
+  list-style-type: none;
   padding: 1rem;
+  margin: 0 5rem;
+}
+
+.order-card-items {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  padding: 1rem;
+}
+
+.order-card-overflow {
+  overflow: scroll;
+  height: 700px;
 }
 
 .row {
