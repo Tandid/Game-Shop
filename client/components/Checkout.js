@@ -86,7 +86,7 @@ class Checkout extends Component {
       await this.props.createNewCart({
         userId: this.props.user.id
           ? this.props.user.id
-          : parseInt(localStorage.getItem('guestId')),
+          : localStorage.getItem('guestId'),
         status: 'cart'
       })
     } catch (exception) {
@@ -196,7 +196,7 @@ const mapStateToProps = ({user, orders, orderItems, products}) => {
     : orders.find(
         order =>
           order.status === 'cart' &&
-          order.userId === parseInt(localStorage.getItem('guestId'))
+          order.userId === localStorage.getItem('guestId')
       )
   return {
     user,
