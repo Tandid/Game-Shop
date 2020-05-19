@@ -919,16 +919,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-<<<<<<< HEAD
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-=======
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _store_orders__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/orders */ "./client/store/orders.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
->>>>>>> 4e61667e0f2b36be6655b7269d592ba8eda6c979
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -962,84 +955,15 @@ var Confirmation = /*#__PURE__*/function (_Component) {
   function Confirmation() {
     _classCallCheck(this, Confirmation);
 
-<<<<<<< HEAD
-    _this = _super.call(this);
-    _this.state = {
-      user: {},
-      order: {},
-      orderItems: {} //   products: {},
-
-    };
-    return _this;
-=======
-    return _possibleConstructorReturn(this, _getPrototypeOf(Confirmation).call(this));
->>>>>>> 4e61667e0f2b36be6655b7269d592ba8eda6c979
+    return _super.call(this);
   }
 
   _createClass(Confirmation, [{
     key: "componentDidMount",
-<<<<<<< HEAD
-    value: function () {
-      var _componentDidMount = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var user, order, orderItems, recentOrder, recentOrderItems;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/auth/me');
-
-              case 2:
-                user = _context.sent;
-                _context.next = 5;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/orders/');
-
-              case 5:
-                order = _context.sent;
-                _context.next = 8;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/orderitems/');
-
-              case 8:
-                orderItems = _context.sent;
-                // const products = await axios.get('/api/products/')
-                recentOrder = order.data.filter(function (_order) {
-                  return _order.userId === user.data.id;
-                }).slice(-1)[0];
-                recentOrderItems = orderItems.data.filter(function (orderItem) {
-                  return orderItem.orderId === recentOrder.id;
-                }); // const recentProducts = products.data.find(
-                //   (product) => product.id === recentOrderItems.productId
-                // )
-
-                console.log(recentOrder);
-                console.log(recentOrderItems);
-                this.setState({
-                  user: user.data,
-                  order: recentOrder,
-                  orderItems: recentOrderItems //   products: recentProducts,
-
-                });
-
-              case 14:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function componentDidMount() {
-        return _componentDidMount.apply(this, arguments);
-      }
-
-      return componentDidMount;
-    }()
-=======
     value: function componentDidMount() {
       var orderId = this.props.match.params.id;
       this.props.loadOrder(orderId);
     }
->>>>>>> 4e61667e0f2b36be6655b7269d592ba8eda6c979
   }, {
     key: "render",
     value: function render() {
@@ -1048,30 +972,18 @@ var Confirmation = /*#__PURE__*/function (_Component) {
           order = _this$props.order,
           orderItems = _this$props.orderItems;
 
-<<<<<<< HEAD
-      if (!orderItems.length) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Loading...");
-      } else {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-=======
       if (!products.length || !order.id || !orderItems.length) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Loading...");
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Loading...");
       } else {
         var thisOrderItems = orderItems.filter(function (orderItem) {
           return orderItem.orderId === order.id;
         });
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
->>>>>>> 4e61667e0f2b36be6655b7269d592ba8eda6c979
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "OrderCard"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Thank you for shopping with us!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "You will receive an email confirmation soon with shipping and tracking details")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           key: Math.random()
-<<<<<<< HEAD
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Order #: ", orderItems.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Status: ", orderItems.status)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, orderItems.map(function (orderItem) {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Order #: ", order.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Status: ", order.status)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, thisOrderItems.map(function (orderItem) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-=======
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Order #: ", order.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Status: ", order.status)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, thisOrderItems.map(function (orderItem) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
->>>>>>> 4e61667e0f2b36be6655b7269d592ba8eda6c979
             className: "orderItem-title",
             key: Math.random()
           }, products.find(function (product) {
@@ -2448,7 +2360,17 @@ var ProductCard = /*#__PURE__*/function (_React$Component) {
           price = _this$props.price,
           inventory = _this$props.inventory,
           cart = _this$props.cart,
-          orderItems = _this$props.orderItems;
+          orderItems = _this$props.orderItems,
+          reviews = _this$props.reviews;
+      var totalReviews = reviews.filter(function (review) {
+        return review.productId === id;
+      }).length;
+      var totalRating = reviews.filter(function (review) {
+        return review.productId === id;
+      }).reduce(function (accum, review) {
+        return accum += review.stars;
+      }, 0);
+      var averageRating = totalRating / totalReviews;
 
       if (!id || !cart) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Loading...");
@@ -2463,7 +2385,7 @@ var ProductCard = /*#__PURE__*/function (_React$Component) {
           className: "productLink"
         }, "More Details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           onClick: addToCart
-        }, "Add to Cart"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Inventory: ", inventory));
+        }, "Add to Cart"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Rating: ", averageRating));
       }
     }
   }]);
@@ -2474,7 +2396,8 @@ var ProductCard = /*#__PURE__*/function (_React$Component) {
 var mapStateToProps = function mapStateToProps(_ref) {
   var orders = _ref.orders,
       user = _ref.user,
-      orderItems = _ref.orderItems;
+      orderItems = _ref.orderItems,
+      reviews = _ref.reviews;
   var cart = user.id ? orders.find(function (order) {
     return order.status === 'cart' && order.userId === user.id;
   }) : orders.find(function (order) {
@@ -2483,7 +2406,8 @@ var mapStateToProps = function mapStateToProps(_ref) {
   return {
     cart: cart,
     user: user,
-    orderItems: orderItems
+    orderItems: orderItems,
+    reviews: reviews
   };
 };
 
@@ -3536,7 +3460,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store */ "./client/store/index.js");
 /* harmony import */ var _store_orders__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/orders */ "./client/store/orders.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -3548,15 +3472,19 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function () { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
 
@@ -3567,43 +3495,17 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
  * COMPONENT
  */
 
-<<<<<<< HEAD
-var AuthForm = function AuthForm(props) {
-  var name = props.name,
-      displayName = props.displayName,
-      handleSubmit = props.handleSubmit,
-      error = props.error;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-    onSubmit: handleSubmit,
-    name: name
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-    htmlFor: "email"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Email")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    name: "email",
-    type: "text"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-    htmlFor: "password"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Password")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    name: "password",
-    type: "password"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    type: "submit"
-  }, displayName)), error && error.response && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, " ", error.response.data, " ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "/auth/google"
-  }, displayName, " with Google"));
-};
-=======
-var AuthForm =
-/*#__PURE__*/
-function (_React$Component) {
+var AuthForm = /*#__PURE__*/function (_React$Component) {
   _inherits(AuthForm, _React$Component);
+
+  var _super = _createSuper(AuthForm);
 
   function AuthForm() {
     var _this;
 
     _classCallCheck(this, AuthForm);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(AuthForm).call(this));
+    _this = _super.call(this);
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -3611,9 +3513,7 @@ function (_React$Component) {
   _createClass(AuthForm, [{
     key: "handleSubmit",
     value: function () {
-      var _handleSubmit = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee(event) {
+      var _handleSubmit = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(event) {
         var formName, email, password;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
@@ -3659,22 +3559,22 @@ function (_React$Component) {
           name = _this$props.name,
           displayName = _this$props.displayName,
           error = _this$props.error;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: handleSubmit,
         name: name
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "email"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Email")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Email")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         name: "email",
         type: "text"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "password"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Password")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Password")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         name: "password",
         type: "password"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
-      }, displayName)), error && error.response && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, " ", error.response.data, " ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      }, displayName)), error && error.response && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, " ", error.response.data, " ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "/auth/google"
       }, displayName, " with Google"));
     }
@@ -3682,7 +3582,6 @@ function (_React$Component) {
 
   return AuthForm;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
->>>>>>> 4e61667e0f2b36be6655b7269d592ba8eda6c979
 /**
  * CONTAINER
  *   Note that we have two different sets of 'mapStateToProps' functions -
@@ -4186,13 +4085,8 @@ var Routes = /*#__PURE__*/function (_Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         path: "/checkout",
         component: _components__WEBPACK_IMPORTED_MODULE_4__["Checkout"]
-<<<<<<< HEAD
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
-        path: "/confirmation",
-=======
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         path: "/confirmation/:id",
->>>>>>> 4e61667e0f2b36be6655b7269d592ba8eda6c979
         component: _components__WEBPACK_IMPORTED_MODULE_4__["Confirmation"]
       }), isLoggedIn && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         exact: true,
@@ -4829,53 +4723,24 @@ var getOrders = function getOrders() {
   }();
 };
 
-<<<<<<< HEAD
-var updateOrder = function updateOrder(order, push) {
+var getOrder = function getOrder(id) {
   return /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(dispatch) {
-      var _yield$axios$put, updatedOrder;
-
+      var response;
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
               _context2.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/orders/".concat(order.id), order);
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/orders/".concat(id));
 
             case 2:
-              _yield$axios$put = _context2.sent;
-              updatedOrder = _yield$axios$put.data;
-              dispatch(_updateOrder(updatedOrder));
-              push('/confirmation');
+              response = _context2.sent;
+              dispatch(_getOrder(response.data));
 
-            case 6:
+            case 4:
             case "end":
               return _context2.stop();
-=======
-var getOrder = function getOrder(id) {
-  return (
-    /*#__PURE__*/
-    function () {
-      var _ref2 = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee2(dispatch) {
-        var response;
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/orders/".concat(id));
-
-              case 2:
-                response = _context2.sent;
-                dispatch(_getOrder(response.data));
-
-              case 4:
-              case "end":
-                return _context2.stop();
-            }
->>>>>>> 4e61667e0f2b36be6655b7269d592ba8eda6c979
           }
         }
       }, _callee2);
@@ -4887,104 +4752,65 @@ var getOrder = function getOrder(id) {
   }();
 };
 
-<<<<<<< HEAD
-var createOrder = function createOrder(order) {
+var updateOrder = function updateOrder(order, push) {
   return /*#__PURE__*/function () {
     var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(dispatch) {
-      var response;
+      var _yield$axios$put, updatedOrder;
+
       return regeneratorRuntime.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
               _context3.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/orders', order);
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/orders/".concat(order.id), order);
 
             case 2:
-              response = _context3.sent;
-              dispatch(_createOrder(response.data));
+              _yield$axios$put = _context3.sent;
+              updatedOrder = _yield$axios$put.data;
+              dispatch(_updateOrder(updatedOrder));
+              push("/confirmation/".concat(order.id));
 
-            case 4:
+            case 6:
             case "end":
               return _context3.stop();
-=======
-var updateOrder = function updateOrder(order, push) {
-  return (
-    /*#__PURE__*/
-    function () {
-      var _ref3 = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee3(dispatch) {
-        var _ref4, updatedOrder;
-
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/orders/".concat(order.id), order);
-
-              case 2:
-                _ref4 = _context3.sent;
-                updatedOrder = _ref4.data;
-                dispatch(_updateOrder(updatedOrder));
-                push("/confirmation/".concat(order.id));
-
-              case 6:
-              case "end":
-                return _context3.stop();
-            }
->>>>>>> 4e61667e0f2b36be6655b7269d592ba8eda6c979
           }
         }
       }, _callee3);
     }));
 
-<<<<<<< HEAD
     return function (_x3) {
       return _ref3.apply(this, arguments);
     };
   }();
-=======
-      return function (_x3) {
-        return _ref3.apply(this, arguments);
-      };
-    }()
-  );
 };
 
 var createOrder = function createOrder(order) {
-  return (
-    /*#__PURE__*/
-    function () {
-      var _ref5 = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee4(dispatch) {
-        var response;
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _context4.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/orders', order);
+  return /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(dispatch) {
+      var response;
+      return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/orders', order);
 
-              case 2:
-                response = _context4.sent;
-                dispatch(_createOrder(response.data));
+            case 2:
+              response = _context4.sent;
+              dispatch(_createOrder(response.data));
 
-              case 4:
-              case "end":
-                return _context4.stop();
-            }
+            case 4:
+            case "end":
+              return _context4.stop();
           }
-        }, _callee4);
-      }));
+        }
+      }, _callee4);
+    }));
 
-      return function (_x4) {
-        return _ref5.apply(this, arguments);
-      };
-    }()
-  );
->>>>>>> 4e61667e0f2b36be6655b7269d592ba8eda6c979
+    return function (_x4) {
+      return _ref4.apply(this, arguments);
+    };
+  }();
 };
 /**
  * REDUCER -------------------------------------------------------

@@ -46,7 +46,28 @@ class ProductCard extends React.Component {
 
   render() {
     const {addToCart} = this
-    const {id, title, imageURL, price, inventory, cart, orderItems} = this.props
+    const {
+      id,
+      title,
+      imageURL,
+      price,
+      inventory,
+      cart,
+      orderItems,
+      reviews
+    } = this.props
+
+    const totalReviews = reviews.filter(review => review.productId === id)
+      .length
+
+    const totalRating = reviews
+      .filter(review => review.productId === id)
+      .reduce((accum, review) => {
+        return (accum += review.stars)
+      }, 0)
+
+    const averageRating = totalRating / totalReviews
+
     if (!id || !cart) {
       return <h1>Loading...</h1>
     } else {
@@ -60,14 +81,14 @@ class ProductCard extends React.Component {
             More Details
           </Link>
           <button onClick={addToCart}>Add to Cart</button>
-          <p>Inventory: {inventory}</p>
+          <p>Rating: {averageRating}</p>
         </li>
       )
     }
   }
 }
 
-const mapStateToProps = ({orders, user, orderItems}) => {
+const mapStateToProps = ({orders, user, orderItems, reviews}) => {
   const cart = user.id
     ? orders.find(order => order.status === 'cart' && order.userId === user.id)
     : orders.find(
@@ -75,10 +96,12 @@ const mapStateToProps = ({orders, user, orderItems}) => {
           order.status === 'cart' &&
           order.userId === parseInt(localStorage.getItem('guestId'))
       )
+
   return {
     cart,
     user,
-    orderItems
+    orderItems,
+    reviews
   }
 }
 
