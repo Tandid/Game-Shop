@@ -22,6 +22,7 @@ class Cart extends React.Component {
     try {
       let orderItemsPrice = 0
       await cartOrderItems.forEach(orderItem => {
+        console.log(orderItemsPrice)
         orderItemsPrice =
           orderItemsPrice +
           parseFloat(
@@ -55,7 +56,6 @@ class Cart extends React.Component {
       const cartOrderItems = orderItems.filter(
         orderItem => orderItem.orderId === cart.id
       )
-
       return (
         <div className="cart-wrapper">
           <h1>Cart</h1>
@@ -88,8 +88,9 @@ const mapStateToProps = ({orders, orderItems, user, products}) => {
     : orders.find(
         order =>
           order.status === 'cart' &&
-          order.userId === localStorage.getItem('guestId')
+          order.userId === parseInt(localStorage.getItem('guestId'))
       )
+
   return {
     cart,
     orderItems,

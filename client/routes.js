@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {v4 as uuidv4} from 'uuid'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -58,10 +57,9 @@ class Routes extends Component {
   }
 
   async createGuestUser() {
-    const guestId = await uuidv4()
-    await localStorage.setItem('guestId', guestId)
-    await this.props.createUser({id: guestId})
-    await this.props.createGuestCart({userId: guestId})
+    await localStorage.setItem('guestId', this.props.users.length + 1)
+    await this.props.createUser()
+    await this.props.createGuestCart({userId: localStorage.getItem('guestId')})
   }
 
   async mergeCart() {
@@ -73,7 +71,7 @@ class Routes extends Component {
 
     const guestCart = await orders.find(
       order =>
-        order.userId === localStorage.getItem('guestId') &&
+        order.userId === parseInt(localStorage.getItem('guestId')) &&
         order.status === 'cart'
     )
 
@@ -140,6 +138,7 @@ class Routes extends Component {
   render() {
     const {isLoggedIn} = this.props
     const {user} = this.props
+
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
