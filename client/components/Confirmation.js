@@ -1,56 +1,26 @@
 import React, {Component} from 'react'
-import axios from 'axios'
 import {connect} from 'react-redux'
+import {getOrder} from '../store/orders'
 
 class Confirmation extends Component {
   constructor() {
     super()
-    this.state = {
-      user: {},
-      order: {},
-      orderItems: {}
-      //   products: {},
-    }
   }
-  async componentDidMount() {
-    const user = await axios.get('/auth/me')
-    const order = await axios.get('/api/orders/')
-    const orderItems = await axios.get('/api/orderitems/')
-    // const products = await axios.get('/api/products/')
 
-    const recentOrder = order.data
-      .filter(_order => _order.userId === user.data.id)
-      .slice(-1)[0]
-
-    const recentOrderItems = orderItems.data.filter(
-      orderItem => orderItem.orderId === recentOrder.id
-    )
-
-    // const recentProducts = products.data.find(
-    //   (product) => product.id === recentOrderItems.productId
-    // )
-
-    console.log(recentOrder)
-    console.log(recentOrderItems)
-
-    this.setState({
-      user: user.data,
-      order: recentOrder,
-      orderItems: recentOrderItems
-      //   products: recentProducts,
-    })
+  componentDidMount() {
+    const orderId = this.props.match.params.id
+    this.props.loadOrder(orderId)
   }
 
   render() {
-    // const {orders, user} = this.props
-    const order = this.state.order
-    const orderItems = this.state.orderItems
-    const {products} = this.props
-    console.log(products)
+    const {products, order, orderItems} = this.props
 
-    if (!orderItems.length) {
+    if (!products.length || !order.id || !orderItems.length) {
       return <h1>Loading...</h1>
     } else {
+      const thisOrderItems = orderItems.filter(
+        orderItem => orderItem.orderId === order.id
+      )
       return (
         <div className="OrderCard">
           <div>
@@ -63,12 +33,12 @@ class Confirmation extends Component {
 
           <ul key={Math.random()}>
             <div>
-              <li>Order #: {orderItems.id}</li>
-              <li>Status: {orderItems.status}</li>
+              <li>Order #: {order.id}</li>
+              <li>Status: {order.status}</li>
             </div>
             <div>
               <ul>
-                {orderItems.map(orderItem => (
+                {thisOrderItems.map(orderItem => (
                   <li className="orderItem-title" key={Math.random()}>
                     {
                       products.find(
@@ -88,10 +58,18 @@ class Confirmation extends Component {
   }
 }
 
-const mapStateToProps = ({products}) => {
+const mapStateToProps = ({products, order, orderItems}) => {
   return {
-    products
+    products,
+    order,
+    orderItems
   }
 }
 
-export default connect(mapStateToProps)(Confirmation)
+const mapDispatchToProps = dispatch => {
+  return {
+    loadOrder: id => dispatch(getOrder(id))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Confirmation)
