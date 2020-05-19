@@ -50,8 +50,6 @@ const mapStateToProps = ({products, reviews}) => {
     return result
   }
 
-  console.log(topProducts())
-
   //-------
   const mostPopular = products.filter(product => {
     return topProducts().find(prod => prod.id === product.id)

@@ -39,6 +39,7 @@ class Account extends Component {
     try {
       this.props.update(
         {
+          id: this.props.user.id,
           firstName: this.state.firstName,
           lastName: this.state.lastName,
           email: this.state.email,
@@ -124,7 +125,7 @@ class Account extends Component {
           <button
             onClick={onSubmit}
             disabled={
-              firstName === user.title &&
+              firstName === user.firstName &&
               lastName === user.lastName &&
               email === user.email &&
               imageURL === user.imageURL

@@ -21,7 +21,7 @@ const defaultUser = {}
 const _getUsers = users => ({type: GET_USERS, users})
 const getUser = user => ({type: GET_USER, user})
 const _removeUser = id => ({type: REMOVE_USER, user: id})
-const _updateUser = () => ({type: UPDATE_USER})
+const _updateUser = user => ({type: UPDATE_USER, user})
 const _createUser = user => ({type: CREATE_USER, user})
 
 /**
@@ -88,7 +88,7 @@ const updateUser = (user, push) => {
   return async dispatch => {
     const {data: updatedUser} = await axios.put(`/api/users/${user.id}`, user)
     dispatch(_updateUser(updatedUser))
-    push('/userlist')
+    push('/account')
   }
 }
 
@@ -123,6 +123,11 @@ const users = function(state = [], action) {
 
     case CREATE_USER:
       return [...state, action.user]
+
+    case UPDATE_USER:
+      state = state.map(
+        user => (user.id === action.user.id ? action.user : user)
+      )
 
     default:
       return state
