@@ -28,13 +28,14 @@ class Cart extends React.Component {
             this.props.products.find(
               product => product.id === orderItem.productId
             ).price
-          ) *
+          ).toFixed(2) *
             orderItem.quantity
       })
       await this.props.updateTotalPrice(
         {
           id: this.props.cart.id,
-          totalPrice: this.props.cart.totalPrice - orderItemsPrice
+          totalPrice:
+            parseFloat(this.props.cart.totalPrice).toFixed(2) - orderItemsPrice
         },
         () => {}
       )
@@ -64,7 +65,12 @@ class Cart extends React.Component {
               <ProductList key={Math.random()} {...orderItem} />
             ))}
           </ul>
-          <p> Total Price: ${parseFloat(cart.totalPrice).toFixed(2)} </p>
+          <p>
+            {' '}
+            Total Price: ${Math.abs(
+              parseFloat(cart.totalPrice).toFixed(2)
+            )}{' '}
+          </p>
 
           <button
             className="cart-button"

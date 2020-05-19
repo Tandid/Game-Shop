@@ -453,14 +453,14 @@ var Cart = /*#__PURE__*/function (_React$Component) {
                 return cartOrderItems.forEach(function (orderItem) {
                   orderItemsPrice = orderItemsPrice + parseFloat(_this2.props.products.find(function (product) {
                     return product.id === orderItem.productId;
-                  }).price) * orderItem.quantity;
+                  }).price).toFixed(2) * orderItem.quantity;
                 });
 
               case 8:
                 _context.next = 10;
                 return this.props.updateTotalPrice({
                   id: this.props.cart.id,
-                  totalPrice: this.props.cart.totalPrice - orderItemsPrice
+                  totalPrice: parseFloat(this.props.cart.totalPrice).toFixed(2) - orderItemsPrice
                 }, function () {});
 
               case 10:
@@ -512,7 +512,7 @@ var Cart = /*#__PURE__*/function (_React$Component) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ProductList__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
             key: Math.random()
           }, orderItem));
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Total Price: $", parseFloat(cart.totalPrice).toFixed(2), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, ' ', "Total Price: $", Math.abs(parseFloat(cart.totalPrice).toFixed(2)), ' '), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "cart-button",
           onClick: clearCart,
           disabled: !cartOrderItems.length
@@ -1418,7 +1418,7 @@ var EditProduct = /*#__PURE__*/function (_React$Component) {
                     title: this.state.title,
                     description: this.state.description,
                     imageURL: this.state.imageURL,
-                    price: parseFloat(this.state.price),
+                    price: parseFloat(this.state.price).toFixed(2),
                     inventory: parseInt(this.state.inventory),
                     category: this.state.category
                   }, this.props.history.push);
@@ -4039,7 +4039,8 @@ var Routes = /*#__PURE__*/function (_Component) {
                   if (!existingOrderItem) {
                     _this2.props.newOrderItem({
                       productId: guestOrderItem.productId,
-                      orderId: userCart.id
+                      orderId: userCart.id,
+                      quantity: guestOrderItem.quantity
                     });
                   } else {
                     _this2.props.incrementOrderItem({

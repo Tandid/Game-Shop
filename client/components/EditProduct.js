@@ -78,7 +78,7 @@ class EditProduct extends React.Component {
           title: this.state.title,
           description: this.state.description,
           imageURL: this.state.imageURL,
-          price: parseFloat(this.state.price),
+          price: parseFloat(this.state.price).toFixed(2),
           inventory: parseInt(this.state.inventory),
           category: this.state.category
         },
