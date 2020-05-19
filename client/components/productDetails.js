@@ -99,7 +99,9 @@ class ProductDetails extends React.Component {
                 .filter(review => review.productId === product.id)
                 .map(review => (
                   <li className="review" key={review.id}>
-                    <p> ------------------------------</p>
+                    <p>
+                      ------------------------------------------------------
+                    </p>
                     <p>Rating: {review.stars} / 10</p>
                     <q> {review.text} </q>
                     <p>
@@ -109,7 +111,9 @@ class ProductDetails extends React.Component {
                           .firstName
                       }
                     </p>
-                    <p> ------------------------------</p>
+                    <p>
+                      --------------------------------------------------------
+                    </p>
                   </li>
                 ))}
             </div>
