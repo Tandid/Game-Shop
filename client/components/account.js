@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {updateUser} from '../store'
+import {updateProfile} from '../store'
 
 class Account extends Component {
   constructor(props) {
@@ -37,13 +37,16 @@ class Account extends Component {
   async onSubmit(event) {
     event.preventDefault()
     try {
-      this.props.update({
-        id: this.props.user.id,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        email: this.state.email,
-        imageURL: this.state.imageURL
-      })
+      this.props.update(
+        {
+          id: this.props.user.id,
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          email: this.state.email,
+          imageURL: this.state.imageURL
+        },
+        this.props.history.push
+      )
     } catch (exception) {
       this.setState({error: exception.response.data.message})
     }
@@ -144,7 +147,7 @@ const mapStateToProps = ({user}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    update: user => dispatch(updateUser(user))
+    update: (user, push) => dispatch(updateProfile(user, push))
   }
 }
 

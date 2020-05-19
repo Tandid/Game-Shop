@@ -218,7 +218,7 @@ var Account = /*#__PURE__*/function (_Component) {
                     lastName: this.state.lastName,
                     email: this.state.email,
                     imageURL: this.state.imageURL
-                  });
+                  }, this.props.history.push);
                 } catch (exception) {
                   this.setState({
                     error: exception.response.data.message
@@ -349,8 +349,8 @@ var mapStateToProps = function mapStateToProps(_ref) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    update: function update(user) {
-      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["updateUser"])(user));
+    update: function update(user, push) {
+      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["updateProfile"])(user, push));
     }
   };
 };
@@ -4236,7 +4236,7 @@ socket.on('connect', function () {
 /*!*******************************!*\
   !*** ./client/store/index.js ***!
   \*******************************/
-/*! exports provided: default, me, auth, logout, updateUser, removeUser, getUsers, user, users, createUser, products, product, getProducts, getDetails, createProduct, removeProduct, updateProduct, orders, order, getOrders, getOrder, updateOrder, createOrder, orderItems, orderItem, getOrderItem, getOrderItems, createOrderItem, updateOrderItem, deleteOrderItem */
+/*! exports provided: default, me, auth, logout, updateUser, updateProfile, removeUser, getUsers, user, users, createUser, products, product, getProducts, getDetails, createProduct, removeProduct, updateProduct, orders, order, getOrders, getOrder, updateOrder, createOrder, orderItems, orderItem, getOrderItem, getOrderItems, createOrderItem, updateOrderItem, deleteOrderItem */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4259,6 +4259,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "logout", function() { return _user__WEBPACK_IMPORTED_MODULE_4__["logout"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "updateUser", function() { return _user__WEBPACK_IMPORTED_MODULE_4__["updateUser"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "updateProfile", function() { return _user__WEBPACK_IMPORTED_MODULE_4__["updateProfile"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "removeUser", function() { return _user__WEBPACK_IMPORTED_MODULE_4__["removeUser"]; });
 
@@ -5328,7 +5330,7 @@ var reviews = function reviews() {
 /*!******************************!*\
   !*** ./client/store/user.js ***!
   \******************************/
-/*! exports provided: me, auth, logout, updateUser, removeUser, getUsers, user, users, createUser */
+/*! exports provided: me, auth, logout, updateUser, updateProfile, removeUser, getUsers, user, users, createUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5337,6 +5339,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "auth", function() { return auth; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logout", function() { return logout; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateUser", function() { return updateUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateProfile", function() { return updateProfile; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeUser", function() { return removeUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUsers", function() { return getUsers; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "user", function() { return user; });
@@ -5371,6 +5374,7 @@ var GET_USERS = 'GET_USERS';
 var GET_USER = 'GET_USER';
 var REMOVE_USER = 'REMOVE_USER';
 var UPDATE_USER = 'UPDATE_USER';
+var UPDATE_PROFILE = 'UPDATE_PROFILE';
 var CREATE_USER = 'CREATE_USER';
 /**
  * INITIAL STATE
@@ -5405,6 +5409,13 @@ var _removeUser = function _removeUser(id) {
 var _updateUser = function _updateUser(user) {
   return {
     type: UPDATE_USER,
+    user: user
+  };
+};
+
+var _updateProfile = function _updateProfile(user) {
+  return {
+    type: UPDATE_PROFILE,
     user: user
   };
 };
@@ -5635,22 +5646,25 @@ var updateUser = function updateUser(user) {
   }();
 };
 
-var createUser = function createUser(user) {
+var updateProfile = function updateProfile(user, push) {
   return /*#__PURE__*/function () {
     var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(dispatch) {
-      var response;
+      var _yield$axios$put2, updatedUser;
+
       return regeneratorRuntime.wrap(function _callee7$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
               _context7.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/users', user);
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/users/".concat(user.id), user);
 
             case 2:
-              response = _context7.sent;
-              dispatch(_createUser(response.data));
+              _yield$axios$put2 = _context7.sent;
+              updatedUser = _yield$axios$put2.data;
+              dispatch(_updateProfile(updatedUser));
+              push('/account');
 
-            case 4:
+            case 6:
             case "end":
               return _context7.stop();
           }
@@ -5660,6 +5674,35 @@ var createUser = function createUser(user) {
 
     return function (_x7) {
       return _ref7.apply(this, arguments);
+    };
+  }();
+};
+
+var createUser = function createUser(user) {
+  return /*#__PURE__*/function () {
+    var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(dispatch) {
+      var response;
+      return regeneratorRuntime.wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              _context8.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/users', user);
+
+            case 2:
+              response = _context8.sent;
+              dispatch(_createUser(response.data));
+
+            case 4:
+            case "end":
+              return _context8.stop();
+          }
+        }
+      }, _callee8);
+    }));
+
+    return function (_x8) {
+      return _ref8.apply(this, arguments);
     };
   }();
 };
@@ -5679,8 +5722,9 @@ var user = function user() {
     case REMOVE_USER:
       return state;
     // return state.filter(user => user.id !== action.user)
-    // case UPDATE_USER:
-    //   return action.user
+
+    case UPDATE_PROFILE:
+      return action.user;
 
     default:
       return state;

@@ -8,6 +8,7 @@ const GET_USERS = 'GET_USERS'
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 const UPDATE_USER = 'UPDATE_USER'
+const UPDATE_PROFILE = 'UPDATE_PROFILE'
 const CREATE_USER = 'CREATE_USER'
 
 /**
@@ -22,6 +23,7 @@ const _getUsers = users => ({type: GET_USERS, users})
 const getUser = user => ({type: GET_USER, user})
 const _removeUser = id => ({type: REMOVE_USER, id})
 const _updateUser = user => ({type: UPDATE_USER, user})
+const _updateProfile = user => ({type: UPDATE_PROFILE, user})
 const _createUser = user => ({type: CREATE_USER, user})
 
 /**
@@ -91,6 +93,14 @@ const updateUser = user => {
   }
 }
 
+const updateProfile = (user, push) => {
+  return async dispatch => {
+    const {data: updatedUser} = await axios.put(`/api/users/${user.id}`, user)
+    dispatch(_updateProfile(updatedUser))
+    push('/account')
+  }
+}
+
 const createUser = user => {
   return async dispatch => {
     const response = await axios.post('/api/users', user)
@@ -108,8 +118,8 @@ const user = function(state = defaultUser, action) {
     case REMOVE_USER:
       return state
     // return state.filter(user => user.id !== action.user)
-    // case UPDATE_USER:
-    //   return action.user
+    case UPDATE_PROFILE:
+      return action.user
     default:
       return state
   }
@@ -141,6 +151,7 @@ export {
   auth,
   logout,
   updateUser,
+  updateProfile,
   removeUser,
   getUsers,
   user,
