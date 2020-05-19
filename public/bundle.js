@@ -3979,37 +3979,45 @@ var Routes = /*#__PURE__*/function (_Component) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                _context2.next = 2;
+                return this.props.loadUser();
+
+              case 2:
+                _context2.next = 4;
+                return this.props.loadOrders();
+
+              case 4:
                 _this$props = this.props, orders = _this$props.orders, orderItems = _this$props.orderItems, user = _this$props.user, products = _this$props.products;
-                _context2.next = 3;
+                _context2.next = 7;
                 return orders.find(function (order) {
                   return order.userId === user.id && order.status === 'cart';
                 });
 
-              case 3:
+              case 7:
                 userCart = _context2.sent;
-                _context2.next = 6;
+                _context2.next = 10;
                 return orders.find(function (order) {
                   return order.userId === localStorage.getItem('guestId') && order.status === 'cart';
                 });
 
-              case 6:
+              case 10:
                 guestCart = _context2.sent;
-                _context2.next = 9;
+                _context2.next = 13;
                 return orderItems.filter(function (orderItem) {
                   return orderItem.orderId === userCart.id;
                 });
 
-              case 9:
+              case 13:
                 userOrderItems = _context2.sent;
-                _context2.next = 12;
+                _context2.next = 16;
                 return orderItems.filter(function (orderItem) {
                   return orderItem.orderId === guestCart.id;
                 });
 
-              case 12:
+              case 16:
                 guestOrderItems = _context2.sent;
                 guestOrderItemsPrice = 0;
-                _context2.next = 16;
+                _context2.next = 20;
                 return guestOrderItems.forEach(function (guestOrderItem) {
                   guestOrderItemsPrice = guestOrderItemsPrice + parseFloat(products.find(function (product) {
                     return product.id === guestOrderItem.productId;
@@ -4032,27 +4040,27 @@ var Routes = /*#__PURE__*/function (_Component) {
                   }
                 });
 
-              case 16:
-                _context2.next = 18;
+              case 20:
+                _context2.next = 22;
                 return this.props.updateTotalPrice({
                   id: guestCart.id,
                   totalPrice: 0
                 }, function () {});
 
-              case 18:
-                _context2.next = 20;
+              case 22:
+                _context2.next = 24;
                 return this.props.updateTotalPrice({
                   id: userCart.id,
                   totalPrice: parseFloat(userCart.totalPrice) + parseFloat(guestOrderItemsPrice)
                 }, function () {});
 
-              case 20:
-                _context2.next = 22;
+              case 24:
+                _context2.next = 26;
                 return guestOrderItems.forEach(function (orderItem) {
                   return _this2.props.removeFromGuestCart(orderItem);
                 });
 
-              case 22:
+              case 26:
               case "end":
                 return _context2.stop();
             }
@@ -4182,6 +4190,12 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     incrementOrderItem: function incrementOrderItem(orderItem) {
       return dispatch(Object(_store_orderItems__WEBPACK_IMPORTED_MODULE_8__["updateOrderItem"])(orderItem));
+    },
+    loadUser: function loadUser() {
+      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_6__["me"])());
+    },
+    loadOrders: function loadOrders() {
+      return dispatch(Object(_store_orders__WEBPACK_IMPORTED_MODULE_9__["getOrders"])());
     }
   };
 }; // The `withRouter` wrapper makes sure that updates are not blocked
