@@ -1869,7 +1869,7 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
         to: "/"
       }, "ProGamerz"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["NavLink"], {
         to: "/products"
-      }, " Products "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["NavLink"], {
+      }, " Games "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["NavLink"], {
         to: "/cart"
       }, " Cart "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["NavLink"], {
         to: "/login"
@@ -1880,36 +1880,7 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
   }]);
 
   return Navbar;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component); // const Navbar = ({handleClick, isLoggedIn}) => (
-//   <div>
-//     <nav>
-//       {isLoggedIn ? (
-//         <div>
-//           {/* The navbar will show these links after you log in */}
-//           <NavLink to="/">ProGamerz</NavLink>
-//           <NavLink to="/products"> Games </NavLink>
-//           <NavLink to="/cart"> Cart </NavLink>
-//           <NavLink to="/orders"> Orders </NavLink>
-//           <NavLink to="/account"> Account Info </NavLink>
-//           <a href="#" onClick={handleClick}>
-//             Logout
-//           </a>
-//         </div>
-//       ) : (
-//         <div>
-//           {/* The navbar will show these links before you log in */}
-//           <NavLink to="/">ProGamerz</NavLink>
-//           <NavLink to="/products"> Products </NavLink>
-//           <NavLink to="/cart"> Cart(#)</NavLink>
-//           <NavLink to="/login">Login</NavLink>
-//           <NavLink to="/signup">Sign Up</NavLink>
-//         </div>
-//       )}
-//     </nav>
-//     <hr />
-//   </div>
-// )
-
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 /**
  * CONTAINER
  */
@@ -3121,7 +3092,9 @@ var Products = /*#__PURE__*/function (_React$Component) {
           value: "PC"
         }, "PC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           value: "Nintendo"
-        }, "Switch"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        }, "Switch"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "product-overflow"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "wrapper"
         }, filteredProducts.map(function (product) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ProductCard_js__WEBPACK_IMPORTED_MODULE_3__["default"], _extends({

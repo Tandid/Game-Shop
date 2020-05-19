@@ -60,7 +60,7 @@ class Products extends React.Component {
             </select>
           </div>
 
-          <div>
+          <div className="product-overflow">
             <ul className="wrapper">
               {filteredProducts.map(product => {
                 return <ProductCard key={product.id} {...product} />

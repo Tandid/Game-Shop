@@ -180,7 +180,7 @@ select {
   text-align: center;
   display: flex;
   flex-direction: column;
-  margin: 0 30%;
+  margin: 1rem 30%;
   justify-content: space-around;
 }
 
@@ -425,4 +425,12 @@ tr:nth-child(even) {
   justify-content: space-between;
   list-style-type: none;
   padding: 1rem;
+}
+
+.product-overflow {
+  padding: 2rem;
+  overflow: scroll;
+  height: 500px;
+  border: solid 1px beige;
+  margin: 0 2rem;
 }

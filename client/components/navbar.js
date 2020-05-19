@@ -37,7 +37,7 @@ class Navbar extends React.Component {
             <div>
               {/* The navbar will show these links before you log in */}
               <NavLink to="/">ProGamerz</NavLink>
-              <NavLink to="/products"> Products </NavLink>
+              <NavLink to="/products"> Games </NavLink>
               <NavLink to="/cart"> Cart </NavLink>
               <NavLink to="/login">Login</NavLink>
               <NavLink to="/signup">Sign Up</NavLink>
@@ -49,36 +49,6 @@ class Navbar extends React.Component {
     )
   }
 }
-
-// const Navbar = ({handleClick, isLoggedIn}) => (
-//   <div>
-//     <nav>
-//       {isLoggedIn ? (
-//         <div>
-//           {/* The navbar will show these links after you log in */}
-//           <NavLink to="/">ProGamerz</NavLink>
-//           <NavLink to="/products"> Games </NavLink>
-//           <NavLink to="/cart"> Cart </NavLink>
-//           <NavLink to="/orders"> Orders </NavLink>
-//           <NavLink to="/account"> Account Info </NavLink>
-//           <a href="#" onClick={handleClick}>
-//             Logout
-//           </a>
-//         </div>
-//       ) : (
-//         <div>
-//           {/* The navbar will show these links before you log in */}
-//           <NavLink to="/">ProGamerz</NavLink>
-//           <NavLink to="/products"> Products </NavLink>
-//           <NavLink to="/cart"> Cart(#)</NavLink>
-//           <NavLink to="/login">Login</NavLink>
-//           <NavLink to="/signup">Sign Up</NavLink>
-//         </div>
-//       )}
-//     </nav>
-//     <hr />
-//   </div>
-// )
 
 /**
  * CONTAINER
