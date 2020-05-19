@@ -29,6 +29,8 @@ async function seed() {
     })
   ])
 
+  const [paul, denis, tandid] = users
+
   const products = await Promise.all([
     Product.create({
       title: 'Super Smash Bros. Ultimate',
@@ -117,17 +119,17 @@ async function seed() {
 
   const orders = await Promise.all([
     Order.create({
-      userId: 2,
+      userId: denis.id,
       status: 'cart',
       totalPrice: parseFloat(SSBU.price) + parseFloat(AC.price)
     }),
     Order.create({
-      userId: 3,
+      userId: tandid.id,
       status: 'cart',
       totalPrice: parseFloat(SSBU.price) + parseFloat(GTAV.price)
     }),
     Order.create({
-      userId: 2,
+      userId: denis.id,
       status: 'completed',
       totalPrice: parseFloat(FF7.price) + parseFloat(HALO.price)
     })
@@ -151,11 +153,36 @@ async function seed() {
   ])
 
   const reviews = await Promise.all([
-    Review.create({text: 'perfect game', stars: 9, userId: 2, productId: 1}),
-    Review.create({text: 'perfect game', stars: 8, userId: 2, productId: 2}),
-    Review.create({text: 'perfect game', stars: 8, userId: 2, productId: 2}),
-    Review.create({text: 'perfect game', stars: 7, userId: 2, productId: 5}),
-    Review.create({text: 'perfect game', stars: 8, userId: 2, productId: 5})
+    Review.create({
+      text: 'perfect game',
+      stars: 9,
+      userId: denis.id,
+      productId: 1
+    }),
+    Review.create({
+      text: 'perfect game',
+      stars: 8,
+      userId: denis.id,
+      productId: 2
+    }),
+    Review.create({
+      text: 'perfect game',
+      stars: 8,
+      userId: denis.id,
+      productId: 2
+    }),
+    Review.create({
+      text: 'perfect game',
+      stars: 7,
+      userId: denis.id,
+      productId: 5
+    }),
+    Review.create({
+      text: 'perfect game',
+      stars: 8,
+      userId: denis.id,
+      productId: 5
+    })
   ])
 
   console.log(`seeded ${users.length} users`)
