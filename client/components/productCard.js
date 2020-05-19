@@ -81,7 +81,7 @@ class ProductCard extends React.Component {
             More Details
           </Link>
           <button onClick={addToCart}>Add to Cart</button>
-          <p>Rating: {averageRating}</p>
+          <p>{!averageRating ? 'No Reviews' : `Rating: ${averageRating}/10`}</p>
         </li>
       )
     }
