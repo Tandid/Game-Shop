@@ -213,6 +213,7 @@ var Account = /*#__PURE__*/function (_Component) {
 
                 try {
                   this.props.update({
+                    id: this.props.user.id,
                     firstName: this.state.firstName,
                     lastName: this.state.lastName,
                     email: this.state.email,
@@ -332,7 +333,7 @@ var Account = /*#__PURE__*/function (_Component) {
         }
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: onSubmit,
-        disabled: firstName === user.title && lastName === user.lastName && email === user.email && imageURL === user.imageURL
+        disabled: firstName === user.firstName && lastName === user.lastName && email === user.email && imageURL === user.imageURL
       }, "Update Profile")));
     }
   }]);
@@ -1736,9 +1737,8 @@ var mapStateToProps = function mapStateToProps(_ref2) {
     }
 
     return result;
-  };
+  }; //-------
 
-  console.log(topProducts()); //-------
 
   var mostPopular = products.filter(function (product) {
     return topProducts().find(function (prod) {
@@ -5423,9 +5423,10 @@ var _removeUser = function _removeUser(id) {
   };
 };
 
-var _updateUser = function _updateUser() {
+var _updateUser = function _updateUser(user) {
   return {
-    type: UPDATE_USER
+    type: UPDATE_USER,
+    user: user
   };
 };
 
@@ -5640,7 +5641,7 @@ var updateUser = function updateUser(user, push) {
               _yield$axios$put = _context6.sent;
               updatedUser = _yield$axios$put.data;
               dispatch(_updateUser(updatedUser));
-              push('/userlist');
+              push('/account');
 
             case 6:
             case "end":
@@ -5719,6 +5720,11 @@ var users = function users() {
 
     case CREATE_USER:
       return [].concat(_toConsumableArray(state), [action.user]);
+
+    case UPDATE_USER:
+      state = state.map(function (user) {
+        return user.id === action.user.id ? action.user : user;
+      });
 
     default:
       return state;
