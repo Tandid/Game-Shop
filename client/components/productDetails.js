@@ -92,7 +92,7 @@ class ProductDetails extends React.Component {
             <h4>
               {' '}
               Average Rating:{' '}
-              {!averageRating ? 'No Reviews' : `${averageRating}/10`}
+              {isNaN(averageRating) ? 'No Reviews' : `${averageRating}/10`}
             </h4>
             <div className="review-overflow">
               {reviews
@@ -150,7 +150,7 @@ const mapStateToProps = ({
       return (accum += review.stars)
     }, 0)
 
-  const averageRating = totalRating / totalReviews
+  const averageRating = (totalRating / totalReviews).toFixed(1)
 
   return {
     products,

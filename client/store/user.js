@@ -84,11 +84,10 @@ const removeUser = id => {
 //   }
 // }
 
-const updateUser = (user, push) => {
+const updateUser = user => {
   return async dispatch => {
     const {data: updatedUser} = await axios.put(`/api/users/${user.id}`, user)
     dispatch(_updateUser(updatedUser))
-    push('/account')
   }
 }
 
@@ -109,8 +108,8 @@ const user = function(state = defaultUser, action) {
     case REMOVE_USER:
       return state
     // return state.filter(user => user.id !== action.user)
-    case UPDATE_USER:
-      return action.user
+    // case UPDATE_USER:
+    //   return action.user
     default:
       return state
   }

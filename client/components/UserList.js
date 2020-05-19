@@ -6,7 +6,6 @@ import {removeUser, updateUser, getUsers} from '../store'
 class UserList extends React.Component {
   constructor() {
     super()
-    // this.delete = this.deleteUser.bind(this)
   }
 
   componentDidMount() {
@@ -43,10 +42,10 @@ class UserList extends React.Component {
                     <td>
                       <button
                         onClick={() =>
-                          this.props.makeOrRemoveAdmin(
-                            {id: user.id, admin: !user.admin},
-                            () => {}
-                          )
+                          this.props.makeOrRemoveAdmin({
+                            id: user.id,
+                            admin: !user.admin
+                          })
                         }
                       >
                         {user.admin === true ? 'Remove Admin' : 'Make Admin'}
@@ -76,7 +75,7 @@ const mapStateToProps = ({users}) => {
 const mapDispatchToProps = dispatch => {
   return {
     delete: id => dispatch(removeUser(id)),
-    makeOrRemoveAdmin: (user, push) => dispatch(updateUser(user, push)),
+    makeOrRemoveAdmin: user => dispatch(updateUser(user)),
     loadUsers: () => dispatch(getUsers())
   }
 }

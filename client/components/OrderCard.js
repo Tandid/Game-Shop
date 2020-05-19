@@ -45,7 +45,9 @@ const OrderCard = ({id, status, totalPrice, orderItems, products}) => {
                   </div>
                 ))}
             </ul>
-            <div className="total">Total Price: ${totalPrice}</div>
+            <div className="total">
+              Total Price: ${parseFloat(totalPrice).toFixed(2)}
+            </div>
           </div>
         </ul>
       </div>
