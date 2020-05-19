@@ -94,7 +94,7 @@ const mapStateToProps = ({orders, user, orderItems, reviews}) => {
     : orders.find(
         order =>
           order.status === 'cart' &&
-          order.userId === parseInt(localStorage.getItem('guestId'))
+          order.userId === localStorage.getItem('guestId')
       )
 
   return {
