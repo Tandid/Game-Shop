@@ -88,7 +88,7 @@ class ProductDetails extends React.Component {
 
           <div className="details-3">
             <h3> Reviews </h3>
-            <h4> Total Reviews: {totalReviews} </h4>
+            <h4>Total Reviews: {totalReviews}</h4>
             <h4> Average Rating: {averageRating}/10</h4>
             <div className="review-overflow">
               {reviews
@@ -133,10 +133,15 @@ const mapStateToProps = ({
           order.userId === parseInt(localStorage.getItem('guestId'))
       )
 
-  const totalReviews = reviews.length
-  const totalRating = reviews.reduce((accum, review) => {
-    return (accum += review.stars)
-  }, 0)
+  const totalReviews = reviews.filter(review => review.productId === product.id)
+    .length
+
+  const totalRating = reviews
+    .filter(review => review.productId === product.id)
+    .reduce((accum, review) => {
+      return (accum += review.stars)
+    }, 0)
+
   const averageRating = totalRating / totalReviews
 
   return {

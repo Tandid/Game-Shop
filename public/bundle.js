@@ -2646,7 +2646,7 @@ var ProductDetails = /*#__PURE__*/function (_React$Component) {
           onClick: addToCart
         }, "Add to Cart")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "details-3"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, " Reviews "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, " Total Reviews: ", totalReviews, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, " Average Rating: ", averageRating, "/10"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, " Reviews "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Total Reviews: ", totalReviews), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, " Average Rating: ", averageRating, "/10"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "review-overflow"
         }, reviews.filter(function (review) {
           return review.productId === product.id;
@@ -2678,8 +2678,12 @@ var mapStateToProps = function mapStateToProps(_ref) {
   }) : orders.find(function (order) {
     return order.status === 'cart' && order.userId === parseInt(localStorage.getItem('guestId'));
   });
-  var totalReviews = reviews.length;
-  var totalRating = reviews.reduce(function (accum, review) {
+  var totalReviews = reviews.filter(function (review) {
+    return review.productId === product.id;
+  }).length;
+  var totalRating = reviews.filter(function (review) {
+    return review.productId === product.id;
+  }).reduce(function (accum, review) {
     return accum += review.stars;
   }, 0);
   var averageRating = totalRating / totalReviews;

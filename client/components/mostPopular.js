@@ -36,6 +36,7 @@ const mapStateToProps = ({products, reviews}) => {
           accum.average = average
           accum.title = product.title
         }
+
         return accum
       }, {})
       result.push(topProduct)
