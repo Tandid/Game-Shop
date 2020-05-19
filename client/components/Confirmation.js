@@ -22,16 +22,17 @@ class Confirmation extends Component {
         orderItem => orderItem.orderId === order.id
       )
       return (
-        <div className="OrderCard">
-          <div>
+        <div className="confirmation-wrapper">
+          <div className="thank-you">
             <p>Thank you for shopping with us!</p>
             <p>
               You will receive an email confirmation soon with shipping and
-              tracking details
+              tracking details 😊
             </p>
+            <p>Here is a summary of your order:</p>
           </div>
 
-          <ul key={Math.random()}>
+          <ul className="order-summary" key={Math.random()}>
             <div>
               <li>Order #: {order.id}</li>
               <li>Status: {order.status}</li>
@@ -39,19 +40,33 @@ class Confirmation extends Component {
             <div>
               <ul>
                 {thisOrderItems.map(orderItem => (
-                  <li className="orderItem-title" key={Math.random()}>
-                    {
-                      products.find(
-                        product => product.id === orderItem.productId
-                      ).title
-                    }
-                    x {orderItem.quantity}
-                  </li>
+                  <div className="order-items" key={Math.random()}>
+                    <li>X{orderItem.quantity}</li>
+                    <li>
+                      {
+                        products.find(
+                          product => product.id === orderItem.productId
+                        ).title
+                      }
+                    </li>
+
+                    <li>
+                      $
+                      {
+                        products.find(
+                          product => product.id === orderItem.productId
+                        ).price
+                      }
+                    </li>
+                  </div>
                 ))}
               </ul>
-              <div>${order.totalPrice}</div>
+              <div className="total">Total Price: ${order.totalPrice}</div>
             </div>
           </ul>
+          <a className="back-button" href="/">
+            Continue Shopping
+          </a>
         </div>
       )
     }

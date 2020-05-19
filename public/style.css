@@ -335,6 +335,7 @@ tr:nth-child(even) {
   columns: 25;
 }
 
+/* auth form */
 .auth-form-wrapper {
   display: flex;
   justify-content: space-evenly;
@@ -367,4 +368,46 @@ tr:nth-child(even) {
   text-align: center;
   border-radius: 10px;
   font-size: larger;
+}
+/* confirmation page */
+.confirmation-wrapper {
+  display: flex;
+  flex-direction: column;
+  background-color: beige;
+  margin: 2rem;
+  padding: 1rem;
+  list-style-type: none;
+  border-radius: 10px;
+}
+
+.thank-you {
+  text-align: center;
+  font-size: xx-large;
+}
+
+.order-summary {
+  border: solid 1px black;
+  list-style-type: none;
+  padding: 1rem;
+  margin: 0 20rem;
+}
+
+.total {
+  display: flex;
+  justify-content: flex-end;
+  padding: 2rem 1rem;
+}
+
+.back-button {
+  text-align: center;
+  margin: 2rem;
+  padding: 1rem;
+  background-color: #f24443;
+}
+
+.order-items {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  padding: 1rem;
 }
