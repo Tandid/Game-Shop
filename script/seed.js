@@ -129,7 +129,7 @@ async function seed() {
         'https://media.gamestop.com/i/gamestop/10131620/Marvels-Spider-Man',
       price: 39.99,
       inventory: 5,
-      category: 'PS4'
+      category: 'Playstation'
     }),
     Product.create({
       title: 'NBA 2k20',
@@ -237,33 +237,33 @@ async function seed() {
 
   const reviews = await Promise.all([
     Review.create({
-      text: 'perfect game',
+      text: 'Perfect game!',
       stars: 9,
       userId: denis.id,
       productId: 1
     }),
     Review.create({
-      text: 'perfect game',
+      text: 'Game of the year!',
+      stars: 8,
+      userId: tandid.id,
+      productId: 2
+    }),
+    Review.create({
+      text: 'Worth it!',
       stars: 8,
       userId: denis.id,
       productId: 2
     }),
     Review.create({
-      text: 'perfect game',
-      stars: 8,
-      userId: denis.id,
-      productId: 2
-    }),
-    Review.create({
-      text: 'perfect game',
+      text: "Couldn't put this down!",
       stars: 7,
       userId: denis.id,
       productId: 5
     }),
     Review.create({
-      text: 'perfect game',
+      text: 'Im addicted!',
       stars: 8,
-      userId: denis.id,
+      userId: tandid.id,
       productId: 5
     })
   ])
