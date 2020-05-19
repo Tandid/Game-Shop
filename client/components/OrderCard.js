@@ -8,34 +8,48 @@ const OrderCard = ({id, status, totalPrice, orderItems, products}) => {
     return <h1>Loading...</h1>
   } else {
     return (
-      <ul key={Math.random()} className="OrderCard">
-        <div>
-          <li>Order #: {id}</li>
-          <li>Status: {status}</li>
-        </div>
-        <div>
-          <ul>
-            {orderItems
-              .filter(orderItem => orderItem.orderId === id)
-              .map(orderItem => (
-                <li className="orderItem-title" key={Math.random()}>
-                  {
-                    products.find(product => product.id === orderItem.productId)
-                      .title
-                  }{' '}
-                  x {orderItem.quantity}
-                  <Link
-                    className="link-button"
-                    to={`/review/${id}/${orderItem.productId}`}
-                  >
-                    Review
-                  </Link>
-                </li>
-              ))}
-          </ul>
-          <div>${totalPrice}</div>
-        </div>
-      </ul>
+      <div className="order-card-wrapper">
+        <ul className="order-card" key={Math.random()}>
+          <div>
+            <li>Order #: {id}</li>
+            <li>Status: {status}</li>
+          </div>
+          <div>
+            <ul>
+              {orderItems
+                .filter(orderItem => orderItem.orderId === id)
+                .map(orderItem => (
+                  <div className="order-card-items" key={Math.random()}>
+                    <li>X{orderItem.quantity}</li>
+                    <li>
+                      {
+                        products.find(
+                          product => product.id === orderItem.productId
+                        ).title
+                      }
+                    </li>
+
+                    <li>
+                      $
+                      {
+                        products.find(
+                          product => product.id === orderItem.productId
+                        ).price
+                      }
+                      <Link
+                        className="back-button"
+                        to={`/review/${id}/${orderItem.productId}`}
+                      >
+                        Write Review
+                      </Link>
+                    </li>
+                  </div>
+                ))}
+            </ul>
+            <div className="total">Total Price: ${totalPrice}</div>
+          </div>
+        </ul>
+      </div>
     )
   }
 }

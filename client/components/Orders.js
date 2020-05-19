@@ -15,7 +15,7 @@ class Orders extends React.Component {
   render() {
     const {orders, user} = this.props
     return (
-      <div>
+      <div className="order-card-overflow">
         {orders
           .filter(order => order.userId === user.id && order.status !== 'cart')
           .map(order => <OrderCard key={order.id} {...order} />)}

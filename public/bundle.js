@@ -1974,22 +1974,28 @@ var OrderCard = function OrderCard(_ref) {
   if (!orderItems.length || !products.length) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Loading...");
   } else {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-      key: Math.random(),
-      className: "OrderCard"
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "order-card-wrapper"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      className: "order-card",
+      key: Math.random()
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Order #: ", id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Status: ", status)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, orderItems.filter(function (orderItem) {
       return orderItem.orderId === id;
     }).map(function (orderItem) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "orderItem-title",
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "order-card-items",
         key: Math.random()
-      }, products.find(function (product) {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "X", orderItem.quantity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, products.find(function (product) {
         return product.id === orderItem.productId;
-      }).title, ' ', "x ", orderItem.quantity, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
-        className: "link-button",
+      }).title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "$", products.find(function (product) {
+        return product.id === orderItem.productId;
+      }).price, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+        className: "back-button",
         to: "/review/".concat(id, "/").concat(orderItem.productId)
-      }, "Review"));
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "$", totalPrice)));
+      }, "Write Review")));
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "total"
+    }, "Total Price: $", totalPrice))));
   }
 };
 
@@ -2196,7 +2202,9 @@ var Orders = /*#__PURE__*/function (_React$Component) {
       var _this$props = this.props,
           orders = _this$props.orders,
           user = _this$props.user;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, orders.filter(function (order) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "order-card-overflow"
+      }, orders.filter(function (order) {
         return order.userId === user.id && order.status !== 'cart';
       }).map(function (order) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_OrderCard__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
