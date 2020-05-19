@@ -9,11 +9,10 @@ const OrderCard = ({id, status, totalPrice, orderItems, products}) => {
   } else {
     return (
       <div className="order-card-wrapper">
+        <h4>
+          Order #{id} / {status}
+        </h4>
         <ul className="order-card" key={Math.random()}>
-          <div>
-            <li>Order #: {id}</li>
-            <li>Status: {status}</li>
-          </div>
           <div>
             <ul>
               {orderItems

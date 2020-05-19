@@ -11,7 +11,7 @@ class Orders extends React.Component {
   componentDidMount() {
     this.props.fetchOrders()
   }
-
+  c
   render() {
     const {orders, user} = this.props
     return (
