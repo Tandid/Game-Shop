@@ -38,7 +38,7 @@ class Navbar extends React.Component {
               {/* The navbar will show these links before you log in */}
               <NavLink to="/">ProGamerz</NavLink>
               <NavLink to="/products"> Products </NavLink>
-              <NavLink to="/cart"> Cart(#)</NavLink>
+              <NavLink to="/cart"> Cart </NavLink>
               <NavLink to="/login">Login</NavLink>
               <NavLink to="/signup">Sign Up</NavLink>
             </div>

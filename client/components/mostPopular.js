@@ -20,6 +20,7 @@ const mapStateToProps = ({products, reviews}) => {
     let result = []
     let filteredProducts = products
     while (result.length < 3) {
+      // ----------
       const topProduct = filteredProducts.reduce((accum, product) => {
         const productReviews = reviews.filter(
           review => review.productId === product.id
@@ -39,6 +40,7 @@ const mapStateToProps = ({products, reviews}) => {
 
         return accum
       }, {})
+      //-------
       result.push(topProduct)
       filteredProducts = filteredProducts.filter(product => {
         return result.find(prod => product.id !== prod.id)
@@ -48,6 +50,9 @@ const mapStateToProps = ({products, reviews}) => {
     return result
   }
 
+  console.log(topProducts())
+
+  //-------
   const mostPopular = products.filter(product => {
     return topProducts().find(prod => prod.id === product.id)
   })

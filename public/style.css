@@ -330,7 +330,41 @@ tr:nth-child(even) {
   padding: 3rem;
 }
 
-textarea {
+.textarea {
   rows: 2;
   columns: 25;
+}
+
+.auth-form-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  background-color: beige;
+  padding: 5rem 10rem;
+  margin: 2rem;
+  border-radius: 10px;
+}
+
+.auth-form > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 1rem;
+  align-items: center;
+}
+
+.auth-form > div > button {
+  width: 100%;
+}
+
+.Oauth {
+  background-color: #f24443;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 10px;
+  font-size: larger;
 }
