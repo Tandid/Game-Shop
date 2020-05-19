@@ -453,14 +453,14 @@ var Cart = /*#__PURE__*/function (_React$Component) {
                 return cartOrderItems.forEach(function (orderItem) {
                   orderItemsPrice = orderItemsPrice + parseFloat(_this2.props.products.find(function (product) {
                     return product.id === orderItem.productId;
-                  }).price) * orderItem.quantity;
+                  }).price).toFixed(2) * orderItem.quantity;
                 });
 
               case 8:
                 _context.next = 10;
                 return this.props.updateTotalPrice({
                   id: this.props.cart.id,
-                  totalPrice: this.props.cart.totalPrice - orderItemsPrice
+                  totalPrice: parseFloat(this.props.cart.totalPrice).toFixed(2) - orderItemsPrice
                 }, function () {});
 
               case 10:
@@ -1408,7 +1408,7 @@ var EditProduct = /*#__PURE__*/function (_React$Component) {
                     title: this.state.title,
                     description: this.state.description,
                     imageURL: this.state.imageURL,
-                    price: parseFloat(this.state.price),
+                    price: parseFloat(this.state.price).toFixed(2),
                     inventory: parseInt(this.state.inventory),
                     category: this.state.category
                   }, this.props.history.push);
@@ -2775,7 +2775,7 @@ var ProductList = /*#__PURE__*/function (_React$Component) {
                 _context.next = 6;
                 return this.props.updateTotalPrice({
                   id: this.props.orderId,
-                  totalPrice: parseFloat(this.props.cart.totalPrice) + parseFloat(product.price)
+                  totalPrice: parseFloat(this.props.cart.totalPrice).toFixed(2) + parseFloat(product.price).toFixed(2)
                 }, function () {});
 
               case 6:
@@ -2799,7 +2799,7 @@ var ProductList = /*#__PURE__*/function (_React$Component) {
                 _context.next = 13;
                 return this.props.updateTotalPrice({
                   id: this.props.orderId,
-                  totalPrice: parseFloat(this.props.cart.totalPrice) - parseFloat(product.price)
+                  totalPrice: parseFloat(this.props.cart.totalPrice).toFixed(2) - parseFloat(product.price).toFixed(2)
                 }, function () {});
 
               case 13:
@@ -2818,7 +2818,7 @@ var ProductList = /*#__PURE__*/function (_React$Component) {
                 _context.next = 19;
                 return this.props.updateTotalPrice({
                   id: this.props.orderId,
-                  totalPrice: parseFloat(this.props.cart.totalPrice) - parseFloat(product.price)
+                  totalPrice: parseFloat(this.props.cart.totalPrice).toFixed(2) - parseFloat(product.price).toFixed(2)
                 }, function () {});
 
               case 19:
@@ -2873,7 +2873,7 @@ var ProductList = /*#__PURE__*/function (_React$Component) {
                 _context2.next = 5;
                 return this.props.updateTotalPrice({
                   id: this.props.orderId,
-                  totalPrice: parseFloat(this.props.cart.totalPrice) - parseFloat(product.price * this.props.quantity)
+                  totalPrice: parseFloat(this.props.cart.totalPrice).toFixed(2) - parseFloat(product.price * this.props.quantity).toFixed(2)
                 }, function () {});
 
               case 5:
