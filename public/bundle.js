@@ -1230,7 +1230,7 @@ var CreateProduct = /*#__PURE__*/function (_React$Component) {
         value: "PC"
       }, "PC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "Nintendo"
-      }, "Switch"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "Nintendo"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         disabled: !title || !description || !imageURL || !price || !inventory || !category
       }, "Create New Game")));
     }
@@ -1527,7 +1527,7 @@ var EditProduct = /*#__PURE__*/function (_React$Component) {
         value: "PC"
       }, "PC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "Nintendo"
-      }, "Switch"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "Nintendo"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         disabled: title === product.title && description === product.description && imageURL === product.imageURL && price === product.price && inventory === product.inventory && category === product.category,
         onClick: onSubmit
       }, "Update")));
@@ -3075,7 +3075,7 @@ var Products = /*#__PURE__*/function (_React$Component) {
           value: "PC"
         }, "PC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           value: "Nintendo"
-        }, "Switch")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "There are no games currently available"));
+        }, "Nintendo")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "There are no games currently available"));
       } else {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "search-bar"
@@ -3092,7 +3092,7 @@ var Products = /*#__PURE__*/function (_React$Component) {
           value: "PC"
         }, "PC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           value: "Nintendo"
-        }, "Switch"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, "Nintendo"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "product-overflow"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "wrapper"
