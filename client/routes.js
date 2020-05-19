@@ -65,6 +65,9 @@ class Routes extends Component {
   }
 
   async mergeCart() {
+    await this.props.loadUser()
+    await this.props.loadOrders()
+
     const {orders, orderItems, user, products} = this.props
 
     const userCart = await orders.find(
@@ -140,6 +143,7 @@ class Routes extends Component {
   render() {
     const {isLoggedIn} = this.props
     const {user} = this.props
+
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
@@ -208,7 +212,9 @@ const mapDispatchToProps = dispatch => {
     removeFromGuestCart: orderItem => dispatch(deleteOrderItem(orderItem)),
     updateTotalPrice: (order, push) => dispatch(updateOrder(order, push)),
     newOrderItem: orderItem => dispatch(createOrderItem(orderItem)),
-    incrementOrderItem: orderItem => dispatch(updateOrderItem(orderItem))
+    incrementOrderItem: orderItem => dispatch(updateOrderItem(orderItem)),
+    loadUser: () => dispatch(me()),
+    loadOrders: () => dispatch(getOrders())
   }
 }
 
