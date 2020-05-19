@@ -130,7 +130,7 @@ const mapStateToProps = ({
     : orders.find(
         order =>
           order.status === 'cart' &&
-          order.userId === parseInt(localStorage.getItem('guestId'))
+          order.userId === localStorage.getItem('guestId')
       )
 
   const totalReviews = reviews.filter(review => review.productId === product.id)
