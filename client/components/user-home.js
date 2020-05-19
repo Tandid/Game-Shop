@@ -4,12 +4,12 @@ import {connect} from 'react-redux'
 import Popular from './MostPopular.js'
 
 export const UserHome = props => {
-  const {email} = props
+  const {email, firstName} = props
 
   return (
     <div>
       <div className="welcome">
-        <h3>Welcome {email}</h3>
+        <h3>Welcome {firstName ? firstName : email}</h3>
         <a href="/products">Enter Now</a>
       </div>
       <Popular />
@@ -19,7 +19,8 @@ export const UserHome = props => {
 
 const mapStateToProps = ({user}) => {
   return {
-    email: user.email
+    email: user.email,
+    firstName: user.firstName
   }
 }
 
