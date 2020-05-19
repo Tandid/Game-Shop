@@ -2,36 +2,57 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {createOrder} from '../store/orders'
 
 /**
  * COMPONENT
  */
-const AuthForm = props => {
-  const {name, displayName, handleSubmit, error} = props
+class AuthForm extends React.Component {
+  constructor() {
+    super()
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-      <a href="/auth/google">{displayName} with Google</a>
-    </div>
-  )
+  async handleSubmit(event) {
+    event.preventDefault()
+    const formName = event.target.name
+    const email = event.target.email.value
+    const password = event.target.password.value
+    await this.props.loginOrSignup(email, password, formName)
+    // await this.props.loadUser()
+    if (formName === 'signup') {
+      await this.props.createCart({userId: this.props.user.id})
+    }
+  }
+
+  render() {
+    const {handleSubmit} = this
+    const {name, displayName, error} = this.props
+
+    return (
+      <div>
+        <form onSubmit={handleSubmit} name={name}>
+          <div>
+            <label htmlFor="email">
+              <small>Email</small>
+            </label>
+            <input name="email" type="text" />
+          </div>
+          <div>
+            <label htmlFor="password">
+              <small>Password</small>
+            </label>
+            <input name="password" type="password" />
+          </div>
+          <div>
+            <button type="submit">{displayName}</button>
+          </div>
+          {error && error.response && <div> {error.response.data} </div>}
+        </form>
+        <a href="/auth/google">{displayName} with Google</a>
+      </div>
+    )
+  }
 }
 
 /**
@@ -53,19 +74,24 @@ const mapSignup = ({user}) => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    error: user.error
+    error: user.error,
+    user
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleSubmit(evt) {
-      evt.preventDefault()
-      const formName = evt.target.name
-      const email = evt.target.email.value
-      const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
-    }
+    // handleSubmit(evt) {
+    //   evt.preventDefault()
+    //   const formName = evt.target.name
+    //   const email = evt.target.email.value
+    //   const password = evt.target.password.value
+    // dispatch(auth(email, password, formName))
+    // },
+    loginOrSignup: (email, password, formName) =>
+      dispatch(auth(email, password, formName)),
+    // loadUser: () => dispatch(me()),
+    createCart: order => dispatch(createOrder(order))
   }
 }
 
@@ -78,6 +104,6 @@ export const Signup = connect(mapSignup, mapDispatchToProps)(AuthForm)
 AuthForm.propTypes = {
   name: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  // handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object
 }

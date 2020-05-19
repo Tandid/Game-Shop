@@ -915,14 +915,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_orders__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/orders */ "./client/store/orders.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -950,96 +945,36 @@ function (_Component) {
   _inherits(Confirmation, _Component);
 
   function Confirmation() {
-    var _this;
-
     _classCallCheck(this, Confirmation);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Confirmation).call(this));
-    _this.state = {
-      user: {},
-      order: {},
-      orderItems: {} //   products: {},
-
-    };
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(Confirmation).call(this));
   }
 
   _createClass(Confirmation, [{
     key: "componentDidMount",
-    value: function () {
-      var _componentDidMount = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee() {
-        var user, order, orderItems, recentOrder, recentOrderItems;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/auth/me');
-
-              case 2:
-                user = _context.sent;
-                _context.next = 5;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/orders/');
-
-              case 5:
-                order = _context.sent;
-                _context.next = 8;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/orderitems/');
-
-              case 8:
-                orderItems = _context.sent;
-                // const products = await axios.get('/api/products/')
-                recentOrder = order.data.filter(function (_order) {
-                  return _order.userId === user.data.id;
-                }).slice(-1)[0];
-                recentOrderItems = orderItems.data.filter(function (orderItem) {
-                  return orderItem.orderId === recentOrder.id;
-                }); // const recentProducts = products.data.find(
-                //   (product) => product.id === recentOrderItems.productId
-                // )
-
-                console.log(recentOrder);
-                console.log(recentOrderItems);
-                this.setState({
-                  user: user.data,
-                  order: recentOrder,
-                  orderItems: recentOrderItems //   products: recentProducts,
-
-                });
-
-              case 14:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function componentDidMount() {
-        return _componentDidMount.apply(this, arguments);
-      }
-
-      return componentDidMount;
-    }()
+    value: function componentDidMount() {
+      var orderId = this.props.match.params.id;
+      this.props.loadOrder(orderId);
+    }
   }, {
     key: "render",
     value: function render() {
-      // const {orders, user} = this.props
-      var order = this.state.order;
-      var orderItems = this.state.orderItems;
-      var products = this.props.products;
-      console.log(products);
+      var _this$props = this.props,
+          products = _this$props.products,
+          order = _this$props.order,
+          orderItems = _this$props.orderItems;
 
-      if (!orderItems.length) {
+      if (!products.length || !order.id || !orderItems.length) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Loading...");
       } else {
+        var thisOrderItems = orderItems.filter(function (orderItem) {
+          return orderItem.orderId === order.id;
+        });
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "OrderCard"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Thank you for shopping with us!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "You will receive an email confirmation soon with shipping and tracking details")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           key: Math.random()
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Order #: ", orderItems.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Status: ", orderItems.status)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, orderItems.map(function (orderItem) {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Order #: ", order.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Status: ", order.status)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, thisOrderItems.map(function (orderItem) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
             className: "orderItem-title",
             key: Math.random()
@@ -1055,13 +990,25 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 var mapStateToProps = function mapStateToProps(_ref) {
-  var products = _ref.products;
+  var products = _ref.products,
+      order = _ref.order,
+      orderItems = _ref.orderItems;
   return {
-    products: products
+    products: products,
+    order: order,
+    orderItems: orderItems
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps)(Confirmation));
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    loadOrder: function loadOrder(id) {
+      return dispatch(Object(_store_orders__WEBPACK_IMPORTED_MODULE_2__["getOrder"])(id));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(Confirmation));
 
 /***/ }),
 
@@ -3418,6 +3365,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store */ "./client/store/index.js");
+/* harmony import */ var _store_orders__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/orders */ "./client/store/orders.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
 
 
 
@@ -3426,30 +3397,95 @@ __webpack_require__.r(__webpack_exports__);
  * COMPONENT
  */
 
-var AuthForm = function AuthForm(props) {
-  var name = props.name,
-      displayName = props.displayName,
-      handleSubmit = props.handleSubmit,
-      error = props.error;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-    onSubmit: handleSubmit,
-    name: name
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-    htmlFor: "email"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Email")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    name: "email",
-    type: "text"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-    htmlFor: "password"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Password")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    name: "password",
-    type: "password"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    type: "submit"
-  }, displayName)), error && error.response && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, " ", error.response.data, " ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "/auth/google"
-  }, displayName, " with Google"));
-};
+var AuthForm =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(AuthForm, _React$Component);
+
+  function AuthForm() {
+    var _this;
+
+    _classCallCheck(this, AuthForm);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(AuthForm).call(this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(AuthForm, [{
+    key: "handleSubmit",
+    value: function () {
+      var _handleSubmit = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee(event) {
+        var formName, email, password;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                event.preventDefault();
+                formName = event.target.name;
+                email = event.target.email.value;
+                password = event.target.password.value;
+                _context.next = 6;
+                return this.props.loginOrSignup(email, password, formName);
+
+              case 6:
+                if (!(formName === 'signup')) {
+                  _context.next = 9;
+                  break;
+                }
+
+                _context.next = 9;
+                return this.props.createCart({
+                  userId: this.props.user.id
+                });
+
+              case 9:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function handleSubmit(_x) {
+        return _handleSubmit.apply(this, arguments);
+      }
+
+      return handleSubmit;
+    }()
+  }, {
+    key: "render",
+    value: function render() {
+      var handleSubmit = this.handleSubmit;
+      var _this$props = this.props,
+          name = _this$props.name,
+          displayName = _this$props.displayName,
+          error = _this$props.error;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: handleSubmit,
+        name: name
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "email"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Email")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        name: "email",
+        type: "text"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "password"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Password")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        name: "password",
+        type: "password"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit"
+      }, displayName)), error && error.response && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, " ", error.response.data, " ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "/auth/google"
+      }, displayName, " with Google"));
+    }
+  }]);
+
+  return AuthForm;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 /**
  * CONTAINER
  *   Note that we have two different sets of 'mapStateToProps' functions -
@@ -3473,18 +3509,26 @@ var mapSignup = function mapSignup(_ref2) {
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    error: user.error
+    error: user.error,
+    user: user
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    handleSubmit: function handleSubmit(evt) {
-      evt.preventDefault();
-      var formName = evt.target.name;
-      var email = evt.target.email.value;
-      var password = evt.target.password.value;
-      dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["auth"])(email, password, formName));
+    // handleSubmit(evt) {
+    //   evt.preventDefault()
+    //   const formName = evt.target.name
+    //   const email = evt.target.email.value
+    //   const password = evt.target.password.value
+    // dispatch(auth(email, password, formName))
+    // },
+    loginOrSignup: function loginOrSignup(email, password, formName) {
+      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["auth"])(email, password, formName));
+    },
+    // loadUser: () => dispatch(me()),
+    createCart: function createCart(order) {
+      return dispatch(Object(_store_orders__WEBPACK_IMPORTED_MODULE_4__["createOrder"])(order));
     }
   };
 };
@@ -3498,7 +3542,7 @@ var Signup = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapSign
 AuthForm.propTypes = {
   name: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string.isRequired,
   displayName: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string.isRequired,
-  handleSubmit: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func.isRequired,
+  // handleSubmit: PropTypes.func.isRequired,
   error: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object
 };
 
@@ -3942,7 +3986,7 @@ function (_Component) {
         path: "/checkout",
         component: _components__WEBPACK_IMPORTED_MODULE_4__["Checkout"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
-        path: "/confirmation",
+        path: "/confirmation/:id",
         component: _components__WEBPACK_IMPORTED_MODULE_4__["Confirmation"]
       }), isLoggedIn && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         exact: true,
@@ -4066,7 +4110,7 @@ socket.on('connect', function () {
 /*!*******************************!*\
   !*** ./client/store/index.js ***!
   \*******************************/
-/*! exports provided: default, me, auth, logout, updateUser, removeUser, getUsers, user, users, createUser, products, product, getProducts, getDetails, createProduct, removeProduct, updateProduct, orderItems, orderItem, getOrderItem, getOrderItems, createOrderItem, updateOrderItem, deleteOrderItem */
+/*! exports provided: default, me, auth, logout, updateUser, removeUser, getUsers, user, users, createUser, products, product, getProducts, getDetails, createProduct, removeProduct, updateProduct, orders, order, getOrders, getOrder, updateOrder, createOrder, orderItems, orderItem, getOrderItem, getOrderItems, createOrderItem, updateOrderItem, deleteOrderItem */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4114,6 +4158,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "updateProduct", function() { return _product__WEBPACK_IMPORTED_MODULE_5__["updateProduct"]; });
 
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "orders", function() { return _orders__WEBPACK_IMPORTED_MODULE_6__["orders"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "order", function() { return _orders__WEBPACK_IMPORTED_MODULE_6__["order"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getOrders", function() { return _orders__WEBPACK_IMPORTED_MODULE_6__["getOrders"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getOrder", function() { return _orders__WEBPACK_IMPORTED_MODULE_6__["getOrder"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "updateOrder", function() { return _orders__WEBPACK_IMPORTED_MODULE_6__["updateOrder"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "createOrder", function() { return _orders__WEBPACK_IMPORTED_MODULE_6__["createOrder"]; });
+
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "orderItems", function() { return _orderItems__WEBPACK_IMPORTED_MODULE_7__["orderItems"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "orderItem", function() { return _orderItems__WEBPACK_IMPORTED_MODULE_7__["orderItem"]; });
@@ -4142,7 +4198,8 @@ var reducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   users: _user__WEBPACK_IMPORTED_MODULE_4__["users"],
   products: _product__WEBPACK_IMPORTED_MODULE_5__["products"],
   product: _product__WEBPACK_IMPORTED_MODULE_5__["product"],
-  orders: _orders__WEBPACK_IMPORTED_MODULE_6__["default"],
+  orders: _orders__WEBPACK_IMPORTED_MODULE_6__["orders"],
+  order: _orders__WEBPACK_IMPORTED_MODULE_6__["order"],
   orderItems: _orderItems__WEBPACK_IMPORTED_MODULE_7__["orderItems"],
   orderItem: _orderItems__WEBPACK_IMPORTED_MODULE_7__["orderItem"],
   reviews: _reviews__WEBPACK_IMPORTED_MODULE_8__["reviews"]
@@ -4152,6 +4209,7 @@ var middleware = Object(redux_devtools_extension__WEBPACK_IMPORTED_MODULE_3__["c
 })));
 var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(reducer, middleware);
 /* harmony default export */ __webpack_exports__["default"] = (store);
+
 
 
 
@@ -4475,12 +4533,15 @@ var orderItem = function orderItem() {
 /*!********************************!*\
   !*** ./client/store/orders.js ***!
   \********************************/
-/*! exports provided: default, getOrders, updateOrder, createOrder */
+/*! exports provided: orders, order, getOrders, getOrder, updateOrder, createOrder */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "orders", function() { return orders; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "order", function() { return order; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getOrders", function() { return getOrders; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getOrder", function() { return getOrder; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateOrder", function() { return updateOrder; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createOrder", function() { return createOrder; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -4503,6 +4564,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  */
 
 var GET_ORDERS = 'GET_ORDERS';
+var GET_ORDER = 'GET_ORDER';
 var UPDATE_ORDER = 'UPDATE_ORDER';
 var CREATE_ORDER = 'CREATE_ORDER';
 /**
@@ -4520,6 +4582,13 @@ var _getOrders = function _getOrders(orders) {
   return {
     type: GET_ORDERS,
     orders: orders
+  };
+};
+
+var _getOrder = function _getOrder(order) {
+  return {
+    type: GET_ORDER,
+    order: order
   };
 };
 
@@ -4575,29 +4644,26 @@ var getOrders = function getOrders() {
   );
 };
 
-var updateOrder = function updateOrder(order, push) {
+var getOrder = function getOrder(id) {
   return (
     /*#__PURE__*/
     function () {
       var _ref2 = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2(dispatch) {
-        var _ref3, updatedOrder;
-
+        var response;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/orders/".concat(order.id), order);
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/orders/".concat(id));
 
               case 2:
-                _ref3 = _context2.sent;
-                updatedOrder = _ref3.data;
-                dispatch(_updateOrder(updatedOrder));
-                push('/confirmation');
+                response = _context2.sent;
+                dispatch(_getOrder(response.data));
 
-              case 6:
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -4612,26 +4678,29 @@ var updateOrder = function updateOrder(order, push) {
   );
 };
 
-var createOrder = function createOrder(order) {
+var updateOrder = function updateOrder(order, push) {
   return (
     /*#__PURE__*/
     function () {
-      var _ref4 = _asyncToGenerator(
+      var _ref3 = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee3(dispatch) {
-        var response;
+        var _ref4, updatedOrder;
+
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/orders', order);
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/orders/".concat(order.id), order);
 
               case 2:
-                response = _context3.sent;
-                dispatch(_createOrder(response.data));
+                _ref4 = _context3.sent;
+                updatedOrder = _ref4.data;
+                dispatch(_updateOrder(updatedOrder));
+                push("/confirmation/".concat(order.id));
 
-              case 4:
+              case 6:
               case "end":
                 return _context3.stop();
             }
@@ -4640,7 +4709,41 @@ var createOrder = function createOrder(order) {
       }));
 
       return function (_x3) {
-        return _ref4.apply(this, arguments);
+        return _ref3.apply(this, arguments);
+      };
+    }()
+  );
+};
+
+var createOrder = function createOrder(order) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref5 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee4(dispatch) {
+        var response;
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/orders', order);
+
+              case 2:
+                response = _context4.sent;
+                dispatch(_createOrder(response.data));
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      return function (_x4) {
+        return _ref5.apply(this, arguments);
       };
     }()
   );
@@ -4650,7 +4753,7 @@ var createOrder = function createOrder(order) {
  */
 
 
-/* harmony default export */ __webpack_exports__["default"] = (function () {
+var orders = function orders() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
@@ -4671,7 +4774,21 @@ var createOrder = function createOrder(order) {
     default:
       return state;
   }
-});
+};
+
+var order = function order() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case GET_ORDER:
+      return action.order;
+
+    default:
+      return state;
+  }
+};
+
 
 
 /***/ }),
