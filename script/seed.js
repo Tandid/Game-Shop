@@ -84,7 +84,7 @@ async function seed() {
     Product.create({
       title: 'Halo 5: Guardians',
       description:
-        'Gears 5 is a third-person shooter video game developed by The Coalition and published by Xbox Game Studios for Microsoft Windows and Xbox One. It is the sixth installment of the Gears of War series and the sequel to Gears of War 4. ',
+        'Halo 5: Guardians is a first-person shooter video game developed by 343 Industries and published by Microsoft Studios for the Xbox One. The fifth mainline entry and tenth overall in the Halo series, it was released worldwide on October 27, 2015.',
       imageURL:
         'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/9441/9441137_sa.jpg;maxHeight=640;maxWidth=550',
       price: 39.99,
