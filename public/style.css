@@ -199,6 +199,9 @@ select {
   justify-content: space-evenly;
 }
 
+.profile {
+  width: 500px;
+}
 .link-button {
   background-color: black;
   padding: 0.5rem;
@@ -279,14 +282,7 @@ tr:nth-child(even) {
 }
 
 /* Order Card */
-/* .OrderCard {
-  display: flex;
-  border-radius: 1rem;
-  background-color: beige;
-  padding: 1rem;
-  list-style-type: none;
-  margin: 2rem 4rem;
-} */
+
 .order-card-wrapper {
   display: flex;
   flex-direction: column;
@@ -348,15 +344,10 @@ tr:nth-child(even) {
 .user-review {
   display: flex;
   flex-direction: column;
-  margin: 4rem 10rem;
+  margin: 4rem 30rem;
   background-color: beige;
   border-radius: 1rem;
   padding: 3rem;
-}
-
-.textarea {
-  rows: 2;
-  columns: 25;
 }
 
 /* auth form */

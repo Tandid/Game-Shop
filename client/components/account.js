@@ -76,7 +76,7 @@ class Account extends Component {
           <h3>User Profile</h3>
           <img className="img-details" src={imageURL} />
         </div>
-        <div>
+        <div className="profile">
           {user.admin === true && (
             <div>
               <Link className="link-button" to="/listings">
@@ -88,9 +88,9 @@ class Account extends Component {
               <Link className="link-button" to="/orderlist">
                 Manage Orders
               </Link>
-              <Link className="link-button" to="/reviews">
+              {/* <Link className="link-button" to="/reviews">
                 Manage Reviews
-              </Link>
+              </Link> */}
             </div>
           )}
           <p> Status: {user.admin === true ? 'Admin' : 'User'}</p>
