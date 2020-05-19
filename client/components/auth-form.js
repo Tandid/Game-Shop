@@ -30,26 +30,24 @@ class AuthForm extends React.Component {
     const {name, displayName, error} = this.props
 
     return (
-      <div>
-        <form onSubmit={handleSubmit} name={name}>
+      <div className="auth-form-wrapper">
+        <form className="auth-form" onSubmit={handleSubmit} name={name}>
           <div>
-            <label htmlFor="email">
-              <small>Email</small>
-            </label>
+            <large>Email: </large>
             <input name="email" type="text" />
           </div>
           <div>
-            <label htmlFor="password">
-              <small>Password</small>
-            </label>
+            <large>Password: </large>
             <input name="password" type="password" />
           </div>
           <div>
             <button type="submit">{displayName}</button>
           </div>
           {error && error.response && <div> {error.response.data} </div>}
+          <a className="Oauth" href="/auth/google">
+            {displayName} with Google
+          </a>
         </form>
-        <a href="/auth/google">{displayName} with Google</a>
       </div>
     )
   }
