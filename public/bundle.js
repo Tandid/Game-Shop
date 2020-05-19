@@ -512,7 +512,7 @@ var Cart = /*#__PURE__*/function (_React$Component) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ProductList__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
             key: Math.random()
           }, orderItem));
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Total Price: $", parseFloat(cart.totalPrice).toFixed(2), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, ' ', "Total Price: $", Math.abs(parseFloat(cart.totalPrice).toFixed(2)), ' '), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "cart-button",
           onClick: clearCart,
           disabled: !cartOrderItems.length
@@ -2620,7 +2620,7 @@ var ProductDetails = /*#__PURE__*/function (_React$Component) {
             key: review.id
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "------------------------------------------------------"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Rating: ", review.stars, " / 10"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("q", null, " ", review.text, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "-", users.find(function (_user) {
             return _user.id === review.userId;
-          }).firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, ' ', "--------------------------------------------------------"));
+          }).firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "--------------------------------------------------------"));
         }))));
       }
     }
@@ -2775,7 +2775,7 @@ var ProductList = /*#__PURE__*/function (_React$Component) {
                 _context.next = 6;
                 return this.props.updateTotalPrice({
                   id: this.props.orderId,
-                  totalPrice: parseFloat(this.props.cart.totalPrice).toFixed(2) + parseFloat(product.price).toFixed(2)
+                  totalPrice: parseFloat(this.props.cart.totalPrice) + parseFloat(product.price)
                 }, function () {});
 
               case 6:
@@ -2799,7 +2799,7 @@ var ProductList = /*#__PURE__*/function (_React$Component) {
                 _context.next = 13;
                 return this.props.updateTotalPrice({
                   id: this.props.orderId,
-                  totalPrice: parseFloat(this.props.cart.totalPrice).toFixed(2) - parseFloat(product.price).toFixed(2)
+                  totalPrice: parseFloat(this.props.cart.totalPrice) - parseFloat(product.price)
                 }, function () {});
 
               case 13:
@@ -2818,7 +2818,7 @@ var ProductList = /*#__PURE__*/function (_React$Component) {
                 _context.next = 19;
                 return this.props.updateTotalPrice({
                   id: this.props.orderId,
-                  totalPrice: parseFloat(this.props.cart.totalPrice).toFixed(2) - parseFloat(product.price).toFixed(2)
+                  totalPrice: parseFloat(this.props.cart.totalPrice) - parseFloat(product.price)
                 }, function () {});
 
               case 19:
@@ -2873,7 +2873,7 @@ var ProductList = /*#__PURE__*/function (_React$Component) {
                 _context2.next = 5;
                 return this.props.updateTotalPrice({
                   id: this.props.orderId,
-                  totalPrice: parseFloat(this.props.cart.totalPrice).toFixed(2) - parseFloat(product.price * this.props.quantity).toFixed(2)
+                  totalPrice: parseFloat(this.props.cart.totalPrice) - parseFloat(product.price * this.props.quantity)
                 }, function () {});
 
               case 5:
@@ -4029,7 +4029,8 @@ var Routes = /*#__PURE__*/function (_Component) {
                   if (!existingOrderItem) {
                     _this2.props.newOrderItem({
                       productId: guestOrderItem.productId,
-                      orderId: userCart.id
+                      orderId: userCart.id,
+                      quantity: guestOrderItem.quantity
                     });
                   } else {
                     _this2.props.incrementOrderItem({

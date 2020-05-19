@@ -25,8 +25,7 @@ class ProductList extends React.Component {
           {
             id: this.props.orderId,
             totalPrice:
-              parseFloat(this.props.cart.totalPrice).toFixed(2) +
-              parseFloat(product.price).toFixed(2)
+              parseFloat(this.props.cart.totalPrice) + parseFloat(product.price)
           },
           () => {}
         )
@@ -40,8 +39,7 @@ class ProductList extends React.Component {
           {
             id: this.props.orderId,
             totalPrice:
-              parseFloat(this.props.cart.totalPrice).toFixed(2) -
-              parseFloat(product.price).toFixed(2)
+              parseFloat(this.props.cart.totalPrice) - parseFloat(product.price)
           },
           () => {}
         )
@@ -55,8 +53,7 @@ class ProductList extends React.Component {
           {
             id: this.props.orderId,
             totalPrice:
-              parseFloat(this.props.cart.totalPrice).toFixed(2) -
-              parseFloat(product.price).toFixed(2)
+              parseFloat(this.props.cart.totalPrice) - parseFloat(product.price)
           },
           () => {}
         )
@@ -81,8 +78,8 @@ class ProductList extends React.Component {
         {
           id: this.props.orderId,
           totalPrice:
-            parseFloat(this.props.cart.totalPrice).toFixed(2) -
-            parseFloat(product.price * this.props.quantity).toFixed(2)
+            parseFloat(this.props.cart.totalPrice) -
+            parseFloat(product.price * this.props.quantity)
         },
         () => {}
       )

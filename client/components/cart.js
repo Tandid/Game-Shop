@@ -65,7 +65,12 @@ class Cart extends React.Component {
               <ProductList key={Math.random()} {...orderItem} />
             ))}
           </ul>
-          <p> Total Price: ${parseFloat(cart.totalPrice).toFixed(2)} </p>
+          <p>
+            {' '}
+            Total Price: ${Math.abs(
+              parseFloat(cart.totalPrice).toFixed(2)
+            )}{' '}
+          </p>
 
           <button
             className="cart-button"

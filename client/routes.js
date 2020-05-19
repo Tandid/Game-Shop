@@ -107,7 +107,8 @@ class Routes extends Component {
       if (!existingOrderItem) {
         this.props.newOrderItem({
           productId: guestOrderItem.productId,
-          orderId: userCart.id
+          orderId: userCart.id,
+          quantity: guestOrderItem.quantity
         })
       } else {
         this.props.incrementOrderItem({
