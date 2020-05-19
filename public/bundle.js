@@ -218,7 +218,7 @@ var Account = /*#__PURE__*/function (_Component) {
                     lastName: this.state.lastName,
                     email: this.state.email,
                     imageURL: this.state.imageURL
-                  }, this.props.history.push);
+                  });
                 } catch (exception) {
                   this.setState({
                     error: exception.response.data.message
@@ -350,8 +350,8 @@ var mapStateToProps = function mapStateToProps(_ref) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    update: function update(user, push) {
-      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["updateUser"])(user, push));
+    update: function update(user) {
+      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["updateUser"])(user));
     }
   };
 };
@@ -1995,7 +1995,7 @@ var OrderCard = function OrderCard(_ref) {
       }, "Write Review")));
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "total"
-    }, "Total Price: $", totalPrice))));
+    }, "Total Price: $", parseFloat(totalPrice).toFixed(2)))));
   }
 };
 
@@ -2391,7 +2391,7 @@ var ProductCard = /*#__PURE__*/function (_React$Component) {
       }).reduce(function (accum, review) {
         return accum += review.stars;
       }, 0);
-      var averageRating = totalRating / totalReviews;
+      var averageRating = (totalRating / totalReviews).toFixed(1);
 
       if (!id || !cart) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Loading...");
@@ -2406,7 +2406,7 @@ var ProductCard = /*#__PURE__*/function (_React$Component) {
           className: "productLink"
         }, "More Details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           onClick: addToCart
-        }, "Add to Cart"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, !averageRating ? 'No Reviews' : "Rating: ".concat(averageRating, "/10")));
+        }, "Add to Cart"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, isNaN(averageRating) ? 'No Reviews' : "Rating: ".concat(averageRating, "/10")));
       }
     }
   }]);
@@ -2628,7 +2628,7 @@ var ProductDetails = /*#__PURE__*/function (_React$Component) {
           onClick: addToCart
         }, "Add to Cart")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "details-3"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, " Reviews "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Total Reviews: ", totalReviews), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, ' ', "Average Rating:", ' ', !averageRating ? 'No Reviews' : "".concat(averageRating, "/10")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, " Reviews "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Total Reviews: ", totalReviews), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, ' ', "Average Rating:", ' ', isNaN(averageRating) ? 'No Reviews' : "".concat(averageRating, "/10")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "review-overflow"
         }, reviews.filter(function (review) {
           return review.productId === product.id;
@@ -2668,7 +2668,7 @@ var mapStateToProps = function mapStateToProps(_ref) {
   }).reduce(function (accum, review) {
     return accum += review.stars;
   }, 0);
-  var averageRating = totalRating / totalReviews;
+  var averageRating = (totalRating / totalReviews).toFixed(1);
   return {
     products: products,
     product: product,
@@ -3212,7 +3212,7 @@ var UserList = /*#__PURE__*/function (_React$Component) {
   function UserList() {
     _classCallCheck(this, UserList);
 
-    return _super.call(this); // this.delete = this.deleteUser.bind(this)
+    return _super.call(this);
   }
 
   _createClass(UserList, [{
@@ -3238,7 +3238,7 @@ var UserList = /*#__PURE__*/function (_React$Component) {
             return _this.props.makeOrRemoveAdmin({
               id: user.id,
               admin: !user.admin
-            }, function () {});
+            });
           }
         }, user.admin === true ? 'Remove Admin' : 'Make Admin')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           onClick: function onClick() {
@@ -3264,8 +3264,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     "delete": function _delete(id) {
       return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["removeUser"])(id));
     },
-    makeOrRemoveAdmin: function makeOrRemoveAdmin(user, push) {
-      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["updateUser"])(user, push));
+    makeOrRemoveAdmin: function makeOrRemoveAdmin(user) {
+      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["updateUser"])(user));
     },
     loadUsers: function loadUsers() {
       return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["getUsers"])());
@@ -5632,7 +5632,7 @@ var removeUser = function removeUser(id) {
 // }
 
 
-var updateUser = function updateUser(user, push) {
+var updateUser = function updateUser(user) {
   return /*#__PURE__*/function () {
     var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(dispatch) {
       var _yield$axios$put, updatedUser;
@@ -5648,9 +5648,8 @@ var updateUser = function updateUser(user, push) {
               _yield$axios$put = _context6.sent;
               updatedUser = _yield$axios$put.data;
               dispatch(_updateUser(updatedUser));
-              push('/account');
 
-            case 6:
+            case 5:
             case "end":
               return _context6.stop();
           }
@@ -5708,9 +5707,8 @@ var user = function user() {
     case REMOVE_USER:
       return state;
     // return state.filter(user => user.id !== action.user)
-
-    case UPDATE_USER:
-      return action.user;
+    // case UPDATE_USER:
+    //   return action.user
 
     default:
       return state;

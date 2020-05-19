@@ -66,7 +66,7 @@ class ProductCard extends React.Component {
         return (accum += review.stars)
       }, 0)
 
-    const averageRating = totalRating / totalReviews
+    const averageRating = (totalRating / totalReviews).toFixed(1)
 
     if (!id || !cart) {
       return <h1>Loading...</h1>
@@ -81,7 +81,11 @@ class ProductCard extends React.Component {
             More Details
           </Link>
           <button onClick={addToCart}>Add to Cart</button>
-          <p>{!averageRating ? 'No Reviews' : `Rating: ${averageRating}/10`}</p>
+          <p>
+            {isNaN(averageRating)
+              ? 'No Reviews'
+              : `Rating: ${averageRating}/10`}
+          </p>
         </li>
       )
     }

@@ -37,16 +37,13 @@ class Account extends Component {
   async onSubmit(event) {
     event.preventDefault()
     try {
-      this.props.update(
-        {
-          id: this.props.user.id,
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          email: this.state.email,
-          imageURL: this.state.imageURL
-        },
-        this.props.history.push
-      )
+      this.props.update({
+        id: this.props.user.id,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        email: this.state.email,
+        imageURL: this.state.imageURL
+      })
     } catch (exception) {
       this.setState({error: exception.response.data.message})
     }
@@ -147,7 +144,7 @@ const mapStateToProps = ({user}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    update: (user, push) => dispatch(updateUser(user, push))
+    update: user => dispatch(updateUser(user))
   }
 }
 
