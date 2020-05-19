@@ -15,8 +15,41 @@ const Popular = ({mostPopular}) => {
   )
 }
 
-const mapStateToProps = ({products}) => {
-  const mostPopular = products.slice(0, 3) //this is just an example for the first 3 games, fix logic later
+const mapStateToProps = ({products, reviews}) => {
+  const topProducts = () => {
+    let result = []
+    while (result.length < 3) {
+      const filtered = products.filter(product => {
+        return result.find(prod => prod.id !== product.id)
+      })
+      const topProduct = filtered.reduce((accum, product) => {
+        const productReviews = reviews.filter(
+          review => review.productId === product.id
+        )
+
+        const average =
+          productReviews.reduce((acc, review) => {
+            acc += review.stars
+            return acc
+          }, 0) / productReviews.length
+
+        if (!accum.average || average > accum.average) {
+          accum.id = product.id
+          accum.average = average
+          accum.title = product.title
+        }
+        return accum
+      }, {})
+      result.push(topProduct)
+    }
+
+    return result
+  }
+
+  const mostPopular = products.filter(product => {
+    return topProducts().find(prod => prod.id === product.id)
+  })
+
   return {mostPopular}
 }
 

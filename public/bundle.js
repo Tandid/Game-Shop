@@ -1742,9 +1742,46 @@ var Popular = function Popular(_ref) {
 };
 
 var mapStateToProps = function mapStateToProps(_ref2) {
-  var products = _ref2.products;
-  var mostPopular = products.slice(0, 3); //this is just an example for the first 3 games, fix logic later
+  var products = _ref2.products,
+      reviews = _ref2.reviews;
 
+  var topProducts = function topProducts() {
+    var result = [];
+
+    while (result.length < 3) {
+      var filtered = products.filter(function (product) {
+        return result.find(function (prod) {
+          return prod.id !== product.id;
+        });
+      });
+      var topProduct = filtered.reduce(function (accum, product) {
+        var productReviews = reviews.filter(function (review) {
+          return review.productId === product.id;
+        });
+        var average = productReviews.reduce(function (acc, review) {
+          acc += review.stars;
+          return acc;
+        }, 0) / productReviews.length;
+
+        if (!accum.average || average > accum.average) {
+          accum.id = product.id;
+          accum.average = average;
+          accum.title = product.title;
+        }
+
+        return accum;
+      }, {});
+      result.push(topProduct);
+    }
+
+    return result;
+  };
+
+  var mostPopular = products.filter(function (product) {
+    return topProducts().find(function (prod) {
+      return prod.id === product.id;
+    });
+  });
   return {
     mostPopular: mostPopular
   };
@@ -3741,6 +3778,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_orderItems__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./store/orderItems */ "./client/store/orderItems.js");
 /* harmony import */ var _store_orders__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./store/orders */ "./client/store/orders.js");
 /* harmony import */ var _store_user__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./store/user */ "./client/store/user.js");
+/* harmony import */ var _store_reviews__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./store/reviews */ "./client/store/reviews.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3766,6 +3804,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -4044,6 +4083,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
       dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_5__["getProducts"])());
       dispatch(Object(_store_orders__WEBPACK_IMPORTED_MODULE_8__["getOrders"])());
       dispatch(Object(_store_orderItems__WEBPACK_IMPORTED_MODULE_7__["getOrderItems"])());
+      dispatch(Object(_store_reviews__WEBPACK_IMPORTED_MODULE_10__["getReviews"])());
     },
     createUser: function createUser(user) {
       return dispatch(Object(_store_user__WEBPACK_IMPORTED_MODULE_9__["createUser"])(user));

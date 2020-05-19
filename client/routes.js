@@ -30,6 +30,7 @@ import {
 } from './store/orderItems'
 import {getOrders, createOrder, updateOrder} from './store/orders'
 import {createUser} from './store/user'
+import {getReviews} from './store/reviews'
 
 /**
  * COMPONENT
@@ -198,7 +199,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(getProducts())
       dispatch(getOrders())
       dispatch(getOrderItems())
+      dispatch(getReviews())
     },
+
     createUser: user => dispatch(createUser(user)),
     createGuestCart: order => dispatch(createOrder(order)),
     removeFromGuestCart: orderItem => dispatch(deleteOrderItem(orderItem)),
