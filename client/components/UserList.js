@@ -1,16 +1,16 @@
-import React from 'react'
+import React, {useImperativeHandle} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {removeUser} from '../store'
+import {removeUser, updateUser, getUsers} from '../store'
 
 class UserList extends React.Component {
   constructor() {
     super()
-    this.delete = this.deleteUser.bind(this)
+    // this.delete = this.deleteUser.bind(this)
   }
 
-  deleteUser = id => {
-    this.props.delete(id)
+  componentDidMount() {
+    this.props.loadUsers()
   }
 
   render() {
@@ -41,12 +41,19 @@ class UserList extends React.Component {
                     <td>{user.email}</td>
                     <td>{user.admin === true ? 'Admin' : 'User'}</td>
                     <td>
-                      <button>
+                      <button
+                        onClick={() =>
+                          this.props.makeOrRemoveAdmin(
+                            {id: user.id, admin: !user.admin},
+                            () => {}
+                          )
+                        }
+                      >
                         {user.admin === true ? 'Remove Admin' : 'Make Admin'}
                       </button>
                     </td>
                     <td>
-                      <button onClick={() => this.deleteUser(user.id)}>
+                      <button onClick={() => this.props.delete(user.id)}>
                         Delete
                       </button>
                     </td>
@@ -68,7 +75,9 @@ const mapStateToProps = ({users}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    delete: id => dispatch(removeUser(id))
+    delete: id => dispatch(removeUser(id)),
+    makeOrRemoveAdmin: (user, push) => dispatch(updateUser(user, push)),
+    loadUsers: () => dispatch(getUsers())
   }
 }
 

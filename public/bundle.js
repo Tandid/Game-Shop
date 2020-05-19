@@ -996,7 +996,7 @@ var Confirmation = /*#__PURE__*/function (_Component) {
           }).price));
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "total"
-        }, "Total Price: $", order.totalPrice))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        }, "Total Price: $", parseFloat(order.totalPrice).toFixed(2)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           className: "back-button",
           href: "/"
         }, "Continue Shopping"));
@@ -3191,8 +3191,6 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 
@@ -3204,24 +3202,20 @@ var UserList = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(UserList);
 
   function UserList() {
-    var _this;
-
     _classCallCheck(this, UserList);
 
-    _this = _super.call(this);
-
-    _defineProperty(_assertThisInitialized(_this), "deleteUser", function (id) {
-      _this.props["delete"](id);
-    });
-
-    _this["delete"] = _this.deleteUser.bind(_assertThisInitialized(_this));
-    return _this;
+    return _super.call(this); // this.delete = this.deleteUser.bind(this)
   }
 
   _createClass(UserList, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.loadUsers();
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this = this;
 
       var users = this.props.users;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3231,9 +3225,16 @@ var UserList = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "First Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Last Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Admin Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Change Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Delete User"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, users && users.map(function (user) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: user.id
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.lastName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.admin === true ? 'Admin' : 'User'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, user.admin === true ? 'Remove Admin' : 'Make Admin')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.lastName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, user.admin === true ? 'Admin' : 'User'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           onClick: function onClick() {
-            return _this2.deleteUser(user.id);
+            return _this.props.makeOrRemoveAdmin({
+              id: user.id,
+              admin: !user.admin
+            }, function () {});
+          }
+        }, user.admin === true ? 'Remove Admin' : 'Make Admin')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: function onClick() {
+            return _this.props["delete"](user.id);
           }
         }, "Delete")));
       })))));
@@ -3254,6 +3255,12 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     "delete": function _delete(id) {
       return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["removeUser"])(id));
+    },
+    makeOrRemoveAdmin: function makeOrRemoveAdmin(user, push) {
+      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["updateUser"])(user, push));
+    },
+    loadUsers: function loadUsers() {
+      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["getUsers"])());
     }
   };
 };
@@ -5411,7 +5418,7 @@ var getUser = function getUser(user) {
 var _removeUser = function _removeUser(id) {
   return {
     type: REMOVE_USER,
-    user: id
+    id: id
   };
 };
 
@@ -5716,6 +5723,11 @@ var users = function users() {
     case UPDATE_USER:
       state = state.map(function (user) {
         return user.id === action.user.id ? action.user : user;
+      });
+
+    case REMOVE_USER:
+      return state.filter(function (user) {
+        return user.id !== action.id;
       });
 
     default:

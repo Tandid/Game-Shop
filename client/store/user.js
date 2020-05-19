@@ -20,7 +20,7 @@ const defaultUser = {}
  */
 const _getUsers = users => ({type: GET_USERS, users})
 const getUser = user => ({type: GET_USER, user})
-const _removeUser = id => ({type: REMOVE_USER, user: id})
+const _removeUser = id => ({type: REMOVE_USER, id})
 const _updateUser = user => ({type: UPDATE_USER, user})
 const _createUser = user => ({type: CREATE_USER, user})
 
@@ -128,6 +128,9 @@ const users = function(state = [], action) {
       state = state.map(
         user => (user.id === action.user.id ? action.user : user)
       )
+
+    case REMOVE_USER:
+      return state.filter(user => user.id !== action.id)
 
     default:
       return state

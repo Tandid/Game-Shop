@@ -1,6 +1,5 @@
 const router = require('express').Router()
 const {User} = require('../db/models')
-module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
@@ -32,16 +31,25 @@ router.put('/:id', (req, res, next) => {
   User.findByPk(req.params.id)
     .then(user =>
       user.update({
+        email: req.body.email,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        email: req.body.email,
         imageURL: req.body.imageURL,
-        ...user
-        // price: req.body.price,
-        // inventory: req.body.inventory,
-        // category: req.body.category
+        admin: req.body.admin
       })
     )
     .then(user => res.send(user))
     .catch(next)
 })
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id)
+    await user.destroy()
+    res.sendStatus(204)
+  } catch (exception) {
+    next(exception)
+  }
+})
+
+module.exports = router

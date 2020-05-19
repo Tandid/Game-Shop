@@ -61,7 +61,9 @@ class Confirmation extends Component {
                   </div>
                 ))}
               </ul>
-              <div className="total">Total Price: ${order.totalPrice}</div>
+              <div className="total">
+                Total Price: ${parseFloat(order.totalPrice).toFixed(2)}
+              </div>
             </div>
           </ul>
           <a className="back-button" href="/">
